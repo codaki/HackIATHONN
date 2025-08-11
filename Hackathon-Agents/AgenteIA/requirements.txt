@@ -1,0 +1,11 @@
+openai>=1.40
+chromadb>=0.5
+pypdf>=4.2
+python-dotenv>=1.0
+tiktoken>=0.7
+requests>=2.32
+rapidfuzz>=3.9
+streamlit>=1.36
+fastapi>=0.115
+uvicorn[standard]>=0.30
+reportlab>=4.2

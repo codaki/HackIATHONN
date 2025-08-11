@@ -1,0 +1,410 @@
+{
+  "results": [
+    {
+      "file": "parquebienhecho.pdf",
+      "path": "D:\\HACKATHONFRONTBACK\\Hackathon-Agents\\AgenteIA\\data\\docs\\03a172a6-433e-4d5b-82ad-9b1643f0a75e\\parquebienhecho.pdf",
+      "type": "documento",
+      "report": {
+        "scores": {
+          "legal": 60,
+          "tecnico": 40,
+          "economico": 60,
+          "inconsistencias": 50
+        },
+        "risks": {
+          "legal": "MEDIO",
+          "tecnico": "ALTO",
+          "economico": "MEDIO",
+          "inconsistencias": "ALTO",
+          "ruc": "ALTO"
+        },
+        "issues": [
+          {
+            "type": "Missing Guarantee",
+            "where": "Garantías",
+            "evidence": "No se menciona una garantía de calidad de obra de al menos 5 años como se requiere en el contrato original.",
+            "severity": "High",
+            "recommendation": "Incluir una garantía de calidad de obra de al menos 5 años para cumplir con los requisitos del contrato original.",
+            "category": "legal"
+          },
+          {
+            "type": "Inconsistent Penalty",
+            "where": "Penalizaciones",
+            "evidence": "La multa por retraso es del 0.2% diario en la propuesta, mientras que en el contrato original es del 0.15%.",
+            "severity": "Medium",
+            "recommendation": "Ajustar la multa por retraso a 0.15% diario para alinearse con el contrato original.",
+            "category": "legal"
+          },
+          {
+            "type": "Shorter Execution Period",
+            "where": "Plazo de Ejecución",
+            "evidence": "El plazo de ejecución propuesto es de 14 meses, mientras que el contrato original establece 20 meses.",
+            "severity": "High",
+            "recommendation": "Ajustar el plazo de ejecución a 20 meses para cumplir con el contrato original.",
+            "category": "legal"
+          },
+          {
+            "type": "Missing Financial Risk Coverage",
+            "where": "Garantías",
+            "evidence": "No se menciona cobertura de riesgo financiero frente a variaciones en precios de materiales críticos.",
+            "severity": "High",
+            "recommendation": "Incluir una cláusula de cobertura de riesgo financiero para cumplir con los requisitos del contrato original.",
+            "category": "legal"
+          },
+          {
+            "description": "El monto propuesto es significativamente inferior al monto total del contrato original (USD 12,500,000.00 vs USD 22,500,000.00), lo que puede indicar falta de recursos para cumplir con los requisitos técnicos.",
+            "severity": "High",
+            "category": "tecnico"
+          },
+          {
+            "description": "El plazo de ejecución propuesto es de 14 meses, mientras que el contrato original establece 20 meses. Esto podría generar dudas sobre la capacidad de cumplir con los estándares de calidad y seguridad requeridos.",
+            "severity": "High",
+            "category": "tecnico"
+          },
+          {
+            "description": "No se menciona la capacidad de las piscinas ni la cantidad de personas que pueden ser atendidas simultáneamente, lo cual es un requisito técnico clave del contrato original.",
+            "severity": "Medium",
+            "category": "tecnico"
+          },
+          {
+            "description": "No se especifican los ensayos de resistencia y durabilidad de materiales, auditorías técnicas trimestrales ni certificaciones de instalaciones eléctricas e hidráulicas, que son requeridos en el contrato original.",
+            "severity": "High",
+            "category": "tecnico"
+          },
+          {
+            "description": "El contrato original menciona la construcción de áreas específicas como zonas de deportes acuáticos y escalada, que no están reflejadas en la propuesta.",
+            "severity": "Medium",
+            "category": "tecnico"
+          },
+          {
+            "description": "La garantía técnica es de 24 meses, mientras que el contrato original establece una cobertura mínima de 5 años para defectos estructurales y de funcionamiento.",
+            "severity": "High",
+            "category": "tecnico"
+          },
+          {
+            "description": "El plan de control de calidad no se menciona en la propuesta, lo cual es un requisito del contrato original.",
+            "severity": "High",
+            "category": "tecnico"
+          },
+          {
+            "description": "El monto total de la propuesta (USD 12,500,000.00) es significativamente menor que el monto total del contrato original (USD 22,500,000.00), lo que podría indicar una falta de alineación con las expectativas del contratante.",
+            "severity": "high",
+            "category": "economico"
+          },
+          {
+            "description": "El plazo de ejecución de 14 meses es menor que el plazo de 20 meses establecido en el contrato original, lo que podría generar dudas sobre la capacidad del contratista para cumplir con los plazos.",
+            "severity": "medium",
+            "category": "economico"
+          },
+          {
+            "description": "La forma de pago incluye un 30% de anticipo, que es superior al 25% estipulado en el contrato original, lo que podría ser un punto de conflicto.",
+            "severity": "medium",
+            "category": "economico"
+          },
+          {
+            "description": "La penalización por retraso es del 0.2% diario, que es más alta que el 0.15% diario del contrato original, lo que podría ser considerado desfavorable para el contratista.",
+            "severity": "medium",
+            "category": "economico"
+          },
+          {
+            "description": "No se especifica el desglose de costos en la propuesta, lo que dificulta la evaluación de la viabilidad económica y técnica del proyecto.",
+            "severity": "high",
+            "category": "economico"
+          },
+          {
+            "type": "parse_error",
+            "where": "validator_incons",
+            "evidence": "```json\n{\n  \"issues\": [\n    {\n      \"issue\": \"Ambigüedad en el plazo de ejecución\",\n      \"description\": \"El contrato menciona un plazo de ejecución de 20 meses, pero no se especifica claramente si este plazo incluye el tiempo para la recepción provisional y definitiva, lo que puede generar confusión sobre el tiempo real de entrega.\",\n      \"score\": 60\n    },\n    {\n      \"issue\": \"Contradicción en las penalizaciones por retraso\",\n      \"description\": \"El contrato establece una multa por retraso del 0.15% diario, mientras que el documento de referencia menciona un 0.2% diario. Esto puede llevar a confusiones sobre cuál es la penalización correcta.\",\n      \"score\": 70\n    },\n    {\n      \"issue\": \"Falta de especificaciones sobre subcontratación\",\n      \"description\": \"No se menciona ninguna cláusula sobre las condiciones o límites de la subcontratación, lo cual es un requisito en los pliegos según la normativa secundaria.\",\n      \"score\": 80\n    },\n    {\n      \"issue\": \"Inconsistencia en ",
+            "severity": "MEDIO",
+            "recommendation": "Revisar",
+            "category": "inconsistencias"
+          }
+        ],
+        "ruc_reports": [
+          {
+            "ruc": "1724918774001",
+            "exists": true,
+            "related": false,
+            "risk": "ALTO",
+            "rationale": "Heurística por similitud=17.921146953405014"
+          }
+        ]
+      }
+    },
+    {
+      "file": "parquemalhecho.pdf",
+      "path": "D:\\HACKATHONFRONTBACK\\Hackathon-Agents\\AgenteIA\\data\\docs\\03a172a6-433e-4d5b-82ad-9b1643f0a75e\\parquemalhecho.pdf",
+      "type": "documento",
+      "report": {
+        "scores": {
+          "legal": 40,
+          "tecnico": 20,
+          "economico": 40,
+          "inconsistencias": 50
+        },
+        "risks": {
+          "legal": "ALTO",
+          "tecnico": "ALTO",
+          "economico": "ALTO",
+          "inconsistencias": "ALTO",
+          "ruc": "BAJO"
+        },
+        "issues": [
+          {
+            "type": "missing",
+            "where": "GARANTÍAS",
+            "evidence": "No se especifica garantía de cumplimiento.",
+            "severity": "high",
+            "recommendation": "Incluir una garantía de cumplimiento del 5% del monto total del contrato.",
+            "category": "legal"
+          },
+          {
+            "type": "ambiguous",
+            "where": "GARANTÍAS",
+            "evidence": "Buen uso del anticipo (sin especificar monto ni forma).",
+            "severity": "medium",
+            "recommendation": "Especificar el monto y la forma de la garantía de buen uso del anticipo.",
+            "category": "legal"
+          },
+          {
+            "type": "missing",
+            "where": "MULTAS",
+            "evidence": "No se define claramente las penalizaciones.",
+            "severity": "high",
+            "recommendation": "Incluir una cláusula clara sobre las multas por retraso y penalizaciones por incumplimiento de estándares de calidad.",
+            "category": "legal"
+          },
+          {
+            "type": "ambiguous",
+            "where": "PLAZO",
+            "evidence": "Cuando se pueda, pero no más de 20 meses.",
+            "severity": "medium",
+            "recommendation": "Definir un plazo específico y claro para la ejecución del proyecto.",
+            "category": "legal"
+          },
+          {
+            "issue": "Monto no detallado ni justificado.",
+            "severity": "Red",
+            "category": "tecnico"
+          },
+          {
+            "issue": "Plazo ambiguo, no se especifica fecha de inicio clara.",
+            "severity": "Ámbar",
+            "category": "tecnico"
+          },
+          {
+            "issue": "Falta de especificación de garantías de cumplimiento.",
+            "severity": "Rojo",
+            "category": "tecnico"
+          },
+          {
+            "issue": "Condiciones de pago no alineadas con el contrato original.",
+            "severity": "Ámbar",
+            "category": "tecnico"
+          },
+          {
+            "issue": "No se presenta lista de materiales ni planos.",
+            "severity": "Rojo",
+            "category": "tecnico"
+          },
+          {
+            "issue": "Normativa técnica no mencionada.",
+            "severity": "Rojo",
+            "category": "tecnico"
+          },
+          {
+            "issue": "Requisitos de seguridad no detallados.",
+            "severity": "Rojo",
+            "category": "tecnico"
+          },
+          {
+            "issue": "No hay plan de mantenimiento ni capacitación.",
+            "severity": "Rojo",
+            "category": "tecnico"
+          },
+          {
+            "description": "El monto propuesto de USD 25,000,000.00 excede el presupuesto del contrato original de USD 22,500,000.00.",
+            "severity": "high",
+            "category": "economico"
+          },
+          {
+            "description": "No se detalla cómo se llegó al monto propuesto, lo que genera falta de transparencia.",
+            "severity": "medium",
+            "category": "economico"
+          },
+          {
+            "description": "El plazo de ejecución es ambiguo, ya que se menciona 'cuando se pueda', a diferencia del plazo definido de 20 meses en el contrato original.",
+            "severity": "high",
+            "category": "economico"
+          },
+          {
+            "description": "No se especifica el monto ni la forma de la garantía de cumplimiento, lo que es un requisito esencial.",
+            "severity": "high",
+            "category": "economico"
+          },
+          {
+            "description": "Las condiciones de pago son diferentes a las del contrato original, donde se especifica un anticipo del 5% y un pago final tras la recepción definitiva.",
+            "severity": "medium",
+            "category": "economico"
+          },
+          {
+            "description": "No se definen claramente las penalizaciones en caso de incumplimiento, lo que puede generar incertidumbre.",
+            "severity": "medium",
+            "category": "economico"
+          },
+          {
+            "description": "Falta de lista de materiales y planos, lo que impide evaluar la viabilidad técnica y económica del proyecto.",
+            "severity": "high",
+            "category": "economico"
+          },
+          {
+            "description": "No se menciona normativa técnica ni requisitos de seguridad, lo que es crucial para la ejecución de obras públicas.",
+            "severity": "high",
+            "category": "economico"
+          },
+          {
+            "description": "No hay plan de mantenimiento ni capacitación, lo que es importante para la sostenibilidad del proyecto.",
+            "severity": "medium",
+            "category": "economico"
+          },
+          {
+            "type": "parse_error",
+            "where": "validator_incons",
+            "evidence": "```json\n{\n  \"issues\": [\n    {\n      \"issue\": \"Monto del contrato\",\n      \"description\": \"El monto del contrato en la propuesta es de USD 25,000,000.00, mientras que en el contrato original es de USD 22,500,000.00. No se justifica el aumento en el monto.\",\n      \"severity\": \"alta\"\n    },\n    {\n      \"issue\": \"Plazo de ejecución\",\n      \"description\": \"En la propuesta se menciona 'cuando se pueda, pero no más de 20 meses', lo cual es ambiguo y no establece un plazo claro como en el contrato original que especifica 20 meses desde la firma del acta de inicio.\",\n      \"severity\": \"alta\"\n    },\n    {\n      \"issue\": \"Garantías\",\n      \"description\": \"La propuesta no especifica el monto ni la forma de la garantía de buen uso del anticipo, y no menciona la garantía de cumplimiento, lo cual es un requisito en el contrato original.\",\n      \"severity\": \"alta\"\n    },\n    {\n      \"issue\": \"Condiciones de pago\",\n      \"description\": \"Las condiciones de pago en la propuesta son ambiguas, ya que se men",
+            "severity": "MEDIO",
+            "recommendation": "Revisar",
+            "category": "inconsistencias"
+          }
+        ],
+        "ruc_reports": [
+          {
+            "ruc": "0990038414001",
+            "exists": true,
+            "related": true,
+            "risk": "BAJO",
+            "rationale": "Heurística por similitud=45.90163934426229"
+          }
+        ]
+      }
+    },
+    {
+      "file": "PLIEGO PARQUE ACUAATICO.pdf",
+      "path": "D:\\HACKATHONFRONTBACK\\Hackathon-Agents\\AgenteIA\\data\\docs\\03a172a6-433e-4d5b-82ad-9b1643f0a75e\\PLIEGO PARQUE ACUAATICO.pdf",
+      "type": "documento",
+      "report": {
+        "scores": {
+          "legal": 70,
+          "tecnico": 55,
+          "economico": 60,
+          "inconsistencias": 50
+        },
+        "risks": {
+          "legal": "MEDIO",
+          "tecnico": "ALTO",
+          "economico": "MEDIO",
+          "inconsistencias": "ALTO",
+          "ruc": "ALTO"
+        },
+        "issues": [
+          {
+            "type": "Missing Requirement",
+            "where": "Garantías",
+            "evidence": "La propuesta menciona una garantía técnica de 24 meses, mientras que el contrato exige una garantía de calidad de obra de mínimo 5 años.",
+            "severity": "High",
+            "recommendation": "Ajustar la garantía técnica a un mínimo de 5 años para cumplir con los requisitos del contrato.",
+            "category": "legal"
+          },
+          {
+            "type": "Ambiguous Requirement",
+            "where": "Multas",
+            "evidence": "La propuesta no menciona las multas por retraso o penalizaciones por incumplimiento de estándares de calidad que están especificadas en el contrato.",
+            "severity": "Medium",
+            "recommendation": "Incluir las multas y penalizaciones correspondientes según lo estipulado en el contrato.",
+            "category": "legal"
+          },
+          {
+            "type": "Missing Requirement",
+            "where": "Plazos",
+            "evidence": "La propuesta no especifica el plazo de ejecución en meses, solo menciona que se evaluará el plazo de ejecución como un criterio.",
+            "severity": "Medium",
+            "recommendation": "Definir claramente el plazo de ejecución en meses para alinearse con el contrato que establece 20 meses.",
+            "category": "legal"
+          },
+          {
+            "description": "La piscina de olas propuesta es para 300 personas, mientras que el contrato especifica una capacidad de 1,500 personas.",
+            "severity": "High",
+            "category": "tecnico"
+          },
+          {
+            "description": "Los toboganes propuestos son de 12 m mínimo, mientras que el contrato menciona toboganes de hasta 120 metros.",
+            "severity": "High",
+            "category": "tecnico"
+          },
+          {
+            "description": "No se menciona la realización de ensayos de resistencia y durabilidad de materiales, que es un requisito del contrato.",
+            "severity": "Medium",
+            "category": "tecnico"
+          },
+          {
+            "description": "No se incluye auditorías técnicas trimestrales en la propuesta, que son requeridas por el contrato.",
+            "severity": "Medium",
+            "category": "tecnico"
+          },
+          {
+            "description": "La propuesta no menciona la certificación de instalaciones eléctricas e hidráulicas por técnicos autorizados, que es un requisito del contrato.",
+            "severity": "Medium",
+            "category": "tecnico"
+          },
+          {
+            "description": "El plazo de ejecución propuesto no se menciona, pero el contrato establece un plazo de 20 meses.",
+            "severity": "Medium",
+            "category": "tecnico"
+          },
+          {
+            "description": "No se especifican protocolos de seguridad para trabajos en altura y manipulación de químicos, que son requeridos por el contrato.",
+            "severity": "Medium",
+            "category": "tecnico"
+          },
+          {
+            "description": "El monto total del contrato es de USD 22,500,000.00, pero la propuesta no especifica un monto total, lo que genera ambigüedad.",
+            "severity": "high",
+            "category": "economico"
+          },
+          {
+            "description": "La propuesta menciona un anticipo del 30% contra garantía bancaria, pero no se especifica si este porcentaje se aplica al monto total del contrato o a un monto diferente.",
+            "severity": "medium",
+            "category": "economico"
+          },
+          {
+            "description": "Los pagos parciales por hitos no están claramente definidos en la propuesta, lo que puede generar confusión sobre el flujo de pagos.",
+            "severity": "medium",
+            "category": "economico"
+          },
+          {
+            "description": "El 10% retenido hasta la entrega definitiva no se menciona en el contexto del contrato original, lo que puede ser un punto de conflicto.",
+            "severity": "medium",
+            "category": "economico"
+          },
+          {
+            "description": "La propuesta no menciona un presupuesto detallado que justifique el monto total, lo que es necesario para la transparencia en el gasto público.",
+            "severity": "high",
+            "category": "economico"
+          },
+          {
+            "type": "parse_error",
+            "where": "validator_incons",
+            "evidence": "```json\n{\n  \"issues\": [\n    {\n      \"issue\": \"Ambigüedad en la especificación de la piscina de olas.\",\n      \"description\": \"El contrato menciona una piscina de olas con capacidad para 1,500 personas, mientras que el pliego especifica una piscina de olas para 300 personas. Esto genera confusión sobre la capacidad real requerida.\",\n      \"score\": 20\n    },\n    {\n      \"issue\": \"Inconsistencia en la normativa de toboganes.\",\n      \"description\": \"El contrato menciona toboganes temáticos de fibra de vidrio, pero no especifica la altura mínima. El pliego exige toboganes de 12 m mínimo, lo que no se refleja en el contrato.\",\n      \"score\": 15\n    },\n    {\n      \"issue\": \"Falta de especificación sobre el sistema de iluminación.\",\n      \"description\": \"El contrato menciona sistemas de seguridad contra incendios y videovigilancia, pero no especifica que la iluminación debe ser LED IP68, como se indica en el pliego.\",\n      \"score\": 10\n    },\n    {\n      \"issue\": \"Inconsistencia en el anticipo.",
+            "severity": "MEDIO",
+            "recommendation": "Revisar",
+            "category": "inconsistencias"
+          }
+        ],
+        "ruc_reports": []
+      }
+    }
+  ],
+  "summary": {
+    "rojas": 5,
+    "amarillas": 3
+  }
+}

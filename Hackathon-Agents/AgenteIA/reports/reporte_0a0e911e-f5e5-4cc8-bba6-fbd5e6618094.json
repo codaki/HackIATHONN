@@ -1,0 +1,116 @@
+{
+  "results": [
+    {
+      "file": "pliegodelicitaciondeobras2027.pdf",
+      "path": "D:\\HACKATHONFRONTBACK\\Hackathon-Agents\\AgenteIA\\data\\docs\\0a0e911e-f5e5-4cc8-bba6-fbd5e6618094\\pliegodelicitaciondeobras2027.pdf",
+      "report": {
+        "scores": {
+          "legal": 50,
+          "tecnico": 50,
+          "economico": 50,
+          "inconsistencias": 50
+        },
+        "risks": {
+          "legal": "ALTO",
+          "tecnico": "ALTO",
+          "economico": "ALTO",
+          "inconsistencias": "ALTO",
+          "ruc": "ALTO"
+        },
+        "issues": [
+          {
+            "type": "parse_error",
+            "where": "validator_legal",
+            "evidence": "```json\n{\n  \"issues\": [\n    {\n      \"type\": \"Missing Information\",\n      \"where\": \"Propuesta - Sección de Garantías\",\n      \"evidence\": \"No se especifican las garantías requeridas para la ejecución del contrato.\",\n      \"severity\": \"High\",\n      \"recommendation\": \"Incluir las garantías necesarias que deben ser presentadas por el contratista, especificando montos y condiciones.\"\n    },\n    {\n      \"type\": \"Missing Information\",\n      \"where\": \"Propuesta - Sección de Multas\",\n      \"evidence\": \"No se mencionan las multas aplicables en caso de incumplimiento de las condiciones del contrato.\",\n      \"severity\": \"High\",\n      \"recommendation\": \"Definir claramente las multas que se aplicarán por incumplimientos y las condiciones bajo las cuales se activarán.\"\n    },\n    {\n      \"type\": \"Missing Information\",\n      \"where\": \"Propuesta - Sección de Plazos\",\n      \"evidence\": \"No se especifican los plazos de ejecución del contrato.\",\n      \"severity\": \"High\",\n      \"recommendation\": \"Incluir un",
+            "severity": "MEDIO",
+            "recommendation": "Revisar",
+            "category": "legal"
+          },
+          {
+            "type": "parse_error",
+            "where": "validator_tech",
+            "evidence": "Para verificar los requisitos técnicos de la propuesta en relación con el contexto RAG, se analizarán los aspectos de materiales, procesos y tiempos. A continuación, se presenta un resumen de los hallazgos y la puntuación de conformidad técnica.\n\n### Análisis de Requisitos Técnicos\n\n1. **Materiales:**\n   - **Requisitos de Materiales:** No se especifican materiales concretos en la propuesta. Sin embargo, se menciona la priorización de productos y servicios nacionales, lo que implica que los materiales deben ser de origen ecuatoriano.\n   - **Ambigüedad:** La falta de especificaciones claras sobre los materiales a utilizar puede generar confusiones en la ejecución del contrato.\n\n2. **Procesos:**\n   - **Cumplimiento Normativo:** La propuesta hace referencia a varios artículos de la Constitución y leyes relacionadas con la contratación pública, lo que indica un entendimiento de los procesos requeridos.\n   - **Documentación:** Se menciona la necesidad de cumplir con los requisitos de certifi",
+            "severity": "MEDIO",
+            "recommendation": "Revisar",
+            "category": "tecnico"
+          },
+          {
+            "type": "parse_error",
+            "where": "validator_econ",
+            "evidence": "Para verificar las condiciones económicas de la propuesta en relación con el contexto RAG, se deben considerar los siguientes aspectos: presupuesto, hitos y formas de pago. A continuación, se presenta un análisis detallado:\n\n### Análisis de Condiciones Económicas\n\n1. **Presupuesto**:\n   - **Verificación**: No se proporciona información específica sobre el presupuesto referencial en la propuesta. La normativa establece que la elaboración del presupuesto referencial es responsabilidad de las unidades requerientes, pero no se menciona si se ha cumplido con esta obligación en la propuesta.\n   - **Faltantes/Ambigüedades**: Falta información sobre el monto total del presupuesto y su justificación.\n\n2. **Hitos**:\n   - **Verificación**: La propuesta no menciona hitos específicos ni un cronograma de ejecución que detalle las etapas del proyecto y los plazos asociados a cada uno.\n   - **Faltantes/Ambigüedades**: Ausencia de un cronograma de hitos que permita evaluar el avance y cumplimiento de l",
+            "severity": "MEDIO",
+            "recommendation": "Revisar",
+            "category": "economico"
+          },
+          {
+            "type": "parse_error",
+            "where": "validator_incons",
+            "evidence": "```json\n{\n  \"issues\": [\n    {\n      \"issue\": \"Ambigüedad en la responsabilidad de la elaboración de pliegos.\",\n      \"description\": \"El documento menciona que la elaboración de los pliegos es responsabilidad de la Dirección Administrativa Financiera, pero no se especifica claramente quién es el responsable final de la aprobación de estos pliegos, lo que puede generar confusión sobre las competencias.\",\n      \"score\": 60\n    },\n    {\n      \"issue\": \"Falta de claridad en las condiciones especiales de ejecución.\",\n      \"description\": \"Aunque se mencionan condiciones especiales de ejecución, no se detallan ejemplos específicos de estas condiciones, lo que puede llevar a interpretaciones diversas y falta de cumplimiento por parte de los contratistas.\",\n      \"score\": 70\n    },\n    {\n      \"issue\": \"Inconsistencia en la referencia a la normativa aplicable.\",\n      \"description\": \"El contrato menciona que se regirá por la Ley Orgánica del Sistema Nacional de Contratación Pública, pero no se ",
+            "severity": "MEDIO",
+            "recommendation": "Revisar",
+            "category": "inconsistencias"
+          }
+        ],
+        "ruc_reports": []
+      }
+    },
+    {
+      "file": "pliegos2023.pdf",
+      "path": "D:\\HACKATHONFRONTBACK\\Hackathon-Agents\\AgenteIA\\data\\docs\\0a0e911e-f5e5-4cc8-bba6-fbd5e6618094\\pliegos2023.pdf",
+      "report": {
+        "scores": {
+          "legal": 50,
+          "tecnico": 50,
+          "economico": 50,
+          "inconsistencias": 50
+        },
+        "risks": {
+          "legal": "ALTO",
+          "tecnico": "ALTO",
+          "economico": "ALTO",
+          "inconsistencias": "ALTO",
+          "ruc": "ALTO"
+        },
+        "issues": [
+          {
+            "type": "parse_error",
+            "where": "validator_legal",
+            "evidence": "```json\n{\n  \"issues\": [\n    {\n      \"type\": \"Missing Information\",\n      \"where\": \"Propuesta\",\n      \"evidence\": \"No se especifican las garantías requeridas para la ejecución del contrato.\",\n      \"severity\": \"High\",\n      \"recommendation\": \"Incluir las garantías necesarias que deben ser presentadas por el contratista, conforme a lo estipulado en la normativa.\"\n    },\n    {\n      \"type\": \"Missing Information\",\n      \"where\": \"Propuesta\",\n      \"evidence\": \"No se mencionan las multas aplicables en caso de incumplimiento de las condiciones del contrato.\",\n      \"severity\": \"High\",\n      \"recommendation\": \"Definir claramente las multas que se aplicarán en caso de incumplimiento de las condiciones contractuales.\"\n    },\n    {\n      \"type\": \"Missing Information\",\n      \"where\": \"Propuesta\",\n      \"evidence\": \"No se establece el plazo de ejecución del contrato.\",\n      \"severity\": \"High\",\n      \"recommendation\": \"Especificar el plazo de ejecución total y parcial del contrato, así como las co",
+            "severity": "MEDIO",
+            "recommendation": "Revisar",
+            "category": "legal"
+          },
+          {
+            "type": "parse_error",
+            "where": "validator_tech",
+            "evidence": "Para verificar los requisitos técnicos de la propuesta en relación con el contexto RAG, se deben considerar los aspectos de materiales, procesos y tiempos. A continuación, se presenta un análisis detallado:\n\n### Análisis de Requisitos Técnicos\n\n1. **Materiales**:\n   - **Requisitos**: La normativa establece que se deben priorizar productos y servicios nacionales, especialmente aquellos provenientes de la economía popular y solidaria, así como de micro, pequeñas y medianas unidades productivas.\n   - **Propuesta**: No se especifican los materiales que se utilizarán en la propuesta. Esto genera ambigüedad sobre si se cumplen los requisitos de priorización de productos nacionales.\n   - **Faltantes**: Detalle sobre los materiales a utilizar y su origen.\n\n2. **Procesos**:\n   - **Requisitos**: La normativa menciona la necesidad de cumplir con criterios de eficiencia, transparencia, calidad y responsabilidad ambiental y social. Además, se requiere que los procesos de contratación sean competiti",
+            "severity": "MEDIO",
+            "recommendation": "Revisar",
+            "category": "tecnico"
+          },
+          {
+            "type": "parse_error",
+            "where": "validator_econ",
+            "evidence": "Para verificar las condiciones económicas de la propuesta en relación con el contexto RAG proporcionado, se deben considerar los siguientes aspectos: presupuesto, hitos y formas de pago. A continuación, se presenta un análisis detallado:\n\n### Análisis de Condiciones Económicas\n\n1. **Presupuesto**:\n   - **Verificación**: No se menciona un presupuesto específico en la propuesta. Según la normativa, es responsabilidad de las unidades requirentes elaborar el presupuesto referencial, pero no se proporciona información sobre el monto o la fuente de financiamiento.\n   - **Faltantes/Ambigüedades**: Falta información sobre el presupuesto referencial y su justificación. Esto es crucial para evaluar la viabilidad económica del proyecto.\n\n2. **Hitos**:\n   - **Verificación**: No se especifican hitos claros en la propuesta. Los hitos son importantes para el seguimiento y la evaluación del progreso del contrato.\n   - **Faltantes/Ambigüedades**: Ausencia de un cronograma de hitos que permita medir el ",
+            "severity": "MEDIO",
+            "recommendation": "Revisar",
+            "category": "economico"
+          },
+          {
+            "type": "parse_error",
+            "where": "validator_incons",
+            "evidence": "```json\n{\n  \"issues\": [\n    {\n      \"issue\": \"Ambigüedad en la definición de 'condiciones especiales de ejecución del contrato'. No se especifica claramente qué condiciones se consideran especiales y cómo se aplicarán en la práctica.\",\n      \"score\": 60\n    },\n    {\n      \"issue\": \"Falta de claridad en la responsabilidad de las unidades requirentes en la elaboración de términos de referencia. No se menciona si hay un proceso de revisión o aprobación por parte de una autoridad superior.\",\n      \"score\": 70\n    },\n    {\n      \"issue\": \"Inconsistencia en la referencia a los documentos que integran el contrato. Se menciona que los pliegos y la oferta ganadora forman parte del contrato, pero no se especifica si hay otros documentos que también deben ser considerados.\",\n      \"score\": 65\n    },\n    {\n      \"issue\": \"Ambigüedad en la cláusula sobre inhabilidades. No se especifica el procedimiento a seguir en caso de que un proveedor inhabilitado participe en el proceso.\",\n      \"score\": 75\n  ",
+            "severity": "MEDIO",
+            "recommendation": "Revisar",
+            "category": "inconsistencias"
+          }
+        ],
+        "ruc_reports": []
+      }
+    }
+  ],
+  "summary": {
+    "rojas": 0,
+    "amarillas": 8
+  }
+}

@@ -1,0 +1,138 @@
+{
+  "licitaciones": [
+    {
+      "id": "0a0e911e-f5e5-4cc8-bba6-fbd5e6618094",
+      "nombre": "Contrato Parque Actuactivo",
+      "objeto": "compara los 2 contratos",
+      "presupuesto": 220000.0,
+      "pesos": {
+        "legal": 35,
+        "tecnico": 40,
+        "economico": 25
+      },
+      "normativa": [],
+      "deadline": null,
+      "etapa": "Análisis",
+      "progreso": 100,
+      "created_at": "2025-08-11T03:42:11.186384",
+      "last_analysis_at": "2025-08-11T03:47:00.535644"
+    },
+    {
+      "id": "42193086-8fff-45ca-a16b-45def094aec6",
+      "nombre": "Proceso sin nombre",
+      "objeto": "",
+      "presupuesto": null,
+      "pesos": {
+        "legal": 35,
+        "tecnico": 40,
+        "economico": 25
+      },
+      "normativa": [],
+      "deadline": null,
+      "etapa": "Ingesta",
+      "progreso": 0,
+      "created_at": "2025-08-11T03:47:24.661163"
+    },
+    {
+      "id": "d16a7971-c5ec-4783-a03a-a22ab2b4b0a8",
+      "nombre": "Contratacion Parques Acuaticos",
+      "objeto": "Compara los 2 contratos",
+      "presupuesto": 30000000.0,
+      "pesos": {
+        "legal": 35,
+        "tecnico": 40,
+        "economico": 25
+      },
+      "normativa": [],
+      "deadline": null,
+      "etapa": "Análisis",
+      "progreso": 100,
+      "created_at": "2025-08-11T04:20:35.425263",
+      "last_analysis_at": "2025-08-11T04:32:43.868153"
+    },
+    {
+      "id": "198e5d45-15c3-4cde-b071-079cd4c2a3d5",
+      "nombre": "Parque Acuatico",
+      "objeto": "Compara los 2 parques acuaticos",
+      "presupuesto": 30000000.0,
+      "pesos": {
+        "legal": 35,
+        "tecnico": 40,
+        "economico": 25
+      },
+      "normativa": [],
+      "deadline": null,
+      "etapa": "Análisis",
+      "progreso": 100,
+      "created_at": "2025-08-11T04:51:17.735969",
+      "last_analysis_at": "2025-08-11T04:53:26.029393"
+    },
+    {
+      "id": "03a172a6-433e-4d5b-82ad-9b1643f0a75e",
+      "nombre": "Parques Acuaticos",
+      "objeto": "Comparar parques acuaticos",
+      "presupuesto": 30000000.0,
+      "pesos": {
+        "legal": 35,
+        "tecnico": 40,
+        "economico": 25
+      },
+      "normativa": [],
+      "deadline": null,
+      "etapa": "Análisis",
+      "progreso": 100,
+      "created_at": "2025-08-11T04:54:12.038812",
+      "last_analysis_at": "2025-08-11T04:56:24.591018"
+    },
+    {
+      "id": "b750b46f-9e6a-4048-b744-8d1376e8ca3e",
+      "nombre": "Parques Acuaticos",
+      "objeto": "Comparativa parques acuaticos",
+      "presupuesto": 30000000.0,
+      "pesos": {
+        "legal": 35,
+        "tecnico": 40,
+        "economico": 25
+      },
+      "normativa": [],
+      "deadline": null,
+      "etapa": "Análisis",
+      "progreso": 100,
+      "created_at": "2025-08-11T05:01:06.211692",
+      "last_analysis_at": "2025-08-11T05:02:47.035048"
+    },
+    {
+      "id": "ca517531-4bcb-4941-a148-8c61ae74003d",
+      "nombre": "Parque Acuatico",
+      "objeto": "Comparacion de contratos",
+      "presupuesto": 3000000.0,
+      "pesos": {
+        "legal": 35,
+        "tecnico": 40,
+        "economico": 25
+      },
+      "normativa": [],
+      "deadline": null,
+      "etapa": "Análisis",
+      "progreso": 100,
+      "created_at": "2025-08-11T05:22:26.091211",
+      "last_analysis_at": "2025-08-11T05:24:48.464448"
+    },
+    {
+      "id": "38b72d81-5042-4515-9869-a002d62e7090",
+      "nombre": "Parque Acuatico",
+      "objeto": "Parque acuatico",
+      "presupuesto": 30000000.0,
+      "pesos": {
+        "legal": 35,
+        "tecnico": 40,
+        "economico": 25
+      },
+      "normativa": [],
+      "deadline": null,
+      "etapa": "Ingesta",
+      "progreso": 0,
+      "created_at": "2025-08-11T14:30:14.566829"
+    }
+  ]
+}

@@ -1,0 +1,463 @@
+from fastapi import FastAPI, UploadFile, File, Form, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+from pydantic import BaseModel, Field
+from typing import List, Optional, Dict, Any
+import os, io, json, uuid, shutil, glob
+from datetime import datetime
+
+# === Importa tu lógica ya creada ===
+from utils.pdf_text import pdf_to_text
+from utils.ruc_extract import extract_rucs
+from agents import rag_legal, validator_legal, validator_tech, validator_econ, validator_incons, validator_ruc, aggregator
+from rag.chroma_setup import get_docs_collection
+from openai import OpenAI
+
+# PDF resumen ejecutivo
+from reportlab.lib.pagesizes import A4
+from reportlab.pdfgen import canvas
+from reportlab.lib.units import cm
+from reportlab.lib.utils import simpleSplit
+
+# ============ Config básica ============
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+DATA_DIR = os.path.join(BASE_DIR, "data")
+DOCS_DIR = os.path.join(DATA_DIR, "docs")
+DB_DIR = os.path.join(BASE_DIR, "db")
+REPORTS_DIR = os.path.join(BASE_DIR, "reports")
+
+os.makedirs(DOCS_DIR, exist_ok=True)
+os.makedirs(DB_DIR, exist_ok=True)
+os.makedirs(REPORTS_DIR, exist_ok=True)
+
+DB_PATH = os.path.join(DB_DIR, "licitaciones.json")
+
+client = OpenAI()
+MODEL_EMB = os.environ.get("MODEL_EMB", "text-embedding-3-small")
+
+# ============ Helpers de persistencia (MVP) ============
+
+def _load_db() -> Dict[str, Any]:
+    if not os.path.exists(DB_PATH):
+        return {"licitaciones": []}
+    with open(DB_PATH, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+def _save_db(db: Dict[str, Any]):
+    with open(DB_PATH, "w", encoding="utf-8") as f:
+        json.dump(db, f, ensure_ascii=False, indent=2)
+
+def _get_licitacion(db, lic_id: str):
+    for x in db.get("licitaciones", []):
+        if x["id"] == lic_id:
+            return x
+    return None
+
+# ============ Embeddings para Chroma (contratos) ============
+
+def _embed_batch(texts: List[str]):
+    resp = client.embeddings.create(model=MODEL_EMB, input=texts)
+    return [d.embedding for d in resp.data]
+
+
+def index_folder_to_contratos(folder: str, lic_id: str):
+    col = get_docs_collection()  # colección "contratos"
+    pdfs = glob.glob(os.path.join(folder, "**/*.pdf"), recursive=True)
+    for path in pdfs:
+        try:
+            text = pdf_to_text(path)
+            # Chunking muy simple (reusa tu utils/chunk si prefieres)
+            from utils.chunk import chunk_text
+            chunks = chunk_text(text)
+            embs = _embed_batch(chunks)
+            ids = [str(uuid.uuid4()) for _ in chunks]
+            metas = [{
+                "source": os.path.basename(path),
+                "path": path,
+                "type": "contrato",
+                "licitacion_id": lic_id,
+            } for _ in chunks]
+            col.add(ids=ids, documents=chunks, embeddings=embs, metadatas=metas)
+        except Exception as e:
+            print(f"[index] Error {path}: {e}")
+
+# ============ Orquestador para una licitación ============
+
+def run_analysis_for_lic(lic_id: str, objeto: str) -> Dict[str, Any]:
+    folder = os.path.join(DOCS_DIR, lic_id)
+    pdfs = glob.glob(os.path.join(folder, "**/*.pdf"), recursive=True)
+    if not pdfs:
+        raise HTTPException(status_code=400, detail="No hay PDFs para esta licitación")
+
+    results = []
+    topics = ["garantias", "multas", "plazos", "tecnicos", "economicos", "coherencia"]
+
+    for path in pdfs:
+        text = pdf_to_text(path)
+        topic_ctx = rag_legal.run_topics(topics, proposal_excerpt=text[:4000], k=6)
+        v_legal = validator_legal.run(text, topic_ctx.get("garantias", []) + topic_ctx.get("multas", []) + topic_ctx.get("plazos", []))
+        v_tech  = validator_tech.run(text, topic_ctx.get("tecnicos", []))
+        v_econ  = validator_econ.run(text, topic_ctx.get("economicos", []))
+        v_incon = validator_incons.run(text, topic_ctx.get("coherencia", []))
+
+        rucs = extract_rucs(text)
+        ruc_reports = [validator_ruc.run(r, objeto) for r in rucs]
+
+        report = aggregator.aggregate(v_legal, v_tech, v_econ, v_incon, ruc_reports)
+        results.append({
+            "file": os.path.basename(path),
+            "path": path,
+            "report": report
+        })
+
+    # Resumen global para la licitación (MVP)
+    total_rojas = sum(1 for r in results for i in r["report"]["issues"] if str(i.get("severity", "")).upper() in ("ALTO","ROJO"))
+    total_amarillas = sum(1 for r in results for i in r["report"]["issues"] if str(i.get("severity", "")).upper() in ("MEDIO","AMARILLO"))
+
+    summary = {"rojas": int(total_rojas), "amarillas": int(total_amarillas)}
+    return {"results": results, "summary": summary}
+
+# ============ PDF: Resumen Ejecutivo (2 páginas) ============
+
+def _wrap_text(c: canvas.Canvas, text: str, max_width: float, font_name: str = "Helvetica", font_size: int = 10):
+    c.setFont(font_name, font_size)
+    return simpleSplit(text, font_name, font_size, max_width)
+
+
+def build_executive_pdf(lic: Dict[str, Any], data: Dict[str, Any], out_path: str):
+    c = canvas.Canvas(out_path, pagesize=A4)
+    width, height = A4
+
+    # ---------- Página 1 ----------
+    c.setFont("Helvetica-Bold", 16)
+    c.drawString(2*cm, height-2*cm, "Resumen Ejecutivo de Licitación")
+
+    c.setFont("Helvetica", 11)
+    y = height-3*cm
+    info = [
+        ("Nombre", lic.get("nombre", "")),
+        ("Objeto", lic.get("objeto", "")),
+        ("Deadline", lic.get("deadline", "N/D")),
+        ("Fecha de reporte", datetime.utcnow().strftime('%Y-%m-%d %H:%M UTC')),
+    ]
+    for k, v in info:
+        c.setFont("Helvetica-Bold", 11)
+        c.drawString(2*cm, y, f"{k}:")
+        c.setFont("Helvetica", 11)
+        lines = _wrap_text(c, str(v), max_width=16*cm)
+        for ln in lines:
+            c.drawString(5*cm, y, ln)
+            y -= 0.6*cm
+        y -= 0.2*cm
+
+    # KPIs
+    rojas = data.get("summary", {}).get("rojas", 0)
+    amar = data.get("summary", {}).get("amarillas", 0)
+    c.setFont("Helvetica-Bold", 12)
+    c.drawString(2*cm, y, f"Alertas rojas: {rojas}   |   Alertas amarillas: {amar}")
+    y -= 1*cm
+
+    # ---------- Página 2 ----------
+    c.showPage()
+    c.setFont("Helvetica-Bold", 14)
+    c.drawString(2*cm, height-2*cm, "Top 5 riesgos y condiciones obligatorias")
+
+    # Collect issues
+    issues = []
+    for r in data.get("results", []):
+        for it in r.get("report", {}).get("issues", []) or []:
+            issues.append({
+                "severity": str(it.get("severity", "")).upper(),
+                "desc": it.get("recommendation") or it.get("evidence") or it.get("type"),
+                "doc": r.get("file"),
+                "where": it.get("where"),
+                "category": it.get("category", "")
+            })
+    # Orden simple: rojas primero, luego amarillas; limitar a 5
+    def sev_rank(s):
+        return {"ROJO":0, "ALTO":0, "AMARILLO":1, "MEDIO":1}.get(s, 2)
+    issues.sort(key=lambda x: (sev_rank(x["severity"]), x["category"]))
+    issues = issues[:5]
+
+    y = height-3*cm
+    c.setFont("Helvetica", 11)
+    if not issues:
+        c.drawString(2*cm, y, "Sin riesgos destacados.")
+    else:
+        for i, it in enumerate(issues, start=1):
+            desc = f"{i}. [{it['severity']}] ({it['category']}) {it['desc']} — Doc: {it['doc']} — Ref: {it.get('where','N/D')}"
+            lines = _wrap_text(c, desc, max_width=17*cm)
+            for ln in lines:
+                c.drawString(2*cm, y, ln)
+                y -= 0.6*cm
+            y -= 0.4*cm
+
+    c.save()
+
+# ============ FastAPI ============
+app = FastAPI(title="API Auditor IA Licitaciones", version="0.2.0")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+@app.get("/health")
+def health():
+    return {"ok": True, "ts": datetime.utcnow().isoformat()}
+
+# ---- Modelos ----
+class Pesos(BaseModel):
+    legal: int = 35
+    tecnico: int = 40
+    economico: int = 25
+
+class NuevaLicitacion(BaseModel):
+    nombre: str
+    objeto: str
+    presupuesto: Optional[float] = None
+    pesos: Pesos = Pesos()
+    normativa: List[str] = Field(default_factory=list)
+    deadline: Optional[str] = None  # ISO date
+
+class LicResumen(BaseModel):
+    id: str
+    nombre: str
+    etapa: str
+    progreso: int
+    rojas: int
+    amarillas: int
+    deadline: Optional[str]
+    responsables: List[str] = []
+
+# ---- LICITACIONES CRUD BÁSICO ----
+@app.post("/licitaciones", response_model=LicResumen)
+def crear_licitacion(payload: NuevaLicitacion):
+    db = _load_db()
+    lic_id = str(uuid.uuid4())
+    item = {
+        "id": lic_id,
+        "nombre": payload.nombre,
+        "objeto": payload.objeto,
+        "presupuesto": payload.presupuesto,
+        "pesos": payload.pesos.dict(),
+        "normativa": payload.normativa,
+        "deadline": payload.deadline,
+        "etapa": "Ingesta",
+        "progreso": 0,
+        "created_at": datetime.utcnow().isoformat(),
+    }
+    db["licitaciones"].append(item)
+    _save_db(db)
+
+    # crear carpeta de documentos de la licitación
+    lic_folder = os.path.join(DOCS_DIR, lic_id)
+    os.makedirs(lic_folder, exist_ok=True)
+
+    return LicResumen(
+        id=lic_id,
+        nombre=item["nombre"],
+        etapa=item["etapa"],
+        progreso=item["progreso"],
+        rojas=0,
+        amarillas=0,
+        deadline=item.get("deadline"),
+        responsables=[],
+    )
+
+@app.get("/licitaciones", response_model=List[LicResumen])
+def listar_licitaciones():
+    db = _load_db()
+    items = []
+    for x in db.get("licitaciones", []):
+        items.append(LicResumen(
+            id=x["id"], nombre=x["nombre"], etapa=x.get("etapa", "Ingesta"), progreso=x.get("progreso", 0),
+            rojas=0, amarillas=0, deadline=x.get("deadline"), responsables=[]
+        ))
+    return items
+
+@app.get("/licitaciones/{lic_id}")
+def obtener_licitacion(lic_id: str):
+    db = _load_db()
+    lic = _get_licitacion(db, lic_id)
+    if not lic:
+        raise HTTPException(status_code=404, detail="No encontrada")
+    return lic
+
+# ---- Subida de documentos (AUTO-GUARDADO + AUTO-INDEXACIÓN) ----
+@app.post("/licitaciones/{lic_id}/documentos")
+async def subir_documentos(lic_id: str, files: List[UploadFile] = File(...), auto_index: bool = True):
+    db = _load_db()
+    lic = _get_licitacion(db, lic_id)
+    if not lic:
+        raise HTTPException(status_code=404, detail="Licitación no encontrada")
+
+    folder = os.path.join(DOCS_DIR, lic_id)
+    os.makedirs(folder, exist_ok=True)
+
+    saved = []
+    for f in files:
+        if not f.filename.lower().endswith(".pdf"):
+            raise HTTPException(status_code=400, detail="Solo PDFs por ahora")
+        out_path = os.path.join(folder, f.filename)
+        with open(out_path, "wb") as out:
+            shutil.copyfileobj(f.file, out)
+        saved.append(out_path)
+
+    # AUTO-INDEXACIÓN inmediata a colección contratos
+    if auto_index:
+        index_folder_to_contratos(folder, lic_id)
+
+    return {"ok": True, "saved": saved, "indexed": bool(auto_index)}
+
+# ---- Listar documentos de la licitación ----
+@app.get("/licitaciones/{lic_id}/documentos")
+def listar_documentos(lic_id: str):
+    folder = os.path.join(DOCS_DIR, lic_id)
+    if not os.path.isdir(folder):
+        return {"items": []}
+    items = []
+    for path in glob.glob(os.path.join(folder, "*.pdf")):
+        try:
+            items.append({
+                "file": os.path.basename(path),
+                "type": "pdf",
+                "size": os.path.getsize(path),
+            })
+        except Exception:
+            continue
+    return {"items": items}
+
+# ---- Indexar documentos de la licitación en Chroma (colección contratos) ----
+@app.post("/licitaciones/{lic_id}/indexar")
+def indexar_licitacion(lic_id: str):
+    folder = os.path.join(DOCS_DIR, lic_id)
+    if not os.path.isdir(folder):
+        raise HTTPException(status_code=404, detail="No hay carpeta de documentos para esta licitación")
+    index_folder_to_contratos(folder, lic_id)
+    return {"ok": True, "indexed_from": folder}
+
+# ---- Análisis orquestado ----
+@app.post("/licitaciones/{lic_id}/analizar")
+def analizar_licitacion(lic_id: str):
+    db = _load_db()
+    lic = _get_licitacion(db, lic_id)
+    if not lic:
+        raise HTTPException(status_code=404, detail="Licitación no encontrada")
+
+    result = run_analysis_for_lic(lic_id, objeto=lic.get("objeto", ""))
+
+    # Persistir reporte
+    rep_path = os.path.join(REPORTS_DIR, f"reporte_{lic_id}.json")
+    with open(rep_path, "w", encoding="utf-8") as f:
+        json.dump(result, f, ensure_ascii=False, indent=2)
+
+    # Actualizar estado básico
+    lic["etapa"] = "Análisis"
+    lic["progreso"] = 100
+    db_ts = datetime.utcnow().isoformat()
+    lic["last_analysis_at"] = db_ts
+    _save_db(db)
+
+    return {"ok": True, "report_path": rep_path, **result}
+
+# ---- Endpoints para vistas específicas de tu UI ----
+@app.get("/licitaciones/{lic_id}/resumen")
+def resumen_licitacion(lic_id: str):
+    rep_path = os.path.join(REPORTS_DIR, f"reporte_{lic_id}.json")
+    if not os.path.exists(rep_path):
+        raise HTTPException(status_code=404, detail="Aún no hay reporte. Ejecuta /analizar")
+    with open(rep_path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    rojas = data["summary"].get("rojas", 0)
+    amarillas = data["summary"].get("amarillas", 0)
+    return {"progreso": 100, "rojas": rojas, "amarillas": amarillas}
+
+@app.get("/licitaciones/{lic_id}/hallazgos")
+def hallazgos_licitacion(lic_id: str):
+    rep_path = os.path.join(REPORTS_DIR, f"reporte_{lic_id}.json")
+    if not os.path.exists(rep_path):
+        raise HTTPException(status_code=404, detail="Aún no hay reporte. Ejecuta /analizar")
+    with open(rep_path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    rows = []
+    for r in data["results"]:
+        doc = r["file"]
+        for it in r["report"].get("issues", []) or []:
+            it_copy = dict(it)
+            it_copy["documento"] = doc
+            rows.append(it_copy)
+    return {"items": rows}
+
+@app.get("/licitaciones/{lic_id}/validaciones/ruc")
+def validaciones_ruc(lic_id: str):
+    rep_path = os.path.join(REPORTS_DIR, f"reporte_{lic_id}.json")
+    if not os.path.exists(rep_path):
+        raise HTTPException(status_code=404, detail="Aún no hay reporte. Ejecuta /analizar")
+    with open(rep_path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    rows = []
+    for r in data["results"]:
+        rows.extend(r["report"].get("ruc_reports", []) or [])
+    return {"items": rows}
+
+@app.get("/licitaciones/{lic_id}/comparativo")
+def comparativo(lic_id: str):
+    rep_path = os.path.join(REPORTS_DIR, f"reporte_{lic_id}.json")
+    if not os.path.exists(rep_path):
+        raise HTTPException(status_code=404, detail="Aún no hay reporte. Ejecuta /analizar")
+    with open(rep_path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    rows = []
+    for r in data["results"]:
+        rep = r["report"]
+        scores = rep.get("scores", {})
+        rojas = sum(1 for i in rep.get("issues", []) if str(i.get("severity", "")).upper() in ("ALTO", "ROJO"))
+        amar = sum(1 for i in rep.get("issues", []) if str(i.get("severity", "")).upper() in ("MEDIO", "AMARILLO"))
+        total = int(0.35 * scores.get("legal", 50) + 0.40 * scores.get("tecnico", 50) + 0.25 * scores.get("economico", 50))
+        rows.append({
+            "oferente": r["file"],
+            "cumple_minimos": True,  # placeholder
+            "legal": scores.get("legal", 0),
+            "tecnico": scores.get("tecnico", 0),
+            "economico": scores.get("economico", 0),
+            "score_total": total,
+            "rojas": rojas,
+            "amarillas": amar,
+            "observaciones": "",
+        })
+    ganador = max(rows, key=lambda x: x["score_total"]) if rows else None
+    return {"items": rows, "ganador": ganador}
+
+# ---- Descargar PDF de Resumen Ejecutivo (2 páginas) ----
+@app.get("/licitaciones/{lic_id}/resumen-ejecutivo.pdf")
+def descargar_resumen_ejecutivo(lic_id: str):
+    db = _load_db()
+    lic = _get_licitacion(db, lic_id)
+    if not lic:
+        raise HTTPException(status_code=404, detail="Licitación no encontrada")
+
+    rep_path = os.path.join(REPORTS_DIR, f"reporte_{lic_id}.json")
+    if not os.path.exists(rep_path):
+        raise HTTPException(status_code=404, detail="Aún no hay reporte. Ejecuta /analizar")
+
+    with open(rep_path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    pdf_path = os.path.join(REPORTS_DIR, f"resumen_{lic_id}.pdf")
+    build_executive_pdf(lic, data, pdf_path)
+
+    return FileResponse(pdf_path, media_type="application/pdf", filename=f"resumen_{lic_id}.pdf")
+
+# ============ Cómo correr ============
+# pip install fastapi uvicorn reportlab python-dotenv
+# uvicorn main_api:app --reload --port 8000
+
+if __name__ == "__main__":
+	import uvicorn
+	# Nota: reload requiere import string. Para ejecución directa, lo desactivamos.
+	uvicorn.run(app, host="0.0.0.0", port=int(os.getenv("PORT", "8000")), reload=False)
