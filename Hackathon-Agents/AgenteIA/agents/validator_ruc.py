@@ -30,15 +30,33 @@ if not api_key:
 client = OpenAI(api_key=api_key)
 MODEL = "gpt-4o-mini"
 
-def call_sri(ruc: str):
+def call_sri(ruc: str, max_retries=3):
     url = SRI_URL.format(ruc=ruc)
-    r = requests.get(url, timeout=20)
-    r.raise_for_status()
-    data = r.json()
-    if isinstance(data, list) and data:
-        return data[0]
-    return None
-
+    
+    for attempt in range(max_retries):
+        try:
+            # Add a longer timeout and user-agent header
+            headers = {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+            }
+            r = requests.get(url, headers=headers, timeout=30)
+            r.raise_for_status()
+            data = r.json()
+            if isinstance(data, list) and data:
+                return data[0]
+            return None
+        except (requests.exceptions.ConnectionError, requests.exceptions.Timeout) as e:
+            if attempt < max_retries - 1:
+                import time
+                # Exponential backoff
+                time.sleep(2 ** attempt)
+                continue
+            else:
+                raise Exception(f"No se pudo conectar al servicio del SRI después de {max_retries} intentos: {e}")
+        except requests.exceptions.HTTPError as e:
+            raise Exception(f"Error HTTP al conectar con el SRI: {e}")
+        except ValueError as e:
+            raise Exception(f"Error al procesar la respuesta del SRI: {e}")
 
 def _normalize(text: str) -> str:
     t = text or ""
