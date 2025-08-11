@@ -61,7 +61,7 @@ function Cards({ items }: { items: { titulo: string; estado: any; razon: string;
 export default function Analysis() {
   return (
     <div className="space-y-6">
-      <SEO title="Análisis | proc-stream" description="Tarjetas por criterio con estado, razón, cita y acciones rápidas." />
+      <SEO title="Análisis | ElicitIA" description="Tarjetas por criterio con estado, razón, cita y acciones rápidas." />
       <h1 className="text-2xl font-semibold">Análisis</h1>
       <Tabs defaultValue="legal">
         <TabsList>

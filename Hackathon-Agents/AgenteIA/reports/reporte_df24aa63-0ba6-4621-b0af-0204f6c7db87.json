@@ -1,0 +1,331 @@
+{
+  "results": [
+    {
+      "file": "parquebienhecho.pdf",
+      "path": "D:\\HACKATHONFRONTBACK\\Hackathon-Agents\\AgenteIA\\data\\docs\\df24aa63-0ba6-4621-b0af-0204f6c7db87\\parquebienhecho.pdf",
+      "report": {
+        "scores": {
+          "legal": 75,
+          "tecnico": 70,
+          "economico": 95,
+          "inconsistencias": 50
+        },
+        "risks": {
+          "legal": "MEDIO",
+          "tecnico": "MEDIO",
+          "economico": "BAJO",
+          "inconsistencias": "ALTO",
+          "ruc": "ALTO"
+        },
+        "issues": [
+          {
+            "type": "missing",
+            "where": "Garantías",
+            "evidence": "No se especifica la duración de la garantía de fiel cumplimiento.",
+            "severity": "medium",
+            "recommendation": "Incluir la duración de la garantía de fiel cumplimiento en la propuesta.",
+            "category": "legal"
+          },
+          {
+            "type": "missing",
+            "where": "Plazos",
+            "evidence": "No se menciona un cronograma detallado de hitos o entregas intermedias.",
+            "severity": "medium",
+            "recommendation": "Incluir un cronograma detallado con hitos y plazos específicos.",
+            "category": "legal"
+          },
+          {
+            "type": "ambiguous",
+            "where": "Penalizaciones",
+            "evidence": "La penalización por mala calidad no especifica si es acumulativa o por incidente.",
+            "severity": "low",
+            "recommendation": "Aclarar si la penalización por mala calidad es acumulativa o se aplica por cada incidente.",
+            "category": "legal"
+          },
+          {
+            "description": "Falta de especificaciones detalladas sobre los materiales a utilizar en la construcción del parque acuático.",
+            "severity": "Amber",
+            "category": "tecnico"
+          },
+          {
+            "description": "Ambigüedad en los procesos de construcción y equipamiento, no se especifican las metodologías a seguir.",
+            "severity": "Amber",
+            "category": "tecnico"
+          },
+          {
+            "description": "El cronograma de obra no se adjunta en la propuesta, lo que dificulta la evaluación de los tiempos de ejecución.",
+            "severity": "Red",
+            "category": "tecnico"
+          },
+          {
+            "description": "No se menciona la certificación de los equipos y materiales conforme a las normativas INEN, ASTM e ISO.",
+            "severity": "Amber",
+            "category": "tecnico"
+          },
+          {
+            "type": "parse_error",
+            "where": "validator_incons",
+            "evidence": "```json\n{\n  \"issues\": [\n    {\n      \"issue\": \"Ambigüedad en el objeto del contrato\",\n      \"description\": \"El objeto del contrato menciona 'cumpliendo con todas las especificaciones técnicas, normativas INEN y estándares internacionales ASTM e ISO aplicables', pero no especifica cuáles son estas especificaciones técnicas ni si hay algún documento anexo que las detalle.\",\n      \"severity\": \"alta\"\n    },\n    {\n      \"issue\": \"Falta de cláusula sobre modificaciones del contrato\",\n      \"description\": \"No se menciona cómo se manejarán las modificaciones al contrato, lo cual es importante para cambios en el alcance o en los costos.\",\n      \"severity\": \"alta\"\n    },\n    {\n      \"issue\": \"Inconsistencia en las penalizaciones\",\n      \"description\": \"La penalización por mala calidad menciona 'hasta 20% de la partida afectada', pero no se especifica qué criterios se utilizarán para determinar la calidad ni cómo se evaluará la partida afectada.\",\n      \"severity\": \"media\"\n    },\n    {\n      \"issu",
+            "severity": "MEDIO",
+            "recommendation": "Revisar",
+            "category": "inconsistencias"
+          }
+        ],
+        "ruc_reports": [
+          {
+            "ruc": "1724918774001",
+            "exists": true,
+            "related": false,
+            "risk": "ALTO",
+            "rationale": "Heurística por similitud=17.921146953405014"
+          }
+        ]
+      }
+    },
+    {
+      "file": "parquemalhecho.pdf",
+      "path": "D:\\HACKATHONFRONTBACK\\Hackathon-Agents\\AgenteIA\\data\\docs\\df24aa63-0ba6-4621-b0af-0204f6c7db87\\parquemalhecho.pdf",
+      "report": {
+        "scores": {
+          "legal": 40,
+          "tecnico": 10,
+          "economico": 40,
+          "inconsistencias": 50
+        },
+        "risks": {
+          "legal": "ALTO",
+          "tecnico": "ALTO",
+          "economico": "ALTO",
+          "inconsistencias": "ALTO",
+          "ruc": "BAJO"
+        },
+        "issues": [
+          {
+            "type": "Ambigüedad en garantías",
+            "where": "Garantías",
+            "evidence": "Buen uso del anticipo (sin especificar monto ni forma). No se especifica garantía de cumplimiento.",
+            "severity": "Alta",
+            "recommendation": "Especificar el monto y la forma de la garantía de buen uso del anticipo y añadir una garantía de cumplimiento.",
+            "category": "legal"
+          },
+          {
+            "type": "Falta de definición de penalizaciones",
+            "where": "Penalizaciones",
+            "evidence": "No se define claramente.",
+            "severity": "Alta",
+            "recommendation": "Incluir un apartado claro sobre las penalizaciones aplicables en caso de incumplimiento.",
+            "category": "legal"
+          },
+          {
+            "type": "Plazo ambiguo",
+            "where": "Plazo",
+            "evidence": "Cuando se pueda, pero no más de 20 meses.",
+            "severity": "Media",
+            "recommendation": "Definir un plazo específico de inicio y finalización del proyecto.",
+            "category": "legal"
+          },
+          {
+            "type": "Falta de documentación técnica",
+            "where": "Observaciones",
+            "evidence": "No hay lista de materiales ni planos. No se menciona normativa técnica. No se detallan requisitos de seguridad.",
+            "severity": "Alta",
+            "recommendation": "Incluir una lista de materiales, planos, normativa técnica y requisitos de seguridad.",
+            "category": "legal"
+          },
+          {
+            "type": "Falta de plan de mantenimiento",
+            "where": "Observaciones",
+            "evidence": "No hay plan de mantenimiento ni capacitación.",
+            "severity": "Media",
+            "recommendation": "Desarrollar un plan de mantenimiento y capacitación para el parque acuático.",
+            "category": "legal"
+          },
+          {
+            "description": "Falta de lista de materiales especificados para la construcción del parque acuático.",
+            "severity": "Red",
+            "category": "tecnico"
+          },
+          {
+            "description": "No se presentan planos del proyecto, lo que impide evaluar la viabilidad técnica.",
+            "severity": "Rojo",
+            "category": "tecnico"
+          },
+          {
+            "description": "No se menciona normativa técnica aplicable al proyecto, lo que genera incertidumbre sobre el cumplimiento de estándares.",
+            "severity": "Rojo",
+            "category": "tecnico"
+          },
+          {
+            "description": "No se detallan requisitos de seguridad para las instalaciones, lo que es crítico en un parque acuático.",
+            "severity": "Rojo",
+            "category": "tecnico"
+          },
+          {
+            "description": "No hay un plan de mantenimiento definido para las instalaciones del parque acuático.",
+            "severity": "Rojo",
+            "category": "tecnico"
+          },
+          {
+            "description": "No se menciona capacitación para el personal que operará el parque, lo que puede afectar la seguridad y operación.",
+            "severity": "Rojo",
+            "category": "tecnico"
+          },
+          {
+            "description": "El plazo de 20 meses es ambiguo y no se especifican hitos o etapas del proyecto.",
+            "severity": "Ámbar",
+            "category": "tecnico"
+          },
+          {
+            "description": "Las penalizaciones no están claramente definidas, lo que puede generar problemas en la ejecución del contrato.",
+            "severity": "Ámbar",
+            "category": "tecnico"
+          },
+          {
+            "description": "Condiciones de pago poco claras, especialmente en relación al anticipo y su uso.",
+            "severity": "Ámbar",
+            "category": "tecnico"
+          },
+          {
+            "description": "Monto total de USD 25,000,000.00 no detallado ni justificado.",
+            "severity": "high",
+            "category": "economico"
+          },
+          {
+            "description": "Condiciones de pago ambiguas, falta de especificación del monto del anticipo.",
+            "severity": "medium",
+            "category": "economico"
+          },
+          {
+            "description": "No se especifica garantía de cumplimiento.",
+            "severity": "high",
+            "category": "economico"
+          },
+          {
+            "description": "Falta de definición de penalizaciones.",
+            "severity": "medium",
+            "category": "economico"
+          },
+          {
+            "description": "No se presenta lista de materiales ni planos.",
+            "severity": "high",
+            "category": "economico"
+          },
+          {
+            "description": "No se menciona normativa técnica.",
+            "severity": "medium",
+            "category": "economico"
+          },
+          {
+            "description": "Falta de requisitos de seguridad.",
+            "severity": "high",
+            "category": "economico"
+          },
+          {
+            "description": "No hay plan de mantenimiento ni capacitación.",
+            "severity": "medium",
+            "category": "economico"
+          },
+          {
+            "type": "parse_error",
+            "where": "validator_incons",
+            "evidence": "```json\n{\n  \"issues\": [\n    {\n      \"issue\": \"Monto no detallado\",\n      \"description\": \"El monto de USD 25,000,000.00 no especifica cómo se llegó a esta cifra, lo que genera ambigüedad sobre la justificación del costo.\",\n      \"severity\": \"alta\"\n    },\n    {\n      \"issue\": \"Plazo ambiguo\",\n      \"description\": \"El plazo 'Cuando se pueda, pero no más de 20 meses' es vago y no establece un cronograma claro para la ejecución del proyecto.\",\n      \"severity\": \"alta\"\n    },\n    {\n      \"issue\": \"Falta de garantía de cumplimiento\",\n      \"description\": \"No se menciona una garantía de cumplimiento, lo que es esencial para asegurar que el contratista cumpla con los términos del contrato.\",\n      \"severity\": \"alta\"\n    },\n    {\n      \"issue\": \"Condiciones de pago poco claras\",\n      \"description\": \"Las condiciones de pago establecen un 50% al inicio y el resto al final, pero no se especifica qué sucede si el proyecto no se completa a tiempo.\",\n      \"severity\": \"media\"\n    },\n    {\n      \"issu",
+            "severity": "MEDIO",
+            "recommendation": "Revisar",
+            "category": "inconsistencias"
+          }
+        ],
+        "ruc_reports": [
+          {
+            "ruc": "0990038414001",
+            "exists": true,
+            "related": true,
+            "risk": "BAJO",
+            "rationale": "Heurística por similitud=45.90163934426229"
+          }
+        ]
+      }
+    },
+    {
+      "file": "PLIEGO PARQUE ACUAATICO.pdf",
+      "path": "D:\\HACKATHONFRONTBACK\\Hackathon-Agents\\AgenteIA\\data\\docs\\df24aa63-0ba6-4621-b0af-0204f6c7db87\\PLIEGO PARQUE ACUAATICO.pdf",
+      "report": {
+        "scores": {
+          "legal": 70,
+          "tecnico": 70,
+          "economico": 90,
+          "inconsistencias": 50
+        },
+        "risks": {
+          "legal": "MEDIO",
+          "tecnico": "MEDIO",
+          "economico": "BAJO",
+          "inconsistencias": "ALTO",
+          "ruc": "ALTO"
+        },
+        "issues": [
+          {
+            "type": "missing_information",
+            "where": "GARANTÍAS",
+            "evidence": "No se especifica el monto de la garantía de fiel cumplimiento en relación al total del contrato.",
+            "severity": "high",
+            "recommendation": "Especificar el monto de la garantía de fiel cumplimiento en relación al total del contrato.",
+            "category": "legal"
+          },
+          {
+            "type": "missing_information",
+            "where": "MULTAS",
+            "evidence": "No se mencionan las multas aplicables en caso de incumplimiento de plazos o condiciones.",
+            "severity": "high",
+            "recommendation": "Incluir un apartado sobre las multas aplicables por incumplimiento de plazos y condiciones.",
+            "category": "legal"
+          },
+          {
+            "type": "ambiguity",
+            "where": "PLAZOS Y PRESENTACIÓN",
+            "evidence": "No se especifica el plazo de ejecución del proyecto.",
+            "severity": "medium",
+            "recommendation": "Definir claramente el plazo de ejecución del proyecto.",
+            "category": "legal"
+          },
+          {
+            "description": "No se especifica el tipo de materiales a utilizar en la construcción de piscinas y toboganes.",
+            "severity": "R",
+            "recommendation": "Definir los materiales específicos para piscinas y toboganes.",
+            "category": "tecnico"
+          },
+          {
+            "description": "Falta de detalles sobre el proceso de instalación de sistemas de bombeo, filtración y cloración.",
+            "severity": "A",
+            "recommendation": "Incluir un plan detallado de instalación para los sistemas mencionados.",
+            "category": "tecnico"
+          },
+          {
+            "description": "No se menciona el tiempo estimado para la capacitación y entrega de manuales.",
+            "severity": "G",
+            "recommendation": "Especificar el tiempo requerido para la capacitación y entrega de manuales.",
+            "category": "tecnico"
+          },
+          {
+            "description": "No se indica el plazo total de ejecución del proyecto.",
+            "severity": "R",
+            "recommendation": "Definir el plazo total de ejecución del proyecto.",
+            "category": "tecnico"
+          },
+          {
+            "type": "parse_error",
+            "where": "validator_incons",
+            "evidence": "```json\n{\n  \"issues\": [\n    {\n      \"issue\": \"Ambigüedad en el alcance de la capacitación\",\n      \"description\": \"No se especifica la duración, contenido o número de sesiones de la capacitación que se debe proporcionar, lo que puede llevar a interpretaciones diferentes sobre lo que se espera.\",\n      \"severity\": \"medium\"\n    },\n    {\n      \"issue\": \"Falta de especificaciones sobre la garantía bancaria\",\n      \"description\": \"El contrato menciona un anticipo contra garantía bancaria, pero no se especifica el tipo de garantía o las condiciones bajo las cuales debe ser presentada.\",\n      \"severity\": \"high\"\n    },\n    {\n      \"issue\": \"Contradicción en el porcentaje de retención\",\n      \"description\": \"El pliego menciona un 10% retenido hasta la entrega definitiva, pero no se aclara si este porcentaje se aplica sobre el total del contrato o sobre los pagos parciales.\",\n      \"severity\": \"high\"\n    },\n    {\n      \"issue\": \"Inconsistencia en los plazos de ejecución\",\n      \"description\": \"N",
+            "severity": "MEDIO",
+            "recommendation": "Revisar",
+            "category": "inconsistencias"
+          }
+        ],
+        "ruc_reports": []
+      }
+    }
+  ],
+  "summary": {
+    "rojas": 5,
+    "amarillas": 3
+  }
+}

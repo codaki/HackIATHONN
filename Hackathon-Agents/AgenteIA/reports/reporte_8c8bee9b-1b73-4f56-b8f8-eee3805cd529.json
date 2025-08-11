@@ -1,0 +1,192 @@
+{
+  "results": [
+    {
+      "file": "CONSTRUCCION DE UN PARQUE RECREACIONAL ACADEMIA DEL VALLE.pdf",
+      "path": "D:\\HACKATHONFRONTBACK\\Hackathon-Agents\\AgenteIA\\data\\docs\\8c8bee9b-1b73-4f56-b8f8-eee3805cd529\\CONSTRUCCION DE UN PARQUE RECREACIONAL ACADEMIA DEL VALLE.pdf",
+      "report": {
+        "scores": {
+          "legal": 40,
+          "tecnico": 30,
+          "economico": 40,
+          "inconsistencias": 50
+        },
+        "risks": {
+          "legal": "ALTO",
+          "tecnico": "ALTO",
+          "economico": "ALTO",
+          "inconsistencias": "ALTO",
+          "ruc": "ALTO"
+        },
+        "issues": [
+          {
+            "type": "Missing Information",
+            "where": "Cláusula sobre garantías",
+            "evidence": "No se menciona la existencia de garantías específicas para la ejecución del contrato.",
+            "severity": "High",
+            "recommendation": "Incluir cláusulas que especifiquen el tipo y monto de las garantías requeridas para la ejecución del contrato.",
+            "category": "legal"
+          },
+          {
+            "type": "Missing Information",
+            "where": "Cláusula sobre multas",
+            "evidence": "No se especifican las multas aplicables en caso de incumplimiento del contrato.",
+            "severity": "High",
+            "recommendation": "Incluir una cláusula que detalle las multas y sanciones aplicables por incumplimiento de las obligaciones contractuales.",
+            "category": "legal"
+          },
+          {
+            "type": "Ambiguity",
+            "where": "Plazos de ejecución",
+            "evidence": "No se mencionan plazos específicos para la ejecución del contrato.",
+            "severity": "Medium",
+            "recommendation": "Definir claramente los plazos de ejecución del contrato para evitar ambigüedades.",
+            "category": "legal"
+          },
+          {
+            "description": "Falta especificación de materiales a utilizar en la construcción del parque recreacional.",
+            "severity": "High",
+            "category": "tecnico"
+          },
+          {
+            "description": "No se detallan los procesos constructivos a seguir durante la obra.",
+            "severity": "High",
+            "category": "tecnico"
+          },
+          {
+            "description": "No se menciona un cronograma o tiempos estimados para la ejecución del proyecto.",
+            "severity": "High",
+            "category": "tecnico"
+          },
+          {
+            "issue": "Falta de información sobre el presupuesto total asignado para la construcción del parque recreacional.",
+            "severity": "high",
+            "category": "economico"
+          },
+          {
+            "issue": "No se especifican los hitos de pago ni las condiciones de los mismos en el contrato.",
+            "severity": "high",
+            "category": "economico"
+          },
+          {
+            "issue": "Ambigüedad en las formas de pago, ya que no se detallan los métodos ni plazos específicos.",
+            "severity": "medium",
+            "category": "economico"
+          },
+          {
+            "type": "parse_error",
+            "where": "validator_incons",
+            "evidence": "```json\n{\n  \"issues\": [\n    {\n      \"issue\": \"Ambigüedad en la denominación del proyecto\",\n      \"description\": \"El nombre del proyecto 'CONSTRUCCION DE UN PARQUE RECREACIONAL MULTIPLE EN ESPACIO PUBLICO ACADEMIA DEL VALLE DE LA AZLC' no está claro si se refiere a un parque recreacional múltiple o a un espacio público específico. Se sugiere aclarar si el parque es parte de la Academia del Valle de la AZLC o si es un espacio público separado.\",\n      \"score\": 20\n    },\n    {\n      \"issue\": \"Falta de cláusulas sobre supervisión y fiscalización\",\n      \"description\": \"El contrato no incluye cláusulas específicas que detallen las funciones y deberes de los administradores del contrato, así como de quienes ejercerán la supervisión o fiscalización, lo cual es requerido por el artículo 70 de la Ley Orgánica del Sistema Nacional de Contratación Pública.\",\n      \"score\": 15\n    },\n    {\n      \"issue\": \"Inconsistencia en la representación del contratante\",\n      \"description\": \"La cláusula prime",
+            "severity": "MEDIO",
+            "recommendation": "Revisar",
+            "category": "inconsistencias"
+          }
+        ],
+        "ruc_reports": [
+          {
+            "ruc": "1706493614001",
+            "exists": true,
+            "related": false,
+            "risk": "ALTO",
+            "rationale": "act-raz(set=30.4, part=40.7, overlap=False); act-obj(set=0.0, part=0.0, overlap=False). Incoherencia con razón social y/o proyecto."
+          }
+        ]
+      }
+    },
+    {
+      "file": "CONSTRUCCIÓN DE PARQUE BIOSALUDABLE COMUNA CENTRO ALANGASI.pdf",
+      "path": "D:\\HACKATHONFRONTBACK\\Hackathon-Agents\\AgenteIA\\data\\docs\\8c8bee9b-1b73-4f56-b8f8-eee3805cd529\\CONSTRUCCIÓN DE PARQUE BIOSALUDABLE COMUNA CENTRO ALANGASI.pdf",
+      "report": {
+        "scores": {
+          "legal": 40,
+          "tecnico": 20,
+          "economico": 40,
+          "inconsistencias": 50
+        },
+        "risks": {
+          "legal": "ALTO",
+          "tecnico": "ALTO",
+          "economico": "ALTO",
+          "inconsistencias": "ALTO",
+          "ruc": "ALTO"
+        },
+        "issues": [
+          {
+            "type": "Missing Information",
+            "where": "Cláusula de Garantías",
+            "evidence": "No se menciona la existencia de garantías específicas para el contrato.",
+            "severity": "High",
+            "recommendation": "Incluir cláusulas que especifiquen las garantías requeridas para la ejecución del contrato.",
+            "category": "legal"
+          },
+          {
+            "type": "Missing Information",
+            "where": "Cláusula de Multas",
+            "evidence": "No se especifican las multas aplicables en caso de incumplimiento del contrato.",
+            "severity": "High",
+            "recommendation": "Incluir una cláusula que detalle las multas por incumplimiento y los procedimientos para su aplicación.",
+            "category": "legal"
+          },
+          {
+            "type": "Missing Information",
+            "where": "Cláusula de Plazos",
+            "evidence": "No se especifican los plazos de ejecución del contrato.",
+            "severity": "Medium",
+            "recommendation": "Definir claramente los plazos de ejecución y entrega de la obra en el contrato.",
+            "category": "legal"
+          },
+          {
+            "description": "Falta especificación de materiales a utilizar en la construcción del parque biosaludable.",
+            "severity": "Red",
+            "category": "tecnico"
+          },
+          {
+            "description": "No se detallan los procesos constructivos que se seguirán durante la obra.",
+            "severity": "Rojo",
+            "category": "tecnico"
+          },
+          {
+            "description": "No se menciona un cronograma o tiempos estimados para la ejecución de la obra.",
+            "severity": "Rojo",
+            "category": "tecnico"
+          },
+          {
+            "issue": "Falta de información sobre el presupuesto total asignado para la construcción del parque biosaludable.",
+            "severity": "high",
+            "category": "economico"
+          },
+          {
+            "issue": "No se especifican los hitos de pago ni las condiciones bajo las cuales se realizarán los pagos al contratista.",
+            "severity": "high",
+            "category": "economico"
+          },
+          {
+            "issue": "Ambigüedad en la descripción de los criterios de evaluación de costos mencionados en el artículo 32 de la Ley Orgánica del Sistema Nacional de Contratación Pública.",
+            "severity": "medium",
+            "category": "economico"
+          },
+          {
+            "type": "parse_error",
+            "where": "validator_incons",
+            "evidence": "```json\n{\n  \"issues\": [\n    {\n      \"issue\": \"Ambigüedad en la denominación del contrato\",\n      \"description\": \"El contrato se refiere a la 'CONSTRUCCIÓN DE PARQUE BIOSALUDABLE' pero no especifica claramente el alcance de la obra, lo que puede dar lugar a interpretaciones diversas sobre lo que incluye o no el proyecto.\",\n      \"score\": 20\n    },\n    {\n      \"issue\": \"Falta de cláusulas sobre supervisión y fiscalización\",\n      \"description\": \"El contrato no incluye cláusulas específicas sobre las funciones y deberes de los administradores del contrato, así como de quienes ejercerán la supervisión o fiscalización, lo cual es requerido por el artículo 70 de la Ley Orgánica del Sistema Nacional de Contratación Pública.\",\n      \"score\": 30\n    },\n    {\n      \"issue\": \"Inconsistencia en la identificación de la obra\",\n      \"description\": \"En la cláusula segunda, se menciona la construcción de un parque biosaludable en 'Calle Benjamin Carrion' pero en el encabezado se hace referencia a 'Cal",
+            "severity": "MEDIO",
+            "recommendation": "Revisar",
+            "category": "inconsistencias"
+          }
+        ],
+        "ruc_reports": [
+          {
+            "ruc": "1715690796001",
+            "exists": true,
+            "related": false,
+            "risk": "ALTO",
+            "rationale": "act-raz(set=36.9, part=42.9, overlap=False); act-obj(set=0.0, part=0.0, overlap=False). Incoherencia con razón social y/o proyecto."
+          }
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "rojas": 2,
+    "amarillas": 2
+  }
+}

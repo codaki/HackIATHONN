@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import api from "@/lib/api";
+import { parseMoney } from "@/lib/utils";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
@@ -14,7 +15,6 @@ export default function NewTenderWizard() {
   const [progress, setProgress] = useState(0);
   const [licId, setLicId] = useState<string | null>(null);
   const nameRef = useRef<HTMLInputElement>(null);
-  const objRef = useRef<HTMLInputElement>(null);
   const presRef = useRef<HTMLInputElement>(null);
   const wLegalRef = useRef<HTMLInputElement>(null);
   const wTecRef = useRef<HTMLInputElement>(null);
@@ -33,14 +33,13 @@ export default function NewTenderWizard() {
   const crear = useMutation({
     mutationFn: async () => {
       const nombre = nameRef.current?.value?.trim() || "Proceso sin nombre";
-      const objeto = objRef.current?.value?.trim() || "";
-      const presupuesto = presRef.current?.value ? Number(presRef.current.value) : undefined;
+      const presupuesto = parseMoney(presRef.current?.value || "");
       const pesos = {
         legal: Number(wLegalRef.current?.value || 35),
         tecnico: Number(wTecRef.current?.value || 40),
         economico: Number(wEcoRef.current?.value || 25),
       };
-      return api.crearLicitacion({ nombre, objeto, presupuesto, pesos, normativa: [], deadline: null });
+      return api.crearLicitacion({ nombre, objeto: "", presupuesto: presupuesto ?? undefined, pesos, normativa: [], deadline: null });
     },
     onSuccess: (res) => {
       setLicId(res.id);
@@ -93,7 +92,7 @@ export default function NewTenderWizard() {
 
   return (
     <div className="space-y-6">
-      <SEO title="Nueva licitación | proc-stream" description="Configura parámetros, sube documentos y confirma para iniciar el análisis." />
+      <SEO title="Nueva licitación | ElicitIA" description="Configura parámetros, sube documentos y confirma para iniciar el análisis." />
 
       <header className="flex items-end justify-between">
         <div>
@@ -128,10 +127,6 @@ export default function NewTenderWizard() {
               <div>
                 <label className="text-sm mb-1 block">Presupuesto referencial (USD)</label>
                  <Input type="number" placeholder="100000" ref={presRef} />
-              </div>
-              <div className="md:col-span-2">
-                <label className="text-sm mb-1 block">Objeto</label>
-                 <Input placeholder="Descripción corta del objeto" ref={objRef} />
               </div>
               <div>
                 <label className="text-sm mb-1 block">Peso Legal (%)</label>

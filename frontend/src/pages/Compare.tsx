@@ -27,7 +27,7 @@ export default function Compare() {
   const ganador = data?.ganador || null;
   return (
     <div className="space-y-6">
-      <SEO title="Comparativo | proc-stream" description="Matriz de evaluación por criterios y ganador recomendado." />
+      <SEO title="Comparativo | ElicitIA" description="Matriz de evaluación por criterios y ganador recomendado." />
 
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-semibold">Comparativo</h1>

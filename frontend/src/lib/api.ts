@@ -39,6 +39,15 @@ export interface ComparativoItem { oferente: string; cumple_minimos: boolean; le
 export interface ComparativoResp { items: ComparativoItem[]; ganador: ComparativoItem | null }
 export interface Hallazgo { documento?: string; category?: string; severity?: string; recommendation?: string; evidence?: string; type?: string }
 
+export interface RucValidationItem {
+  ruc: string;
+  exists: boolean;
+  related: boolean;
+  risk: "ALTO" | "MEDIO" | "BAJO";
+  rationale: string;
+  documento?: string;
+}
+
 export const api = {
 	health: () => request<{ ok: boolean; ts: string }>(`/health`),
 	crearLicitacion: (payload: {
@@ -70,6 +79,7 @@ export const api = {
 	resumen: (licId: string) => request<{ progreso: number; rojas: number; amarillas: number }>(`/licitaciones/${licId}/resumen`),
 	hallazgos: (licId: string) => request<{ items: Hallazgo[] }>(`/licitaciones/${licId}/hallazgos`),
 	listarDocumentos: (licId: string) => request<{ items: { file: string; type: string; size: number }[] }>(`/licitaciones/${licId}/documentos`),
+	validacionesRuc: (licId: string) => request<{ items: RucValidationItem[] }>(`/licitaciones/${licId}/validaciones/ruc`),
 	resumenPdfUrl: (licId: string) => `${BASE_URL}/licitaciones/${licId}/resumen-ejecutivo.pdf`,
 };
 

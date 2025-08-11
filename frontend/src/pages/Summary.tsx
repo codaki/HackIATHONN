@@ -18,7 +18,7 @@ export default function Summary() {
 
   return (
     <div className="space-y-6">
-      <SEO title="Resumen ejecutivo | proc-stream" description="2 páginas con ganador, scores y top 5 riesgos con citas." />
+      <SEO title="Resumen ejecutivo | ElicitIA" description="2 páginas con ganador, scores y top 5 riesgos con citas." />
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-semibold">Resumen ejecutivo</h1>
         <Button variant="hero" asChild>

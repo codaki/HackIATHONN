@@ -1,0 +1,235 @@
+{
+  "results": [
+    {
+      "file": "CONTRATO DE SUMINISTRO DE BANANO1.pdf",
+      "path": "D:\\HACKATHONFRONTBACK\\Hackathon-Agents\\AgenteIA\\data\\docs\\28c846e6-2374-4e1e-b3d1-3095ea076dd1\\CONTRATO DE SUMINISTRO DE BANANO1.pdf",
+      "report": {
+        "scores": {
+          "legal": 75,
+          "tecnico": 70,
+          "economico": 75,
+          "inconsistencias": 50
+        },
+        "risks": {
+          "legal": "MEDIO",
+          "tecnico": "MEDIO",
+          "economico": "MEDIO",
+          "inconsistencias": "ALTO",
+          "ruc": "ALTO"
+        },
+        "issues": [
+          {
+            "type": "Missing Information",
+            "where": "CLÁUSULA CUARTA – GARANTÍAS",
+            "evidence": "No se especifica el mecanismo de ejecución de las garantías.",
+            "severity": "Medium",
+            "recommendation": "Incluir un procedimiento claro para la ejecución de las garantías.",
+            "category": "legal"
+          },
+          {
+            "type": "Ambiguity",
+            "where": "CLÁUSULA SEXTA – MULTAS Y PENALIZACIONES",
+            "evidence": "No se especifica el límite máximo de multas acumulativas.",
+            "severity": "High",
+            "recommendation": "Definir un límite máximo para las multas acumulativas por retraso.",
+            "category": "legal"
+          },
+          {
+            "type": "Missing Information",
+            "where": "CLÁUSULA TERCERA – PLAZO DE EJECUCIÓN",
+            "evidence": "No se menciona el inicio de la ejecución de las entregas.",
+            "severity": "Medium",
+            "recommendation": "Especificar la fecha de inicio de las entregas de banano.",
+            "category": "legal"
+          },
+          {
+            "description": "No se especifica el tipo de cartón utilizado para las cajas de empaque.",
+            "severity": "Amber",
+            "category": "tecnico"
+          },
+          {
+            "description": "Falta de detalles sobre los procesos de control de calidad durante la cosecha y empaque.",
+            "severity": "Amber",
+            "category": "tecnico"
+          },
+          {
+            "description": "No se menciona el tiempo estimado para la cosecha y empaque de cada lote.",
+            "severity": "Red",
+            "category": "tecnico"
+          },
+          {
+            "description": "Ambigüedad en la frecuencia de las inspecciones previas a la cosecha.",
+            "severity": "Amber",
+            "category": "tecnico"
+          },
+          {
+            "description": "No se especifica el método de transporte interno y su tiempo estimado.",
+            "severity": "Red",
+            "category": "tecnico"
+          },
+          {
+            "description": "El anticipo del 20% se menciona como amortizable en cada factura mensual, pero no se especifica claramente cómo se calculará el monto a retener en cada factura.",
+            "severity": "medium",
+            "category": "economico"
+          },
+          {
+            "description": "No se detalla el procedimiento para la aprobación de la inspección de calidad, lo que podría generar ambigüedad en los pagos.",
+            "severity": "medium",
+            "category": "economico"
+          },
+          {
+            "description": "El monto de retención del 5% de cada pago como fondo de garantía no se menciona en el presupuesto detallado, lo que puede afectar el flujo de caja del proveedor.",
+            "severity": "high",
+            "category": "economico"
+          },
+          {
+            "description": "No se especifican las condiciones para la liberación del fondo de garantía al cierre del contrato, lo que podría generar incertidumbre.",
+            "severity": "medium",
+            "category": "economico"
+          },
+          {
+            "type": "parse_error",
+            "where": "validator_incons",
+            "evidence": "```json\n{\n  \"issues\": [\n    {\n      \"issue\": \"Ambigüedad en la cláusula de calidad del producto\",\n      \"description\": \"La cláusula cuarta menciona que habrá 'cobertura de reposición o descuento inmediato por producto rechazado en inspección', pero no especifica el procedimiento para determinar qué constituye un producto rechazado ni el tiempo de respuesta para la reposición o descuento.\",\n      \"severity\": \"alta\"\n    },\n    {\n      \"issue\": \"Falta de especificación sobre el proceso de inspección\",\n      \"description\": \"En la cláusula octava se menciona que el contratante designará un inspector técnico, pero no se detalla el proceso de inspección ni los criterios específicos que se utilizarán para la aceptación del producto.\",\n      \"severity\": \"media\"\n    },\n    {\n      \"issue\": \"Inconsistencia en el monto del anticipo\",\n      \"description\": \"La cláusula quinta establece un anticipo del 20% del valor del contrato (USD 216.000,00), pero el cálculo correcto del 20% de USD 1.080.000,00 e",
+            "severity": "MEDIO",
+            "recommendation": "Revisar",
+            "category": "inconsistencias"
+          }
+        ],
+        "ruc_reports": [
+          {
+            "ruc": "0990038414001",
+            "exists": false,
+            "related": false,
+            "risk": "ALTO",
+            "rationale": "Error en validación SRI: ('Connection aborted.', ConnectionResetError(10054, 'Se ha forzado la interrupción de una conexión existente por el host remoto', None, 10054, None))"
+          }
+        ]
+      }
+    },
+    {
+      "file": "CONTRATO DE SUMINISTRO DE BANANO2.pdf",
+      "path": "D:\\HACKATHONFRONTBACK\\Hackathon-Agents\\AgenteIA\\data\\docs\\28c846e6-2374-4e1e-b3d1-3095ea076dd1\\CONTRATO DE SUMINISTRO DE BANANO2.pdf",
+      "report": {
+        "scores": {
+          "legal": 60,
+          "tecnico": 60,
+          "economico": 60,
+          "inconsistencias": 50
+        },
+        "risks": {
+          "legal": "MEDIO",
+          "tecnico": "MEDIO",
+          "economico": "MEDIO",
+          "inconsistencias": "ALTO",
+          "ruc": "ALTO"
+        },
+        "issues": [
+          {
+            "type": "Ambigüedad en garantías",
+            "where": "CLÁUSULA CUARTA – GARANTÍAS",
+            "evidence": "La cláusula menciona que se evaluará si corresponde reposición, descuento o algún otro mecanismo, pero no establece criterios claros para determinar cuándo se aplicarán estas acciones.",
+            "severity": "Moderada",
+            "recommendation": "Especificar criterios claros y objetivos para la evaluación de la calidad del producto y las acciones a tomar en caso de incumplimiento.",
+            "category": "legal"
+          },
+          {
+            "type": "Ambigüedad en multas",
+            "where": "CLÁUSULA SEXTA – MULTAS Y PENALIZACIONES",
+            "evidence": "La cláusula menciona que las multas serán determinadas de común acuerdo y que el monto no excederá lo que se considere razonable, lo que puede dar lugar a interpretaciones diversas.",
+            "severity": "Alta",
+            "recommendation": "Definir un marco claro para las multas y penalizaciones, incluyendo montos específicos o porcentajes aplicables en caso de incumplimiento.",
+            "category": "legal"
+          },
+          {
+            "type": "Falta de plazos específicos",
+            "where": "CLÁUSULA TERCERA – PLAZO DE VIGENCIA",
+            "evidence": "El contrato tiene vigencia indefinida y permite la terminación sin justificación, lo que puede generar incertidumbre sobre la duración del compromiso.",
+            "severity": "Moderada",
+            "recommendation": "Considerar establecer un plazo mínimo de vigencia o condiciones más claras para la terminación del contrato.",
+            "category": "legal"
+          },
+          {
+            "type": "Falta de plazos específicos para entregas",
+            "where": "CLÁUSULA OCTAVA – RECEPCIÓN Y ENTREGA",
+            "evidence": "La cláusula menciona que las entregas se realizarán dentro de un plazo razonable, pero no define qué se considera un plazo razonable.",
+            "severity": "Moderada",
+            "recommendation": "Definir plazos específicos para las entregas o criterios para determinar lo que se considera razonable.",
+            "category": "legal"
+          },
+          {
+            "description": "Ambigüedad en la definición de 'calidades y presentaciones' del banano a suministrar.",
+            "severity": "High",
+            "category": "tecnico"
+          },
+          {
+            "description": "No se especifican los criterios de calidad que el banano debe cumplir.",
+            "severity": "High",
+            "category": "tecnico"
+          },
+          {
+            "description": "Falta de un plazo específico para las entregas, solo se menciona 'plazo razonable'.",
+            "severity": "Medium",
+            "category": "tecnico"
+          },
+          {
+            "description": "No se detallan los procesos de control de calidad que se llevarán a cabo.",
+            "severity": "Medium",
+            "category": "tecnico"
+          },
+          {
+            "description": "Ambigüedad en el mecanismo de amortización del anticipo.",
+            "severity": "Medium",
+            "category": "tecnico"
+          },
+          {
+            "description": "El precio por tonelada de banano no está definido claramente, depende de factores variables.",
+            "severity": "ambigüedad",
+            "category": "economico"
+          },
+          {
+            "description": "Las condiciones de pago son vagamente definidas, se menciona que pueden ser parciales o totales sin un esquema claro.",
+            "severity": "ambigüedad",
+            "category": "economico"
+          },
+          {
+            "description": "El anticipo puede alcanzar hasta el 50% del valor de la entrega, pero no se especifica un monto mínimo o condiciones claras para su aplicación.",
+            "severity": "faltante",
+            "category": "economico"
+          },
+          {
+            "description": "No se especifican hitos de pago o plazos concretos para la entrega y pago del producto.",
+            "severity": "faltante",
+            "category": "economico"
+          },
+          {
+            "description": "Las multas y penalizaciones no tienen un monto definido, lo que puede llevar a interpretaciones diversas.",
+            "severity": "ambigüedad",
+            "category": "economico"
+          },
+          {
+            "type": "parse_error",
+            "where": "validator_incons",
+            "evidence": "```json\n{\n  \"issues\": [\n    {\n      \"issue\": \"Ambigüedad en la definición de cantidades y calidades\",\n      \"description\": \"La cláusula primera menciona que las cantidades, calidades y presentaciones serán definidas oportunamente, lo que puede generar incertidumbre sobre las expectativas de ambas partes.\",\n      \"score\": 20\n    },\n    {\n      \"issue\": \"Falta de claridad en el método de determinación del precio\",\n      \"description\": \"La cláusula segunda indica que el precio será determinado tomando en cuenta varios factores, pero no especifica un método claro para su cálculo, lo que puede llevar a discrepancias.\",\n      \"score\": 25\n    },\n    {\n      \"issue\": \"Terminación del contrato sin justificación\",\n      \"description\": \"La cláusula tercera permite la terminación del contrato sin necesidad de justificación, lo que puede ser perjudicial para el proveedor, ya que no hay un compromiso mínimo de duración.\",\n      \"score\": 30\n    },\n    {\n      \"issue\": \"Ambigüedad en la garantía de ca",
+            "severity": "MEDIO",
+            "recommendation": "Revisar",
+            "category": "inconsistencias"
+          }
+        ],
+        "ruc_reports": [
+          {
+            "ruc": "0990038414001",
+            "exists": false,
+            "related": false,
+            "risk": "ALTO",
+            "rationale": "Error en validación SRI: ('Connection aborted.', ConnectionResetError(10054, 'Se ha forzado la interrupción de una conexión existente por el host remoto', None, 10054, None))"
+          }
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "rojas": 0,
+    "amarillas": 2
+  }
+}

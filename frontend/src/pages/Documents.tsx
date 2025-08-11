@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge";
 export default function Documents() {
   return (
     <div className="space-y-6">
-      <SEO title="Documentos | proc-stream" description="Visor con índice de secciones y tabs de resumen, texto y metadatos." />
+      <SEO title="Documentos | ElicitIA" description="Visor con índice de secciones y tabs de resumen, texto y metadatos." />
       <h1 className="text-2xl font-semibold">Documentos</h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">

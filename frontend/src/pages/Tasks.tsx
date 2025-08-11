@@ -36,7 +36,7 @@ function Col({ title, items }: { title: string; items: any[] }) {
 export default function Tasks() {
   return (
     <div className="space-y-6">
-      <SEO title="Tareas | proc-stream" description="Kanban simplificado para colaboración mínima entre áreas." />
+      <SEO title="Tareas | ElicitIA" description="Kanban simplificado para colaboración mínima entre áreas." />
       <h1 className="text-2xl font-semibold">Tareas</h1>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Col title="Abierto" items={data.abierto} />

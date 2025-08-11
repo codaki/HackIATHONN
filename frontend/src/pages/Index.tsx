@@ -32,7 +32,7 @@ export default function Index() {
   const procesos: Row[] = (data || []).map((x) => ({ ...x }));
   return (
     <div className="space-y-6">
-      <SEO title="Mis licitaciones | proc-stream" description="Explora tus procesos, filtra por estado y actúa rápido sobre lo que importa." />
+      <SEO title="Mis licitaciones | ElicitIA" description="Explora tus procesos, filtra por estado y actúa rápido sobre lo que importa." />
 
       <header className="flex items-end justify-between">
         <div>
@@ -142,7 +142,7 @@ export default function Index() {
                   <TableCell className="text-right">
                     <div className="flex justify-end gap-2">
                       <Button variant="outline" onClick={() => navigate("/tareas")}>Pendientes</Button>
-                      <Button onClick={() => navigate(`/comparativo?lic=${p.id}`)}>Abrir</Button>
+                      <Button onClick={() => navigate(`/dashboard?lic=${p.id}`)}>Abrir</Button>
                     </div>
                   </TableCell>
                 </TableRow>

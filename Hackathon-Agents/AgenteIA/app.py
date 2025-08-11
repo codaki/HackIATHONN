@@ -89,19 +89,51 @@ def run_analysis_for_lic(lic_id: str, objeto: str) -> Dict[str, Any]:
     if not pdfs:
         raise HTTPException(status_code=400, detail="No hay PDFs para esta licitación")
 
+    # Separar pliego vs propuestas desde DB si existe metadata; fallback por nombre
+    db = _load_db()
+    lic = _get_licitacion(db, lic_id)
+    doc_meta = {os.path.join(folder, d.get("file")): d.get("type", "propuesta") for d in (lic.get("docs", []) if lic else [])}
+    pliegos = []
+    propuestas = []
+    for path in pdfs:
+        t = doc_meta.get(path)
+        if not t:
+            base = os.path.basename(path).lower()
+            t = "pliego" if "pliego" in base else "propuesta"
+        (pliegos if t == "pliego" else propuestas).append(path)
+    if not propuestas:
+        propuestas = [p for p in pdfs if p not in pliegos]
+
     results = []
     topics = ["garantias", "multas", "plazos", "tecnicos", "economicos", "coherencia"]
 
-    for path in pdfs:
+    # Construir contexto base del pliego para comparar
+    base_ctx = {k: [] for k in topics}
+    for path in pliegos:
+        try:
+            text = pdf_to_text(path)
+            topic_ctx = rag_legal.run_topics(topics, proposal_excerpt=text[:4000], k=6)
+            for k in topics:
+                base_ctx[k].extend(topic_ctx.get(k, []))
+        except Exception:
+            continue
+
+    # Analizar solo propuestas, con contexto del pliego
+    for path in propuestas:
         text = pdf_to_text(path)
         topic_ctx = rag_legal.run_topics(topics, proposal_excerpt=text[:4000], k=6)
+        # Mezclar contexto del pliego con el de la propuesta
+        for k in topics:
+            topic_ctx[k] = (base_ctx.get(k, []) or []) + (topic_ctx.get(k, []) or [])
         v_legal = validator_legal.run(text, topic_ctx.get("garantias", []) + topic_ctx.get("multas", []) + topic_ctx.get("plazos", []))
         v_tech  = validator_tech.run(text, topic_ctx.get("tecnicos", []))
         v_econ  = validator_econ.run(text, topic_ctx.get("economicos", []))
         v_incon = validator_incons.run(text, topic_ctx.get("coherencia", []))
 
         rucs = extract_rucs(text)
-        ruc_reports = [validator_ruc.run(r, objeto) for r in rucs]
+        # Usar objeto si existe; en su defecto, un extracto del documento como contexto semántico
+        ctx_obj = objeto or " ".join((text or "").split()[:60])
+        ruc_reports = [validator_ruc.run(r, ctx_obj) for r in rucs]
 
         report = aggregator.aggregate(v_legal, v_tech, v_econ, v_incon, ruc_reports)
         results.append({
@@ -289,7 +321,12 @@ def obtener_licitacion(lic_id: str):
 
 # ---- Subida de documentos (AUTO-GUARDADO + AUTO-INDEXACIÓN) ----
 @app.post("/licitaciones/{lic_id}/documentos")
-async def subir_documentos(lic_id: str, files: List[UploadFile] = File(...), auto_index: bool = True):
+async def subir_documentos(
+    lic_id: str,
+    files: List[UploadFile] = File(...),
+    auto_index: bool = True,
+    tipo: Optional[str] = Form(None),
+):
     db = _load_db()
     lic = _get_licitacion(db, lic_id)
     if not lic:
@@ -299,6 +336,7 @@ async def subir_documentos(lic_id: str, files: List[UploadFile] = File(...), aut
     os.makedirs(folder, exist_ok=True)
 
     saved = []
+    lic_docs = lic.setdefault("docs", [])
     for f in files:
         if not f.filename.lower().endswith(".pdf"):
             raise HTTPException(status_code=400, detail="Solo PDFs por ahora")
@@ -306,6 +344,16 @@ async def subir_documentos(lic_id: str, files: List[UploadFile] = File(...), aut
         with open(out_path, "wb") as out:
             shutil.copyfileobj(f.file, out)
         saved.append(out_path)
+        doc_type = (tipo or "propuesta").lower()
+        if doc_type not in ("pliego", "propuesta"):
+            doc_type = "propuesta"
+        lic_docs.append({
+            "file": f.filename,
+            "path": out_path,
+            "type": doc_type,
+            "size": os.path.getsize(out_path)
+        })
+    _save_db(db)
 
     # AUTO-INDEXACIÓN inmediata a colección contratos
     if auto_index:
@@ -316,19 +364,17 @@ async def subir_documentos(lic_id: str, files: List[UploadFile] = File(...), aut
 # ---- Listar documentos de la licitación ----
 @app.get("/licitaciones/{lic_id}/documentos")
 def listar_documentos(lic_id: str):
-    folder = os.path.join(DOCS_DIR, lic_id)
-    if not os.path.isdir(folder):
-        return {"items": []}
+    db = _load_db()
+    lic = _get_licitacion(db, lic_id)
+    if not lic:
+        raise HTTPException(status_code=404, detail="Licitación no encontrada")
     items = []
-    for path in glob.glob(os.path.join(folder, "*.pdf")):
-        try:
-            items.append({
-                "file": os.path.basename(path),
-                "type": "pdf",
-                "size": os.path.getsize(path),
-            })
-        except Exception:
-            continue
+    for d in lic.get("docs", []) or []:
+        items.append({
+            "file": d.get("file"),
+            "type": d.get("type", "propuesta"),
+            "size": int(d.get("size", 0)),
+        })
     return {"items": items}
 
 # ---- Indexar documentos de la licitación en Chroma (colección contratos) ----
@@ -401,7 +447,10 @@ def validaciones_ruc(lic_id: str):
         data = json.load(f)
     rows = []
     for r in data["results"]:
-        rows.extend(r["report"].get("ruc_reports", []) or [])
+        for rr in r["report"].get("ruc_reports", []) or []:
+            item = dict(rr)
+            item["documento"] = r.get("file")
+            rows.append(item)
     return {"items": rows}
 
 @app.get("/licitaciones/{lic_id}/comparativo")
@@ -418,7 +467,14 @@ def comparativo(lic_id: str):
         scores = rep.get("scores", {})
         rojas = sum(1 for i in rep.get("issues", []) if str(i.get("severity", "")).upper() in ("ALTO", "ROJO"))
         amar = sum(1 for i in rep.get("issues", []) if str(i.get("severity", "")).upper() in ("MEDIO", "AMARILLO"))
-        total = int(0.35 * scores.get("legal", 50) + 0.40 * scores.get("tecnico", 50) + 0.25 * scores.get("economico", 50))
+        # Pesos desde DB si existen
+        db = _load_db()
+        lic = _get_licitacion(db, lic_id)
+        pesos = (lic or {}).get("pesos", {"legal": 35, "tecnico": 40, "economico": 25})
+        wl, wt, we = float(pesos.get("legal", 35)), float(pesos.get("tecnico", 40)), float(pesos.get("economico", 25))
+        denom = max(wl + wt + we, 1.0)
+        wl, wt, we = wl/denom, wt/denom, we/denom
+        total = int(wl * scores.get("legal", 50) + wt * scores.get("tecnico", 50) + we * scores.get("economico", 50))
         rows.append({
             "oferente": r["file"],
             "cumple_minimos": True,  # placeholder
@@ -430,6 +486,8 @@ def comparativo(lic_id: str):
             "amarillas": amar,
             "observaciones": "",
         })
+    # excluir pliegos de la competencia si se colaron
+    rows = [r for r in rows if not str(r.get("oferente", "")).lower().startswith("pliego")]
     ganador = max(rows, key=lambda x: x["score_total"]) if rows else None
     return {"items": rows, "ganador": ganador}
 

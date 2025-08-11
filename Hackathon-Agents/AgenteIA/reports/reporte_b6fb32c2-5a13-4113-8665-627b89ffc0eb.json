@@ -1,0 +1,294 @@
+{
+  "results": [
+    {
+      "file": "CONSTRUCCION DE UN PARQUE RECREACIONAL ACADEMIA DEL VALLE.pdf",
+      "path": "D:\\HACKATHONFRONTBACK\\Hackathon-Agents\\AgenteIA\\data\\docs\\b6fb32c2-5a13-4113-8665-627b89ffc0eb\\CONSTRUCCION DE UN PARQUE RECREACIONAL ACADEMIA DEL VALLE.pdf",
+      "report": {
+        "scores": {
+          "legal": 30,
+          "tecnico": 60,
+          "economico": 40,
+          "inconsistencias": 50
+        },
+        "risks": {
+          "legal": "ALTO",
+          "tecnico": "MEDIO",
+          "economico": "ALTO",
+          "inconsistencias": "ALTO",
+          "ruc": "ALTO"
+        },
+        "issues": [
+          {
+            "type": "missing",
+            "where": "Cláusula de Garantías",
+            "evidence": "No se menciona ninguna cláusula sobre garantías en el contrato.",
+            "severity": "high",
+            "recommendation": "Incluir una cláusula que especifique el tipo y monto de las garantías requeridas para la ejecución del contrato.",
+            "category": "legal"
+          },
+          {
+            "type": "missing",
+            "where": "Cláusula de Multas",
+            "evidence": "No se menciona ninguna cláusula sobre multas por incumplimiento en el contrato.",
+            "severity": "high",
+            "recommendation": "Incluir una cláusula que establezca las multas aplicables en caso de incumplimiento de las obligaciones contractuales.",
+            "category": "legal"
+          },
+          {
+            "type": "missing",
+            "where": "Plazos de Ejecución",
+            "evidence": "No se especifican los plazos de ejecución del contrato.",
+            "severity": "high",
+            "recommendation": "Definir y detallar los plazos de ejecución del contrato para asegurar claridad en las obligaciones del contratista.",
+            "category": "legal"
+          },
+          {
+            "description": "Falta especificación de materiales a utilizar en la construcción del parque recreacional.",
+            "severity": "R",
+            "recommendation": "Incluir una lista detallada de los materiales que se utilizarán en la obra.",
+            "category": "tecnico"
+          },
+          {
+            "description": "Ambigüedad en los procesos constructivos a seguir para la ejecución del proyecto.",
+            "severity": "A",
+            "recommendation": "Definir claramente los procesos constructivos y las normativas a seguir.",
+            "category": "tecnico"
+          },
+          {
+            "description": "No se menciona el cronograma de tiempos para la ejecución de la obra.",
+            "severity": "R",
+            "recommendation": "Incluir un cronograma detallado que especifique los tiempos de inicio y finalización de cada fase del proyecto.",
+            "category": "tecnico"
+          },
+          {
+            "issue": "Falta de información sobre el presupuesto total asignado para la construcción del parque recreacional.",
+            "severity": "high",
+            "category": "economico"
+          },
+          {
+            "issue": "No se especifican los hitos de pago ni las condiciones asociadas a cada uno de ellos.",
+            "severity": "high",
+            "category": "economico"
+          },
+          {
+            "issue": "Ambigüedad en las formas de pago, ya que no se detallan los métodos aceptados ni las condiciones de pago.",
+            "severity": "medium",
+            "category": "economico"
+          },
+          {
+            "type": "parse_error",
+            "where": "validator_incons",
+            "evidence": "```json\n{\n  \"issues\": [\n    {\n      \"issue\": \"Ambigüedad en la denominación del proyecto\",\n      \"description\": \"El nombre del proyecto se menciona como 'CONSTRUCCION DE UN PARQUE RECREACIONAL MULTIPLE EN ESPACIO PUBLICO ACADEMIA DEL VALLE DE LA AZLC', pero no se especifica qué significa 'AZLC'. Esto puede generar confusión sobre la ubicación o el contexto del proyecto.\",\n      \"severity\": \"medium\"\n    },\n    {\n      \"issue\": \"Falta de cláusulas sobre supervisión y fiscalización\",\n      \"description\": \"El contrato no incluye cláusulas específicas sobre las funciones y deberes de los administradores del contrato, así como de quienes ejercerán la supervisión o fiscalización, lo cual es requerido por el artículo 70 de la Ley Orgánica del Sistema Nacional de Contratación Pública.\",\n      \"severity\": \"high\"\n    },\n    {\n      \"issue\": \"Falta de estipulación sobre pagos y garantías\",\n      \"description\": \"No se mencionan las condiciones de pago, ejecución de garantías, ni la aplicación de mu",
+            "severity": "MEDIO",
+            "recommendation": "Revisar",
+            "category": "inconsistencias"
+          }
+        ],
+        "ruc_reports": [
+          {
+            "ruc": "1706493614001",
+            "exists": true,
+            "related": false,
+            "risk": "ALTO",
+            "rationale": "Similitud actividad-razon=28.57142857142857, actividad-objeto=17.391304347826093. Incoherencia con razón social y/o proyecto."
+          }
+        ]
+      }
+    },
+    {
+      "file": "CONSTRUCCIÓN DE PARQUE BIOSALUDABLE COMUNA CENTRO ALANGASI.pdf",
+      "path": "D:\\HACKATHONFRONTBACK\\Hackathon-Agents\\AgenteIA\\data\\docs\\b6fb32c2-5a13-4113-8665-627b89ffc0eb\\CONSTRUCCIÓN DE PARQUE BIOSALUDABLE COMUNA CENTRO ALANGASI.pdf",
+      "report": {
+        "scores": {
+          "legal": 60,
+          "tecnico": 30,
+          "economico": 20,
+          "inconsistencias": 50
+        },
+        "risks": {
+          "legal": "MEDIO",
+          "tecnico": "ALTO",
+          "economico": "ALTO",
+          "inconsistencias": "ALTO",
+          "ruc": "ALTO"
+        },
+        "issues": [
+          {
+            "type": "Missing Information",
+            "where": "Cláusula sobre garantías",
+            "evidence": "No se menciona la existencia de garantías específicas para la ejecución del contrato.",
+            "severity": "High",
+            "recommendation": "Incluir cláusulas que especifiquen el tipo y monto de las garantías requeridas para la ejecución del contrato.",
+            "category": "legal"
+          },
+          {
+            "type": "Missing Information",
+            "where": "Cláusula sobre multas",
+            "evidence": "No se especifican las multas aplicables en caso de incumplimiento del contrato.",
+            "severity": "High",
+            "recommendation": "Incluir una cláusula que detalle las multas y sanciones por incumplimiento de las obligaciones contractuales.",
+            "category": "legal"
+          },
+          {
+            "type": "Ambiguous Information",
+            "where": "Plazos de ejecución",
+            "evidence": "No se mencionan plazos específicos para la ejecución del contrato.",
+            "severity": "Medium",
+            "recommendation": "Definir claramente los plazos de ejecución y las condiciones para su cumplimiento.",
+            "category": "legal"
+          },
+          {
+            "description": "Falta especificación de materiales a utilizar en la construcción del parque biosaludable.",
+            "severity": "Red",
+            "category": "tecnico"
+          },
+          {
+            "description": "No se detallan los procesos constructivos que se seguirán durante la obra.",
+            "severity": "Rojo",
+            "category": "tecnico"
+          },
+          {
+            "description": "No se menciona el cronograma de tiempos para la ejecución de la obra.",
+            "severity": "Rojo",
+            "category": "tecnico"
+          },
+          {
+            "description": "No se especifica el presupuesto total asignado para la construcción del parque biosaludable.",
+            "severity": "high",
+            "category": "economico"
+          },
+          {
+            "description": "No se detallan los hitos de pago ni las condiciones específicas para cada uno.",
+            "severity": "high",
+            "category": "economico"
+          },
+          {
+            "description": "Falta información sobre las formas de pago aceptadas y los plazos para realizar dichos pagos.",
+            "severity": "high",
+            "category": "economico"
+          },
+          {
+            "type": "parse_error",
+            "where": "validator_incons",
+            "evidence": "```json\n{\n  \"issues\": [\n    {\n      \"issue\": \"Ambigüedad en la denominación del contratante\",\n      \"description\": \"En la cláusula primera se menciona que el contratante es el 'GOBIERNO AUTÓNOMO DESCENTRALIZADO DEL DISTRITO METROPOLITANO DE QUITO', pero no se especifica claramente si se refiere a la entidad en su totalidad o a la Administración Zonal Los Chillos específicamente.\",\n      \"score\": 20\n    },\n    {\n      \"issue\": \"Falta de especificación de plazos\",\n      \"description\": \"No se menciona en el contrato los plazos de ejecución de la obra, lo cual es un elemento clave en cualquier contrato de obra pública.\",\n      \"score\": 30\n    },\n    {\n      \"issue\": \"Inconsistencia en la dirección del proyecto\",\n      \"description\": \"En la cláusula primera se menciona 'Calle Benjamin Carrion', pero en la cláusula 2.5 se menciona 'Calle BE NJAMIN CARRION', lo que puede generar confusión sobre la ubicación exacta del proyecto.\",\n      \"score\": 15\n    },\n    {\n      \"issue\": \"Falta de cláusul",
+            "severity": "MEDIO",
+            "recommendation": "Revisar",
+            "category": "inconsistencias"
+          }
+        ],
+        "ruc_reports": [
+          {
+            "ruc": "1715690796001",
+            "exists": false,
+            "related": false,
+            "risk": "ALTO",
+            "rationale": "Error en validación SRI: ('Connection aborted.', ConnectionResetError(10054, 'Se ha forzado la interrupción de una conexión existente por el host remoto', None, 10054, None))"
+          }
+        ]
+      }
+    },
+    {
+      "file": "📄 PLIEGO DE LICITACIÓN.pdf",
+      "path": "D:\\HACKATHONFRONTBACK\\Hackathon-Agents\\AgenteIA\\data\\docs\\b6fb32c2-5a13-4113-8665-627b89ffc0eb\\📄 PLIEGO DE LICITACIÓN.pdf",
+      "report": {
+        "scores": {
+          "legal": 75,
+          "tecnico": 75,
+          "economico": 70,
+          "inconsistencias": 50
+        },
+        "risks": {
+          "legal": "MEDIO",
+          "tecnico": "MEDIO",
+          "economico": "MEDIO",
+          "inconsistencias": "ALTO",
+          "ruc": "ALTO"
+        },
+        "issues": [
+          {
+            "type": "Missing Information",
+            "where": "Garantías",
+            "evidence": "No se especifica el monto de la póliza de responsabilidad civil y daños a terceros.",
+            "severity": "Medium",
+            "recommendation": "Incluir el monto requerido para la póliza de responsabilidad civil y daños a terceros.",
+            "category": "legal"
+          },
+          {
+            "type": "Ambiguity",
+            "where": "Multas y Penalidades",
+            "evidence": "Las sanciones por incumplimiento de especificaciones o seguridad se mencionan, pero no se detallan los criterios específicos para su aplicación.",
+            "severity": "High",
+            "recommendation": "Especificar los criterios y montos de las sanciones por incumplimiento de especificaciones o seguridad.",
+            "category": "legal"
+          },
+          {
+            "type": "Missing Information",
+            "where": "Plazo de Ejecución",
+            "evidence": "No se menciona si hay penalizaciones por incumplimiento del plazo de ejecución.",
+            "severity": "Medium",
+            "recommendation": "Incluir penalizaciones específicas por incumplimiento del plazo de ejecución.",
+            "category": "legal"
+          },
+          {
+            "description": "No se especifica el tipo de césped y especies ornamentales a utilizar.",
+            "severity": "Amber",
+            "category": "tecnico"
+          },
+          {
+            "description": "Falta de detalles sobre el sistema de alimentación para las luminarias LED.",
+            "severity": "Amber",
+            "category": "tecnico"
+          },
+          {
+            "description": "No se menciona el tipo de pintura epóxica a utilizar.",
+            "severity": "Amber",
+            "category": "tecnico"
+          },
+          {
+            "description": "No se especifica el proceso de limpieza y nivelación del terreno.",
+            "severity": "Amber",
+            "category": "tecnico"
+          },
+          {
+            "description": "Ambigüedad en la certificación de juegos infantiles, se menciona ASTM F1487 o equivalente, pero no se especifica qué equivalentes son aceptables.",
+            "severity": "Amber",
+            "category": "tecnico"
+          },
+          {
+            "description": "El presupuesto referencial es amplio (USD 80,000.00 - 90,000.00), lo que puede generar ambigüedad en la propuesta final.",
+            "severity": "medium",
+            "category": "economico"
+          },
+          {
+            "description": "La forma de pago incluye un anticipo del 25% con presentación de póliza de buen uso, pero no se especifica el tiempo de entrega de dicha póliza.",
+            "severity": "medium",
+            "category": "economico"
+          },
+          {
+            "description": "El saldo se paga contra planilla final aprobada, pero no se menciona un plazo específico para la aprobación de la planilla, lo que puede generar incertidumbre en el flujo de caja.",
+            "severity": "medium",
+            "category": "economico"
+          },
+          {
+            "description": "No se especifica si el monto total incluye todos los costos indirectos o si hay costos adicionales que podrían surgir durante la ejecución.",
+            "severity": "high",
+            "category": "economico"
+          },
+          {
+            "type": "parse_error",
+            "where": "validator_incons",
+            "evidence": "```json\n{\n  \"issues\": [\n    {\n      \"issue\": \"Ambigüedad en el plazo de ejecución\",\n      \"description\": \"El plazo de ejecución se menciona como 30 días calendario, pero no se especifica si incluye días hábiles o no. Esto puede llevar a confusiones sobre el tiempo real de ejecución.\",\n      \"severity\": \"medium\"\n    },\n    {\n      \"issue\": \"Falta de especificación sobre el tipo de póliza de responsabilidad civil\",\n      \"description\": \"Se menciona una póliza de responsabilidad civil y daños a terceros, pero no se especifica el monto o las condiciones que debe cumplir. Esto puede generar incertidumbre sobre la cobertura requerida.\",\n      \"severity\": \"high\"\n    },\n    {\n      \"issue\": \"Inconsistencia en el monto de la garantía de fiel cumplimiento\",\n      \"description\": \"Se menciona que la garantía de fiel cumplimiento es del 5% del valor del contrato, pero no se especifica si se refiere al monto total del contrato o al monto del anticipo. Esto puede llevar a confusiones sobre el cálculo",
+            "severity": "MEDIO",
+            "recommendation": "Revisar",
+            "category": "inconsistencias"
+          }
+        ],
+        "ruc_reports": []
+      }
+    }
+  ],
+  "summary": {
+    "rojas": 2,
+    "amarillas": 3
+  }
+}

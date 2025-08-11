@@ -1,27 +1,14 @@
 import requests
 from typing import Dict, Any
 from rapidfuzz import fuzz
-from openai import OpenAI
-
-client = OpenAI()
-MODEL = "gpt-4o-mini"
+import re
+import unicodedata
 
 SRI_URL = (
     "https://srienlinea.sri.gob.ec/"
     "sri-catastro-sujeto-servicio-internet/rest/ConsolidadoContribuyente/"
     "obtenerPorNumerosRuc?&ruc={ruc}"
 )
-
-SYSTEM = (
-    "Eres un verificador de RUC. Dados los datos del SRI, decide si la actividad económica principal es coherente "
-    "con la razón social y si está relacionada con el objeto del contrato. Responde JSON con related (bool) y why."
-)
-
-PROMPT = (
-    "Datos SRI:\nActividad: {actividad}\nRazon Social: {razon}\nObjeto del contrato: {objeto}\n\n"
-    "¿La actividad es coherente con la razón social y relevante para el objeto? Responde JSON: {{\"related\": true|false, \"why\": \"...\"}}"
-)
-
 
 def call_sri(ruc: str):
     url = SRI_URL.format(ruc=ruc)
@@ -33,25 +20,49 @@ def call_sri(ruc: str):
     return None
 
 
+def _normalize(text: str) -> str:
+    t = text or ""
+    t = t.lower()
+    t = ''.join(c for c in unicodedata.normalize('NFD', t) if unicodedata.category(c) != 'Mn')
+    t = re.sub(r"[^a-z0-9\s]", " ", t)
+    t = re.sub(r"\s+", " ", t).strip()
+    return t
+
+
+def _token_overlap(haystack: str, needles: str) -> bool:
+    hs = haystack.split()
+    ns = [w for w in needles.split() if len(w) >= 4]
+    return any(w in hs for w in ns)
+
+
 def assess_related(actividad: str, razon: str, objeto: str) -> Dict[str, Any]:
-    # Filtro rápido por similitud (suave) + LLM como juez final
-    sim = fuzz.token_set_ratio((actividad or "").lower(), (razon or "").lower())
-    # Pregunta al modelo para una evaluación semántica + explicación
-    content = PROMPT.format(actividad=actividad or "", razon=razon or "", objeto=objeto or "")
-    resp = client.chat.completions.create(
-        model=MODEL,
-        temperature=0,
-        messages=[
-            {"role": "system", "content": SYSTEM},
-            {"role": "user", "content": content},
-        ]
+    """Regla determinística robusta para texto asimétrico.
+    Criterios de aceptación (cualquiera de los siguientes para cada relación):
+    - actividad vs razón social: token_set_ratio >= 22 o partial_ratio >= 40 o solapamiento de tokens
+    - actividad vs objeto: token_set_ratio >= 30 o partial_ratio >= 55 o solapamiento de tokens
+    """
+    a = _normalize(actividad)
+    rz = _normalize(razon)
+    obj = _normalize(objeto)
+
+    sim_ar_set = fuzz.token_set_ratio(a, rz)
+    sim_ar_part = fuzz.partial_ratio(a, rz)
+    sim_ao_set = fuzz.token_set_ratio(a, obj)
+    sim_ao_part = fuzz.partial_ratio(a, obj)
+
+    overlap_ar = _token_overlap(a, rz)
+    overlap_ao = _token_overlap(a, obj)
+
+    ok_ar = sim_ar_set >= 22 or sim_ar_part >= 40 or overlap_ar
+    ok_ao = sim_ao_set >= 30 or sim_ao_part >= 55 or overlap_ao
+
+    related = bool(ok_ar and ok_ao)
+    why = (
+        f"act-raz(set={sim_ar_set:.1f}, part={sim_ar_part:.1f}, overlap={overlap_ar}); "
+        f"act-obj(set={sim_ao_set:.1f}, part={sim_ao_part:.1f}, overlap={overlap_ao}). "
+        + ("Coherente con razón social y proyecto." if related else "Incoherencia con razón social y/o proyecto.")
     )
-    import json
-    try:
-        verdict = json.loads(resp.choices[0].message.content)
-    except Exception:
-        verdict = {"related": sim >= 40, "why": f"Heurística por similitud={sim}"}
-    return verdict
+    return {"related": related, "why": why}
 
 
 def run(ruc: str, objeto_contrato: str) -> Dict[str, Any]:
