@@ -279,14 +279,14 @@ export default function NewTenderWizard() {
 
       {analizar.isPending && (
         <div className="fixed inset-0 z-50 grid place-items-center bg-background/70 backdrop-blur-sm">
-          <Card className="shadow-elevated w-[520px]">
+          <Card className="shadow-elevated w-[680px]">
             <CardHeader>
               <CardTitle className="text-base">Analizando documentos...</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="space-y-4 text-sm">
+              <div className="space-y-5 text-sm">
                 {/* Hilera de iconos animados */}
-                <div className="flex items-center justify-center gap-4 text-muted-foreground">
+                <div className="flex items-center justify-center gap-6 text-muted-foreground">
                   {[
                     FileText,
                     Search,
@@ -297,7 +297,7 @@ export default function NewTenderWizard() {
                     const active = (aniMsg % 5) === idx;
                     return (
                       <div key={idx} className={`transition-colors ${active ? "text-primary" : "text-muted-foreground"}`}>
-                        <Icon className={`h-6 w-6 ${active ? "animate-pulse" : "opacity-70"}`} />
+                        <Icon className={`h-8 w-8 ${active ? "animate-pulse" : "opacity-70"}`} />
                       </div>
                     );
                   })}
