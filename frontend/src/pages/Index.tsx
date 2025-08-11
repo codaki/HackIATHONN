@@ -30,6 +30,15 @@ export default function Index() {
     queryFn: api.listarLicitaciones,
   });
   const procesos: Row[] = (data || []).map((x) => ({ ...x }));
+
+  const positivos = (p: Row): string[] => {
+    const items: string[] = [];
+    if ((p.rojas ?? 0) === 0) items.push("Sin rojas");
+    if ((p.amarillas ?? 0) <= 1) items.push("Pocas amarillas");
+    if ((p.progreso ?? 0) === 100) items.push("Análisis completo");
+    if (p.etapa === "Análisis" || p.etapa === "Comparativo") items.push("Procesado");
+    return items.slice(0, 3);
+  };
   return (
     <div className="space-y-6">
       <SEO title="Mis licitaciones | ElicitIA" description="Explora tus procesos, filtra por estado y actúa rápido sobre lo que importa." />
@@ -98,15 +107,14 @@ export default function Index() {
           <CardTitle className="text-base">Procesos</CardTitle>
         </CardHeader>
         <CardContent>
-          <Table>
+          <Table className="[&_thead_th]:text-muted-foreground [&_tbody_tr:hover]:bg-accent/30">
             <TableHeader>
               <TableRow>
                 <TableHead>Nombre</TableHead>
                 <TableHead>Etapa</TableHead>
                 <TableHead>Avance</TableHead>
                 <TableHead>Alertas</TableHead>
-                <TableHead>Fecha límite</TableHead>
-                <TableHead>Responsable</TableHead>
+                <TableHead>Puntos fuertes</TableHead>
                 <TableHead className="text-right">Acciones</TableHead>
               </TableRow>
             </TableHeader>
@@ -137,11 +145,18 @@ export default function Index() {
                       <span className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold bg-warning text-warning-foreground">{p.amarillas ?? 0} amarillas</span>
                     </div>
                   </TableCell>
-                  <TableCell>{p.deadline ? new Date(p.deadline).toLocaleDateString() : "-"}</TableCell>
-                  <TableCell>{p.responsables?.[0] || "-"}</TableCell>
+                  <TableCell>
+                    <div className="flex flex-wrap gap-1">
+                      {positivos(p).map((t) => (
+                        <span key={t} className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-success/15 text-success">{t}</span>
+                      ))}
+                      {positivos(p).length === 0 && (
+                        <span className="text-xs text-muted-foreground">–</span>
+                      )}
+                    </div>
+                  </TableCell>
                   <TableCell className="text-right">
                     <div className="flex justify-end gap-2">
-                      <Button variant="outline" onClick={() => navigate("/tareas")}>Pendientes</Button>
                       <Button onClick={() => navigate(`/dashboard?lic=${p.id}`)}>Abrir</Button>
                     </div>
                   </TableCell>

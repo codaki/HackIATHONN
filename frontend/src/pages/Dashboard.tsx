@@ -10,7 +10,7 @@ import { useQuery } from "@tanstack/react-query";
 import api, { ComparativoItem, Hallazgo, RucValidationItem } from "@/lib/api";
 import { ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { Bar, BarChart, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
-import { Trophy } from "lucide-react";
+import { Trophy, AlertTriangle, Gauge } from "lucide-react";
 import { GridStack } from "gridstack";
 import 'gridstack/dist/gridstack.min.css';
 
@@ -54,28 +54,25 @@ export default function Dashboard() {
     category: String(h.category || h.tipo || "").toLowerCase(),
     description: h.recommendation || h.evidence || h.desc || h.type || "Revisar",
   }));
-  // Intercalado por documento para Top hallazgos
+  // Ordenar globalmente por severidad (ROJO/ALTO/HIGH > MEDIO/AMARILLO/MEDIUM > LOW)
   const severityRank = (s: string) => (s === "ALTO" || s === "ROJO" || s === "HIGH" ? 2 : (s === "MEDIO" || s === "AMARILLO" || s === "MEDIUM" ? 1 : 0));
-  const byDoc: Record<string, UIHallazgo[]> = {};
-  hallazgos.forEach((h) => {
-    const key = h.documento || "";
-    if (!byDoc[key]) byDoc[key] = [];
-    byDoc[key].push(h);
-  });
-  Object.keys(byDoc).forEach((k) => byDoc[k].sort((a,b)=> severityRank(b.severity) - severityRank(a.severity)));
-  const docKeys = Object.keys(byDoc);
-  const topHallazgos: UIHallazgo[] = [];
-  let idx = 0;
-  while (topHallazgos.length < 8 && docKeys.length > 0 && idx < 1000) {
-    for (const d of docKeys) {
-      const arr = byDoc[d];
-      if (arr && arr.length) topHallazgos.push(arr.shift() as UIHallazgo);
-      if (topHallazgos.length >= 8) break;
-    }
-    idx++;
-  }
+  const topHallazgos: UIHallazgo[] = [...hallazgos]
+    .sort((a,b)=> severityRank(b.severity) - severityRank(a.severity))
+    .slice(0, 20);
   const ganador: ComparativoItem | null = (compQ.data?.ganador as ComparativoItem | null) || null;
   const items: ComparativoItem[] = (compQ.data?.items as ComparativoItem[] | undefined) || [];
+  // Derivar alertas reales desde hallazgos (mapea severidades a rojas/amarillas)
+  const derived = useMemo(() => {
+    type WithUpper = { SEVERITY?: string };
+    const all = (hallazgosQ.data?.items as (Hallazgo & WithUpper)[] | undefined) || [];
+    let red = 0, yellow = 0;
+    for (const it of all) {
+      const s = String(it?.severity || it?.SEVERITY || '').toUpperCase();
+      if (["ALTO","ROJO","HIGH"].includes(s)) red++;
+      else if (["MEDIO","AMARILLO","MEDIUM"].includes(s)) yellow++;
+    }
+    return { red, yellow };
+  }, [hallazgosQ.data]);
   const numProps = items.length;
   const avg = (arr:number[]) => (arr.length ? Math.round(arr.reduce((a,b)=>a+b,0)/arr.length) : 0);
   const avgL = avg(items.map((x)=>Number(x.legal||0)));
@@ -132,9 +129,9 @@ export default function Dashboard() {
         <Card className="grid-stack-item shadow-elevated" gs-x={4} gs-y={0} gs-w={2} gs-h={2} style={{ height: "100%" }}>
             <CardHeader className="py-3"><CardTitle className="text-sm">Promedios</CardTitle></CardHeader>
             <CardContent className="text-xs flex gap-2">
-              <span className="px-2 py-0.5 rounded-full bg-primary text-primary-foreground">L {avgL}</span>
-              <span className="px-2 py-0.5 rounded-full bg-success text-success-foreground">T {avgT}</span>
-              <span className="px-2 py-0.5 rounded-full bg-warning text-warning-foreground">E {avgE}</span>
+              <span className="px-2 py-0.5 rounded-full bg-primary text-primary-foreground inline-flex items-center gap-1"><Gauge className="w-3 h-3"/>L {avgL}</span>
+              <span className="px-2 py-0.5 rounded-full bg-success text-success-foreground inline-flex items-center gap-1"><Gauge className="w-3 h-3"/>T {avgT}</span>
+              <span className="px-2 py-0.5 rounded-full bg-warning text-warning-foreground inline-flex items-center gap-1"><Gauge className="w-3 h-3"/>E {avgE}</span>
             </CardContent>
         </Card>
 
@@ -142,8 +139,8 @@ export default function Dashboard() {
         <Card className="grid-stack-item shadow-elevated" gs-x={6} gs-y={0} gs-w={2} gs-h={2} style={{ height: "100%" }}>
             <CardHeader className="py-3"><CardTitle className="text-sm">Alertas</CardTitle></CardHeader>
             <CardContent className="text-xs flex items-center gap-2">
-              <Badge variant="destructive">{resumen.rojas} rojas</Badge>
-              <span className="px-2 py-0.5 rounded-full bg-warning text-warning-foreground text-[10px] font-semibold">{resumen.amarillas} amarillas</span>
+              <Badge variant="destructive" className="inline-flex items-center gap-1"><AlertTriangle className="w-3 h-3"/>{derived.red || resumen.rojas} rojas</Badge>
+              <span className="px-2 py-0.5 rounded-full bg-warning text-warning-foreground text-[10px] font-semibold inline-flex items-center gap-1"><AlertTriangle className="w-3 h-3"/>{derived.yellow || resumen.amarillas} amarillas</span>
             </CardContent>
         </Card>
 
@@ -164,7 +161,7 @@ export default function Dashboard() {
             <CardContent className="text-xs">
               <ResponsiveContainer width="100%" height={140}>
                 <PieChart>
-                  <Pie dataKey="value" data={[{name:'Rojas', value: resumen.rojas},{name:'Amarillas', value: resumen.amarillas}]} cx="50%" cy="50%" outerRadius={50} label>
+                  <Pie dataKey="value" data={[{name:'Rojas', value: (derived.red || resumen.rojas)},{name:'Amarillas', value: (derived.yellow || resumen.amarillas)}]} cx="50%" cy="50%" outerRadius={50} label>
                     <Cell fill="hsl(var(--destructive))" />
                     <Cell fill="hsl(var(--warning))" />
                   </Pie>
@@ -210,7 +207,7 @@ export default function Dashboard() {
                   <XAxis type="number" hide />
                   <YAxis type="category" dataKey="oferente" width={150} />
                   <Tooltip />
-                  <Bar dataKey="score_total" fill="hsl(var(--primary))" />
+                  <Bar dataKey="score_total" fill="hsl(var(--success))" radius={[4,4,4,4]} />
                 </BarChart>
               </ResponsiveContainer>
             </CardContent>
@@ -261,7 +258,11 @@ export default function Dashboard() {
               {((rucQ.data?.items as RucValidationItem[] | undefined) || []).map((r, i)=> (
                 <div key={i} className="flex items-center justify-between">
                   <span>{r.ruc} <span className="text-muted-foreground">— {r.documento || "Documento"}</span></span>
-                  {r.related ? <Badge variant="secondary">Relacionado</Badge> : <Badge variant="destructive">No relacionado</Badge>}
+                  {r.related ? (
+                    <span className="px-2 py-0.5 rounded-full bg-success text-success-foreground text-xs font-semibold">Relacionado</span>
+                  ) : (
+                    <Badge variant="destructive">No relacionado</Badge>
+                  )}
                 </div>
               ))}
             </CardContent>
