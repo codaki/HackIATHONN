@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { FileText, Search, Cog, ShieldCheck, CheckCircle2 } from "lucide-react";
 import { SEO } from "@/components/SEO";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -283,13 +284,27 @@ export default function NewTenderWizard() {
               <CardTitle className="text-base">Analizando documentos...</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="space-y-3 text-sm">
-                <Progress value={aniProg} />
+              <div className="space-y-4 text-sm">
+                {/* Hilera de iconos animados */}
+                <div className="flex items-center justify-center gap-4 text-muted-foreground">
+                  {[
+                    FileText,
+                    Search,
+                    Cog,
+                    ShieldCheck,
+                    CheckCircle2,
+                  ].map((Icon, idx) => {
+                    const active = (aniMsg % 5) === idx;
+                    return (
+                      <div key={idx} className={`transition-colors ${active ? "text-primary" : "text-muted-foreground"}`}>
+                        <Icon className={`h-6 w-6 ${active ? "animate-pulse" : "opacity-70"}`} />
+                      </div>
+                    );
+                  })}
+                </div>
                 <p className="text-muted-foreground">
                   {stages[aniMsg]}{""}
-                  <span className="inline-block w-6 text-left">
-                    {".".repeat(dots)}
-                  </span>
+                  <span className="inline-block w-6 text-left">{".".repeat(dots)}</span>
                 </p>
                 <p className="text-xs text-muted-foreground">Esto puede tomar 30–60s según el tamaño de los PDFs.</p>
               </div>

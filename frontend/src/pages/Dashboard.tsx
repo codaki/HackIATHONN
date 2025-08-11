@@ -2,9 +2,9 @@ import { SEO } from "@/components/SEO";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Progress } from "@/components/ui/progress";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useLocation } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import api, { ComparativoItem, Hallazgo, RucValidationItem } from "@/lib/api";
@@ -74,15 +74,27 @@ export default function Dashboard() {
         {/* Fila 1: KPIs */}
         <Card className="shadow-elevated col-span-12 lg:col-span-3" style={{ width: CARD_SIZE.kpiProgress.width, height: CARD_SIZE.kpiProgress.height }}>
           <CardHeader className="py-3"><CardTitle className="text-sm">Progreso</CardTitle></CardHeader>
-          <CardContent className="text-xs">{resumen.progreso}%</CardContent>
+          <CardContent className="space-y-1">
+            <div className="text-xs flex justify-between">
+              <span>Completado</span>
+              <span className="font-medium">{resumen.progreso}%</span>
+            </div>
+            <Progress value={resumen.progreso} />
+          </CardContent>
         </Card>
         <Card className="shadow-elevated col-span-12 lg:col-span-3" style={{ width: CARD_SIZE.kpiPropuestas.width, height: CARD_SIZE.kpiPropuestas.height }}>
           <CardHeader className="py-3"><CardTitle className="text-sm">Propuestas</CardTitle></CardHeader>
-          <CardContent className="text-xs">{numProps}</CardContent>
+          <CardContent className="text-xs">
+            <span className="px-2 py-0.5 rounded-full bg-info text-info-foreground text-[10px] font-semibold">{numProps} propuestas</span>
+          </CardContent>
         </Card>
         <Card className="shadow-elevated col-span-12 lg:col-span-3" style={{ width: CARD_SIZE.kpiPromedios.width, height: CARD_SIZE.kpiPromedios.height }}>
           <CardHeader className="py-3"><CardTitle className="text-sm">Promedios</CardTitle></CardHeader>
-          <CardContent className="text-xs flex gap-3"><span>L {avgL}</span><span>T {avgT}</span><span>E {avgE}</span></CardContent>
+          <CardContent className="text-xs flex gap-2">
+            <span className="px-2 py-0.5 rounded-full bg-primary text-primary-foreground">L {avgL}</span>
+            <span className="px-2 py-0.5 rounded-full bg-success text-success-foreground">T {avgT}</span>
+            <span className="px-2 py-0.5 rounded-full bg-warning text-warning-foreground">E {avgE}</span>
+          </CardContent>
         </Card>
         <Card className="shadow-elevated col-span-12 lg:col-span-3" style={{ width: CARD_SIZE.kpiAlertas.width, height: CARD_SIZE.kpiAlertas.height }}>
           <CardHeader className="py-3"><CardTitle className="text-sm">Alertas</CardTitle></CardHeader>
@@ -109,8 +121,8 @@ export default function Dashboard() {
               <PieChart>
                 <Pie dataKey="value" data={[{name:'Rojas', value: resumen.rojas},{name:'Amarillas', value: resumen.amarillas}]}
                   cx="50%" cy="50%" outerRadius={50} label>
-                  <Cell fill="hsl(0,84%,60%)" />
-                  <Cell fill="hsl(45,93%,47%)" />
+                  <Cell fill="hsl(var(--destructive))" />
+                  <Cell fill="hsl(var(--warning))" />
                 </Pie>
                 <Tooltip />
                 <Legend />
@@ -122,23 +134,27 @@ export default function Dashboard() {
       <Card className="shadow-elevated col-span-12 lg:col-span-12 overflow-hidden" style={{ width: CARD_SIZE.distCriterio.width, height: CARD_SIZE.distCriterio.height }}>
         <CardHeader className="py-2"><CardTitle className="text-sm">Distribución por criterio</CardTitle></CardHeader>
         <CardContent className="p-3 h-[calc(100%-2.5rem)]">
-          <ChartContainer config={{
-            legal:{label:"Legal",color:"hsl(222,89%,56%)"},
-            tecnico:{label:"Técnico",color:"hsl(142,76%,36%)"},
-            economico:{label:"Económico",color:"hsl(27,96%,61%)"},
-          }}>
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={rows} barCategoryGap={6} barGap={2}>
-                <XAxis dataKey="oferente" hide/>
-                <YAxis allowDecimals={false} />
-                <Tooltip content={<ChartTooltipContent/>} cursor={{ fill: 'rgba(0,0,0,0.03)' }} />
-                <Legend content={<ChartLegendContent/>} />
-                <Bar dataKey="legal" stackId="a" fill="var(--color-legal)"/>
-                <Bar dataKey="tecnico" stackId="a" fill="var(--color-tecnico)"/>
-                <Bar dataKey="economico" stackId="a" fill="var(--color-economico)"/>
-              </BarChart>
-            </ResponsiveContainer>
-          </ChartContainer>
+          {rows.length === 0 ? (
+            <div className="h-full flex items-center justify-center text-xs text-muted-foreground">Sin datos</div>
+          ) : (
+            <ChartContainer config={{
+              legal:{label:"Legal",color:"hsl(222,89%,56%)"},
+              tecnico:{label:"Técnico",color:"hsl(142,76%,36%)"},
+              economico:{label:"Económico",color:"hsl(27,96%,61%)"},
+            }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={rows} barCategoryGap={6} barGap={2}>
+                  <XAxis dataKey="oferente" hide/>
+                  <YAxis allowDecimals={false} />
+                  <Tooltip content={<ChartTooltipContent/>} cursor={{ fill: 'rgba(0,0,0,0.03)' }} />
+                  <Legend content={<ChartLegendContent/>} />
+                  <Bar dataKey="legal" stackId="a" fill="var(--color-legal)"/>
+                  <Bar dataKey="tecnico" stackId="a" fill="var(--color-tecnico)"/>
+                  <Bar dataKey="economico" stackId="a" fill="var(--color-economico)"/>
+                </BarChart>
+              </ResponsiveContainer>
+            </ChartContainer>
+          )}
         </CardContent>
       </Card>
 
@@ -151,7 +167,7 @@ export default function Dashboard() {
               <XAxis type="number" hide />
               <YAxis type="category" dataKey="oferente" width={150} />
               <Tooltip />
-              <Bar dataKey="score_total" fill="hsl(222,89%,56%)" />
+              <Bar dataKey="score_total" fill="hsl(var(--primary))" />
             </BarChart>
           </ResponsiveContainer>
         </CardContent>
