@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { SEO } from "@/components/SEO";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -23,6 +23,21 @@ export default function NewTenderWizard() {
   const propsRef = useRef<HTMLInputElement>(null);
   const qc = useQueryClient();
   const navigate = useNavigate();
+  const stages = [
+    "Preparando entorno de análisis...",
+    "Extrayendo texto de los PDFs...",
+    "Indexando el pliego como base...",
+    "Comparando propuestas con el pliego...",
+    "Analizando riesgos legales...",
+    "Evaluando criterios técnicos...",
+    "Evaluando criterios económicos...",
+    "Buscando inconsistencias...",
+    "Validando RUCs en SRI...",
+    "Calculando puntajes y ganador...",
+  ];
+  const [aniMsg, setAniMsg] = useState(0);
+  const [aniProg, setAniProg] = useState(0);
+  const [dots, setDots] = useState(0);
 
   const docsQuery = useQuery({
     queryKey: ["docs", licId],
@@ -70,6 +85,14 @@ export default function NewTenderWizard() {
     },
   });
 
+  useEffect(() => {
+    if (!analizar.isPending) { setAniMsg(0); setAniProg(0); return; }
+    const t1 = setInterval(() => setAniMsg((i) => (i + 1) % stages.length), 2500);
+    const t2 = setInterval(() => setAniProg((p) => (p >= 95 ? 95 : p + 3)), 250);
+    const t3 = setInterval(() => setDots((d) => (d + 1) % 4), 400);
+    return () => { clearInterval(t1); clearInterval(t2); clearInterval(t3); };
+  }, [analizar.isPending]);
+
   const simulateUpload = async () => {
     setUploading(true);
     setProgress(0);
@@ -99,19 +122,29 @@ export default function NewTenderWizard() {
           <h1 className="text-2xl font-semibold">Nueva licitación</h1>
           <p className="text-sm text-muted-foreground">Wizard de 3 pasos</p>
         </div>
-        <div className="flex gap-2">
-          {step > 1 && (
-            <Button variant="secondary" onClick={() => setStep((s) => s - 1)}>Atrás</Button>
-          )}
-          {step < 3 ? (
-            <Button onClick={() => (step === 1 ? crear.mutate() : setStep((s) => s + 1))} disabled={crear.isPending}>
-              {step === 1 ? (crear.isPending ? "Creando..." : "Crear") : "Siguiente"}
-            </Button>
-          ) : (
-            <Button variant="hero">Iniciar análisis</Button>
-          )}
-        </div>
       </header>
+
+      {/* Stepper estilo timeline */}
+      <div className="mt-1 w-full flex justify-center">
+        <div className="w-full max-w-4xl flex items-center justify-between gap-0">
+        {(["Parámetros","Documentos","Confirmación"]).map((label, idx) => {
+          const s = idx + 1; const done = s < step; const current = s === step;
+          return (
+            <div key={label} className="flex items-center">
+              <div className="flex flex-col items-center min-w-[88px]">
+                <div className={`h-6 w-6 rounded-full border-2 flex items-center justify-center ${done||current?"border-primary bg-primary/10":"border-border"}`}>
+                  <div className={`h-3 w-3 rounded-full ${done?"bg-primary":current?"bg-primary/70":"bg-muted-foreground/20"}`} />
+                </div>
+                <span className="text-[11px] mt-1 text-muted-foreground">{label}</span>
+              </div>
+              {idx < 2 && (
+                <div className={`flex-1 h-[2px] mx-8 ${s < step?"bg-primary":"bg-border"}`} />
+              )}
+            </div>
+          );
+        })}
+        </div>
+      </div>
 
       {step === 1 && (
         <Card className="shadow-elevated">
@@ -216,12 +249,53 @@ export default function NewTenderWizard() {
                   </div>
                 ))
               ))}
-              <div className="pt-2">
-                <Button variant="hero" onClick={() => analizar.mutate()} disabled={analizar.isPending || !licId}>{analizar.isPending ? "Analizando..." : "Iniciar análisis"}</Button>
-              </div>
+              
             </div>
           </CardContent>
         </Card>
+      )}
+
+      {/* Footer de acciones del wizard */}
+      <div className="sticky bottom-0 z-20 border-t bg-background/80 glass mt-4">
+        <div className="flex items-center justify-between p-3">
+          <span className="text-xs text-muted-foreground">Paso {step} de 3</span>
+          <div className="flex gap-2">
+            {step > 1 && (
+              <Button variant="secondary" onClick={() => setStep((s) => s - 1)}>Atrás</Button>
+            )}
+            {step < 3 ? (
+              <Button onClick={() => (step === 1 ? crear.mutate() : setStep((s) => s + 1))} disabled={crear.isPending}>
+                {step === 1 ? (crear.isPending ? "Creando..." : "Crear") : "Siguiente"}
+              </Button>
+            ) : (
+              <Button variant="hero" onClick={() => analizar.mutate()} disabled={analizar.isPending || !licId}>
+                {analizar.isPending ? "Analizando..." : "Iniciar análisis"}
+              </Button>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {analizar.isPending && (
+        <div className="fixed inset-0 z-50 grid place-items-center bg-background/70 backdrop-blur-sm">
+          <Card className="shadow-elevated w-[520px]">
+            <CardHeader>
+              <CardTitle className="text-base">Analizando documentos...</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-3 text-sm">
+                <Progress value={aniProg} />
+                <p className="text-muted-foreground">
+                  {stages[aniMsg]}{""}
+                  <span className="inline-block w-6 text-left">
+                    {".".repeat(dots)}
+                  </span>
+                </p>
+                <p className="text-xs text-muted-foreground">Esto puede tomar 30–60s según el tamaño de los PDFs.</p>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       )}
     </div>
   );
