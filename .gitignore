@@ -1,17 +1,18 @@
 # OS
 .DS_Store
 Thumbs.db
-
+*.json
 # IDE
 .idea/
+*.pdf
 .vscode/
 *.code-workspace
-
+*.bin
 # Node
 node_modules/
 dist/
 build/
-
+.bin
 # Python
 __pycache__/
 *.py[cod]
