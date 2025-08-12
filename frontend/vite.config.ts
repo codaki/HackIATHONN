@@ -10,6 +10,9 @@ export default defineConfig(({ mode }) => ({
     port: 8080,
   },
   preview: {
+    port: 8080,
+    host: "::",
+
     allowedHosts: ["dreamteamfront-jraz2.ondigitalocean.app"],
   },
   plugins: [react(), mode === "development" && componentTagger()].filter(
