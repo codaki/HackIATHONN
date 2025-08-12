@@ -1,43 +1,67 @@
 // Cliente API simple para FastAPI
-const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+// Update the BASE_URL to point to your DigitalOcean backend
+
+const BASE_URL = import.meta.env.PROD
+  ? "https://dreamteamfront-jraz2.ondigitalocean.app"
+  : "http://localhost:8000";
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
-	const res = await fetch(`${BASE_URL}${path}`, {
-		...init,
-		headers: {
-			...(init?.headers || {}),
-		},
-		credentials: "omit",
-	});
-	if (!res.ok) {
-		const txt = await res.text().catch(() => "");
-		throw new Error(`API ${res.status}: ${txt || res.statusText}`);
-	}
-	const ct = res.headers.get("content-type") || "";
-	if (ct.includes("application/json")) return (await res.json()) as T;
-	return (await res.blob()) as unknown as T;
+  const res = await fetch(`${BASE_URL}${path}`, {
+    ...init,
+    headers: { 
+      ...(init?.headers || {}),
+    },
+    credentials: "omit",
+  });
+  if (!res.ok) {
+    const txt = await res.text().catch(() => "");
+    throw new Error(`API ${res.status}: ${txt || res.statusText}`);
+  }
+  const ct = res.headers.get("content-type") || "";
+  if (ct.includes("application/json")) return (await res.json()) as T;
+  return (await res.blob()) as unknown as T;
 }
 
 export interface Pesos {
-	legal: number;
-	tecnico: number;
-	economico: number;
+  legal: number;
+  tecnico: number;
+  economico: number;
 }
 
 export interface LicResumen {
-	id: string;
-	nombre: string;
-	etapa: string;
-	progreso: number;
-	rojas: number;
-	amarillas: number;
-	deadline?: string | null;
-	responsables: string[];
+  id: string;
+  nombre: string;
+  etapa: string;
+  progreso: number;
+  rojas: number;
+  amarillas: number;
+  deadline?: string | null;
+  responsables: string[];
 }
 
-export interface ComparativoItem { oferente: string; cumple_minimos: boolean; legal: number; tecnico: number; economico: number; score_total: number; rojas: number; amarillas: number; observaciones: string }
-export interface ComparativoResp { items: ComparativoItem[]; ganador: ComparativoItem | null }
-export interface Hallazgo { documento?: string; category?: string; severity?: string; recommendation?: string; evidence?: string; type?: string }
+export interface ComparativoItem {
+  oferente: string;
+  cumple_minimos: boolean;
+  legal: number;
+  tecnico: number;
+  economico: number;
+  score_total: number;
+  rojas: number;
+  amarillas: number;
+  observaciones: string;
+}
+export interface ComparativoResp {
+  items: ComparativoItem[];
+  ganador: ComparativoItem | null;
+}
+export interface Hallazgo {
+  documento?: string;
+  category?: string;
+  severity?: string;
+  recommendation?: string;
+  evidence?: string;
+  type?: string;
+}
 
 export interface RucValidationItem {
   ruc: string;
@@ -49,6 +73,7 @@ export interface RucValidationItem {
 }
 
 export const api = {
+
 	health: () => request<{ ok: boolean; ts: string }>(`/health`),
 	crearLicitacion: (payload: {
 		nombre: string;
@@ -89,5 +114,3 @@ export const api = {
 };
 
 export default api;
-
-

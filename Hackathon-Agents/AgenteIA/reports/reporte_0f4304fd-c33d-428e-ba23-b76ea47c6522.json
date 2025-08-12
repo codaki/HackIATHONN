@@ -1,0 +1,303 @@
+{
+  "results": [
+    {
+      "file": "CONTRATO DE SUMINISTRO DE BANANO1.pdf",
+      "path": "D:\\Github\\Github\\Personal\\HackIATHONN\\Hackathon-Agents\\AgenteIA\\data\\docs\\0f4304fd-c33d-428e-ba23-b76ea47c6522\\CONTRATO DE SUMINISTRO DE BANANO1.pdf",
+      "report": {
+        "scores": {
+          "legal": 75,
+          "tecnico": 75,
+          "economico": 75,
+          "inconsistencias": 50
+        },
+        "risks": {
+          "legal": "MEDIO",
+          "tecnico": "MEDIO",
+          "economico": "MEDIO",
+          "inconsistencias": "ALTO",
+          "ruc": "BAJO"
+        },
+        "issues": [
+          {
+            "type": "Missing Information",
+            "where": "Cláusula Cuarta – GARANTÍAS",
+            "evidence": "No se especifica la forma de presentación de las garantías ni el plazo de vigencia de las mismas.",
+            "severity": "Medium",
+            "recommendation": "Incluir detalles sobre la forma de presentación de las garantías y su vigencia.",
+            "category": "legal"
+          },
+          {
+            "type": "Ambiguity",
+            "where": "Cláusula Sexta – MULTAS Y PENALIZACIONES",
+            "evidence": "La penalización por incumplimiento de calidad no especifica si se aplica a la totalidad del lote o a la cantidad defectuosa.",
+            "severity": "Medium",
+            "recommendation": "Aclarar si el descuento del 20% se aplica a la totalidad de la partida o solo a la cantidad afectada.",
+            "category": "legal"
+          },
+          {
+            "type": "Missing Information",
+            "where": "Cláusula Tercera – PLAZO DE EJECUCIÓN",
+            "evidence": "No se menciona si el plazo de ejecución incluye días hábiles o calendario.",
+            "severity": "Low",
+            "recommendation": "Especificar si el plazo de 12 meses es en días hábiles o calendario.",
+            "category": "legal"
+          },
+          {
+            "description": "No se especifica el origen de los insumos utilizados en el empaque y transporte interno, lo cual es necesario para cumplir con la normativa de producción nacional.",
+            "severity": "High",
+            "category": "tecnico"
+          },
+          {
+            "description": "El contrato menciona la presentación de certificados fitosanitarios y de calidad, pero no se detalla el proceso de obtención de estos certificados ni su validez temporal.",
+            "severity": "Medium",
+            "category": "tecnico"
+          },
+          {
+            "description": "No se menciona el proceso de verificación de calidad en el destino final, lo que podría generar ambigüedad en la aceptación del producto.",
+            "severity": "Medium",
+            "category": "tecnico"
+          },
+          {
+            "description": "El plazo de ejecución es de 12 meses, pero no se especifica si este incluye el tiempo de cosecha, empaque y transporte, lo que puede afectar la planificación.",
+            "severity": "Medium",
+            "category": "tecnico"
+          },
+          {
+            "description": "No se menciona un plan de contingencia en caso de incumplimiento de las especificaciones técnicas, lo que podría afectar la relación contractual.",
+            "severity": "Medium",
+            "category": "tecnico"
+          },
+          {
+            "description": "El contrato menciona un anticipo del 20% del valor del contrato, pero no se especifica el mecanismo de amortización en detalle, lo que podría generar ambigüedades en la interpretación.",
+            "severity": "medium",
+            "category": "economico"
+          },
+          {
+            "description": "No se detalla el proceso de aprobación de la inspección de calidad para los pagos mensuales, lo que podría llevar a disputas sobre la calidad del producto entregado.",
+            "severity": "medium",
+            "category": "economico"
+          },
+          {
+            "description": "El contrato establece multas por retraso en la entrega y penalizaciones por incumplimiento de calidad, pero no se especifica un límite máximo para las multas acumuladas, lo que podría ser considerado excesivo.",
+            "severity": "low",
+            "category": "economico"
+          },
+          {
+            "description": "No se menciona un mecanismo claro para la resolución de controversias en caso de incumplimiento de las condiciones de pago o entrega, lo que podría complicar la gestión de conflictos.",
+            "severity": "medium",
+            "category": "economico"
+          },
+          {
+            "type": "parse_error",
+            "where": "validator_incons",
+            "evidence": "```json\n{\n  \"issues\": [\n    {\n      \"issue\": \"Falta de especificación sobre el origen del producto en el contrato.\",\n      \"description\": \"El contrato menciona que el banano proviene de 'plantaciones propias y certificadas bajo normas GlobalG.A.P', pero no se especifica si esto se alinea con los requisitos de control del valor agregado ecuatoriano establecidos en la normativa.\",\n      \"score\": 20\n    },\n    {\n      \"issue\": \"Ambigüedad en la cláusula de garantías.\",\n      \"description\": \"La cláusula de garantías menciona 'cobertura de reposición o descuento inmediato por producto rechazado en inspección', pero no se especifica el procedimiento para determinar la calidad y el proceso de reclamación.\",\n      \"score\": 15\n    },\n    {\n      \"issue\": \"Inconsistencia en el monto del contrato.\",\n      \"description\": \"El monto total del contrato se establece en USD 1.080.000,00, pero el desglose de costos en el Anexo I no suma correctamente a este total, lo que puede generar confusión.\",\n     ",
+            "severity": "MEDIO",
+            "recommendation": "Revisar",
+            "category": "inconsistencias"
+          }
+        ],
+        "ruc_reports": [
+          {
+            "ruc": "0990038414001",
+            "exists": true,
+            "related": true,
+            "risk": "BAJO",
+            "rationale": "La actividad económica principal de la empresa, 'CULTIVO DE BANANOS Y PLÁTANOS', es directamente coherente y adecuada para el objeto del contrato, que es un 'CONTRATO DE SUMINISTRO DE BANANO'. La empresa mencionada, 'EXPORTADORA BANANERA NOBOA S.A.', se dedica a la producción de bananos, lo que la posiciona como un proveedor natural para el suministro requerido por el contratante. Además, el hecho de que el contrato mencione específicamente el suministro de banano refuerza la relación directa entre la actividad económica de la empresa y el objeto del contrato. La confianza en esta evaluación es alta, dado que la actividad y el contrato están alineados en el mismo sector agrícola.",
+            "ai_powered": true,
+            "sri_data": {
+              "numeroRuc": "0990038414001",
+              "razonSocial": "EXPORTADORA BANANERA NOBOA S.A.",
+              "estadoContribuyenteRuc": "ACTIVO",
+              "actividadEconomicaPrincipal": "CULTIVO DE BANANOS Y PLÁTANOS.",
+              "tipoContribuyente": "SOCIEDAD",
+              "regimen": "GENERAL",
+              "categoria": null,
+              "obligadoLlevarContabilidad": "SI",
+              "agenteRetencion": "NO",
+              "contribuyenteEspecial": "NO",
+              "informacionFechasContribuyente": {
+                "fechaInicioActividades": "1946-12-26 00:00:00.0",
+                "fechaCese": "",
+                "fechaReinicioActividades": "",
+                "fechaActualizacion": "2025-06-18 14:29:34.0"
+              },
+              "representantesLegales": [
+                {
+                  "identificacion": "0904455235",
+                  "nombre": "LOPEZ CASTRO AURA GUILLERMINA                     "
+                }
+              ],
+              "motivoCancelacionSuspension": null,
+              "contribuyenteFantasma": "NO",
+              "transaccionesInexistente": "NO"
+            },
+            "actividad_economica": "CULTIVO DE BANANOS Y PLÁTANOS.",
+            "razon_social": "EXPORTADORA BANANERA NOBOA S.A.",
+            "estado_contribuyente": "ACTIVO",
+            "tipo_contribuyente": "SOCIEDAD",
+            "obligado_contabilidad": "SI",
+            "confidence": 90
+          }
+        ]
+      }
+    },
+    {
+      "file": "CONTRATO DE SUMINISTRO DE BANANO2.pdf",
+      "path": "D:\\Github\\Github\\Personal\\HackIATHONN\\Hackathon-Agents\\AgenteIA\\data\\docs\\0f4304fd-c33d-428e-ba23-b76ea47c6522\\CONTRATO DE SUMINISTRO DE BANANO2.pdf",
+      "report": {
+        "scores": {
+          "legal": 65,
+          "tecnico": 60,
+          "economico": 60,
+          "inconsistencias": 50
+        },
+        "risks": {
+          "legal": "MEDIO",
+          "tecnico": "MEDIO",
+          "economico": "MEDIO",
+          "inconsistencias": "ALTO",
+          "ruc": "BAJO"
+        },
+        "issues": [
+          {
+            "type": "Ambigüedad",
+            "where": "CLÁUSULA SEGUNDA – PRECIO Y CONDICIONES ECONÓMICAS",
+            "evidence": "El precio por tonelada de banano será determinado tomando en cuenta la situación económica general, la demanda local e internacional y las condiciones climáticas.",
+            "severity": "Moderada",
+            "recommendation": "Definir un método claro y específico para la determinación del precio.",
+            "category": "legal"
+          },
+          {
+            "type": "Falta de especificación",
+            "where": "CLÁUSULA TERCERA – PLAZO DE VIGENCIA",
+            "evidence": "Este contrato tendrá vigencia indefinida, iniciando en el momento en que se realice la primera entrega de producto.",
+            "severity": "Alta",
+            "recommendation": "Establecer un plazo específico o condiciones bajo las cuales se puede dar por terminado el contrato.",
+            "category": "legal"
+          },
+          {
+            "type": "Falta de claridad",
+            "where": "CLÁUSULA SEXTA – MULTAS Y PENALIZACIONES",
+            "evidence": "Las multas aplicarán en caso de retrasos o incumplimientos graves, los cuales serán determinados de común acuerdo.",
+            "severity": "Alta",
+            "recommendation": "Especificar los criterios y montos de las multas para evitar ambigüedades.",
+            "category": "legal"
+          },
+          {
+            "type": "Falta de garantías",
+            "where": "CLÁUSULA CUARTA – GARANTÍAS",
+            "evidence": "EL PROVEEDOR garantiza que el producto entregado cumplirá con un nivel de calidad aceptable para fines comerciales.",
+            "severity": "Moderada",
+            "recommendation": "Incluir detalles sobre el tipo de garantía y el proceso de reclamación en caso de incumplimiento.",
+            "category": "legal"
+          },
+          {
+            "description": "No se especifica la cantidad exacta de banano a entregar, lo que puede generar ambigüedad en el cumplimiento del contrato.",
+            "severity": "High",
+            "category": "tecnico"
+          },
+          {
+            "description": "Falta de un cronograma de entrega que detalle los tiempos específicos de entrega del producto.",
+            "severity": "High",
+            "category": "tecnico"
+          },
+          {
+            "description": "No se menciona el proceso de control de calidad específico que se aplicará al banano entregado, lo que puede llevar a discrepancias en la calidad aceptable.",
+            "severity": "Medium",
+            "category": "tecnico"
+          },
+          {
+            "description": "El contrato menciona que el precio será determinado por factores externos, pero no se establece un mecanismo claro para la revisión y ajuste de precios.",
+            "severity": "Medium",
+            "category": "tecnico"
+          },
+          {
+            "description": "No se especifica el lugar exacto de entrega, lo que puede causar confusiones logísticas.",
+            "severity": "Medium",
+            "category": "tecnico"
+          },
+          {
+            "issue": "El precio por tonelada de banano no está definido claramente, lo que puede generar incertidumbre en el presupuesto.",
+            "severity": "high",
+            "category": "economico"
+          },
+          {
+            "issue": "Las condiciones de pago son ambiguas, ya que se menciona que el pago se efectuará de forma parcial o total según acuerdo verbal o escrito, lo que puede dar lugar a malentendidos.",
+            "severity": "medium",
+            "category": "economico"
+          },
+          {
+            "issue": "No se especifica un plazo claro para el pago después de la entrega, lo que puede afectar la liquidez del proveedor.",
+            "severity": "medium",
+            "category": "economico"
+          },
+          {
+            "issue": "El anticipo de hasta el 50% no tiene un mecanismo claro de amortización, lo que puede generar confusión en la ejecución del contrato.",
+            "severity": "medium",
+            "category": "economico"
+          },
+          {
+            "issue": "No se establecen hitos claros para la entrega y pago, lo que dificulta el seguimiento del cumplimiento del contrato.",
+            "severity": "medium",
+            "category": "economico"
+          },
+          {
+            "type": "parse_error",
+            "where": "validator_incons",
+            "evidence": "```json\n{\n  \"issues\": [\n    {\n      \"issue\": \"Ambigüedad en la definición de cantidades y calidades del producto.\",\n      \"description\": \"La cláusula primera menciona que las cantidades y calidades serán definidas oportunamente entre las partes, lo que puede generar incertidumbre sobre las expectativas de ambas partes y no se alinea con la necesidad de especificaciones técnicas claras según el instructivo de compras públicas.\",\n      \"score\": 40\n    },\n    {\n      \"issue\": \"Falta de un estudio de mercado documentado.\",\n      \"description\": \"No se menciona la realización de un estudio de mercado para definir el precio referencial, lo cual es un requisito según la normativa de compras públicas. Esto puede afectar la transparencia y la justificación del precio acordado.\",\n      \"score\": 30\n    },\n    {\n      \"issue\": \"Condiciones de pago poco claras.\",\n      \"description\": \"La cláusula segunda establece que el pago se realizará de forma parcial o total según acuerdo verbal o escrito, lo q",
+            "severity": "MEDIO",
+            "recommendation": "Revisar",
+            "category": "inconsistencias"
+          }
+        ],
+        "ruc_reports": [
+          {
+            "ruc": "0990038414001",
+            "exists": true,
+            "related": true,
+            "risk": "BAJO",
+            "rationale": "La actividad económica principal de la empresa, 'CULTIVO DE BANANOS Y PLÁTANOS', es directamente coherente con el objeto del contrato, que se refiere a un 'CONTRATO DE SUMINISTRO DE BANANO'. La empresa 'EXPORTADORA BANANERA NOBOA S.A.' se dedica a la producción de bananos, lo que la posiciona como un proveedor adecuado para el suministro requerido por 'Frutas y Más S.A.'. La relación entre la actividad económica y el objeto del contrato es clara, ya que ambas están centradas en el cultivo y suministro de bananos. Sin embargo, la confianza no es del 100% debido a la falta de información sobre la capacidad de la empresa para cumplir con los términos específicos del contrato.",
+            "ai_powered": true,
+            "sri_data": {
+              "numeroRuc": "0990038414001",
+              "razonSocial": "EXPORTADORA BANANERA NOBOA S.A.",
+              "estadoContribuyenteRuc": "ACTIVO",
+              "actividadEconomicaPrincipal": "CULTIVO DE BANANOS Y PLÁTANOS.",
+              "tipoContribuyente": "SOCIEDAD",
+              "regimen": "GENERAL",
+              "categoria": null,
+              "obligadoLlevarContabilidad": "SI",
+              "agenteRetencion": "NO",
+              "contribuyenteEspecial": "NO",
+              "informacionFechasContribuyente": {
+                "fechaInicioActividades": "1946-12-26 00:00:00.0",
+                "fechaCese": "",
+                "fechaReinicioActividades": "",
+                "fechaActualizacion": "2025-06-18 14:29:34.0"
+              },
+              "representantesLegales": [
+                {
+                  "identificacion": "0904455235",
+                  "nombre": "LOPEZ CASTRO AURA GUILLERMINA                     "
+                }
+              ],
+              "motivoCancelacionSuspension": null,
+              "contribuyenteFantasma": "NO",
+              "transaccionesInexistente": "NO"
+            },
+            "actividad_economica": "CULTIVO DE BANANOS Y PLÁTANOS.",
+            "razon_social": "EXPORTADORA BANANERA NOBOA S.A.",
+            "estado_contribuyente": "ACTIVO",
+            "tipo_contribuyente": "SOCIEDAD",
+            "obligado_contabilidad": "SI",
+            "confidence": 90
+          }
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "rojas": 0,
+    "amarillas": 2
+  }
+}
