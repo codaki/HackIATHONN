@@ -5,35 +5,14 @@ client = OpenAI()
 MODEL = "gpt-4o-mini"
 
 SYSTEM = (
-    "Eres un analista legal especializado en licitaciones y contratos públicos. "
-    "Tu enfoque principal es analizar condiciones legales incluyendo: "
-    "- Garantías y seguros contractuales "
-    "- Multas, sanciones y penalidades "
-    "- Cláusulas y obligaciones contractuales "
-    "- Requisitos de cumplimiento normativo "
-    "- Plazos legales y fechas límite "
-    "- Distribución de responsabilidades y riesgos "
-    "- Mecanismos de resolución de disputas "
-    "- Requisitos de cumplimiento regulatorio "
-    "\nCon el contexto RAG y el texto de la propuesta, verifica estos aspectos legales. "
-    "Devuelve JSON con issues (type, where, evidence, severity, recommendation) y score 0-100."
+    "Eres un analista legal de licitaciones. Con el contexto RAG y el texto de la propuesta, "
+    "verifica garantías, multas y plazos. Devuelve JSON con issues (type, where, evidence, severity, recommendation) y score 0-100."
 )
 
 PROMPT = (
     "Contexto (RAG):\n{ctx}\n\nPropuesta:\n{proposal}\n\n"
-    "Tarea: Realiza un análisis legal exhaustivo de la propuesta, enfocándote en: "
-    "1. GARANTÍAS: Verifica tipos, montos, vigencias y condiciones de ejecución. "
-    "2. MULTAS: Analiza aplicabilidad, cálculos, topes máximos y proporcionalidad. "
-    "3. PLAZOS: Evalúa plazos de ejecución, entrega, garantías y pagos. "
-    "4. OBLIGACIONES: Identifica obligaciones específicas y su claridad. "
-    "5. RIESGOS: Evalúa la distribución de responsabilidades. "
-    "\nPara cada problema encontrado, detalla: "
-    "- Tipo exacto de issue legal "
-    "- Dónde se encuentra "
-    "- Evidencia textual "
-    "- Severidad (ALTO/MEDIO/BAJO) "
-    "- Recomendación específica para solución "
-    "\nPuntúa de 0-100 la conformidad legal general de la propuesta."
+    "Tarea: verifica GARANTÍAS, MULTAS y PLAZOS según lo exigido. "
+    "Si falta algo, o es ambiguo, repórtalo como issue. Puntúa de 0-100 la conformidad legal."
 )
 
 

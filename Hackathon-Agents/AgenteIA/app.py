@@ -167,18 +167,37 @@ def run_analysis_for_lic(lic_id: str, objeto: str) -> Dict[str, Any]:
         for r in results:
             rep = r["report"]
             sc = rep.get("scores", {})
-            total = int(wl*sc.get("legal",0) + wt*sc.get("tecnico",0) + we*sc.get("economico",0))
+            base_total = int(wl*sc.get("legal",0) + wt*sc.get("tecnico",0) + we*sc.get("economico",0))
             rojas = sum(1 for i in rep.get("issues", []) if str(i.get("severity","" )).upper() in ("ALTO","ROJO"))
             amar = sum(1 for i in rep.get("issues", []) if str(i.get("severity","" )).upper() in ("MEDIO","AMARILLO"))
+            # Penalizaciones por RUC
+            penal_ruc = 0
+            descalificado = False
+            for rr in (rep.get("ruc_reports") or []):
+                exists = bool(rr.get("exists", True))
+                related = bool(rr.get("related", True))
+                risk = str(rr.get("risk", "")).upper()
+                if not exists:
+                    penal_ruc += 50
+                    descalificado = True
+                elif not related:
+                    penal_ruc += 40
+                elif risk == "ALTO":
+                    penal_ruc = max(penal_ruc, 30)
+            total = max(0, base_total - penal_ruc)
             filas.append({
                 "oferente": r.get("file"),
                 "scores": sc,
                 "total": total,
                 "rojas": rojas,
                 "amarillas": amar,
-                "issues": rep.get("issues", [])
+                "issues": rep.get("issues", []),
+                "penalizacion_ruc": penal_ruc,
+                "descalificado": descalificado,
             })
-        ganador = max(filas, key=lambda x: x["total"]) if filas else None
+        # Elegir ganador ignorando descalificados
+        candidatas = [f for f in filas if not f.get("descalificado")]
+        ganador = max(candidatas, key=lambda x: x["total"]) if candidatas else None
     except Exception:
         filas, ganador = [], None
 
@@ -566,7 +585,22 @@ def comparativo(lic_id: str):
         wl, wt, we = float(pesos.get("legal", 35)), float(pesos.get("tecnico", 40)), float(pesos.get("economico", 25))
         denom = max(wl + wt + we, 1.0)
         wl, wt, we = wl/denom, wt/denom, we/denom
-        total = int(wl * scores.get("legal", 50) + wt * scores.get("tecnico", 50) + we * scores.get("economico", 50))
+        base_total = int(wl * scores.get("legal", 50) + wt * scores.get("tecnico", 50) + we * scores.get("economico", 50))
+        # Penalizaciones por RUC (consistentes con orquestador)
+        penal_ruc = 0
+        descalificado = False
+        for rr in (rep.get("ruc_reports") or []):
+            exists = bool(rr.get("exists", True))
+            related = bool(rr.get("related", True))
+            risk = str(rr.get("risk", "")).upper()
+            if not exists:
+                penal_ruc += 50
+                descalificado = True
+            elif not related:
+                penal_ruc += 40
+            elif risk == "ALTO":
+                penal_ruc = max(penal_ruc, 30)
+        total = max(0, base_total - penal_ruc)
         rows.append({
             "oferente": r["file"],
             "cumple_minimos": True,  # placeholder
@@ -577,10 +611,13 @@ def comparativo(lic_id: str):
             "rojas": rojas,
             "amarillas": amar,
             "observaciones": "",
+            "penalizacion_ruc": penal_ruc,
+            "descalificado": descalificado,
         })
     # excluir pliegos de la competencia si se colaron
     rows = [r for r in rows if not str(r.get("oferente", "")).lower().startswith("pliego")]
-    ganador = max(rows, key=lambda x: x["score_total"]) if rows else None
+    candidatas = [r for r in rows if not r.get("descalificado")]
+    ganador = max(candidatas, key=lambda x: x["score_total"]) if candidatas else None
     return {"items": rows, "ganador": ganador}
 
 class ChatRequest(BaseModel):

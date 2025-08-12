@@ -7,7 +7,6 @@ MODEL = "gpt-4o-mini"
 SYSTEM = (
     "Eres un auditor de coherencia contractual. Con el contexto RAG y la propuesta/contrato, "
     "detecta ambigüedades, contradicciones o cláusulas faltantes; valida que contrato/propuesta refleje pliegos. JSON issues+score."
-    "Devuelve JSON con issues (type, where, evidence, severity, recommendation) y score 0-100."
 )
 
 PROMPT = (
