@@ -1,0 +1,290 @@
+{
+  "results": [
+    {
+      "file": "CONTRATO DE SUMINISTRO DE BANANO1.pdf",
+      "path": "D:\\Github\\Github\\Personal\\HackIATHONN\\Hackathon-Agents\\AgenteIA\\data\\docs\\d6626b68-41f1-4624-a7ed-cb6fa43e06c0\\CONTRATO DE SUMINISTRO DE BANANO1.pdf",
+      "report": {
+        "scores": {
+          "legal": 85,
+          "tecnico": 70,
+          "economico": 75,
+          "inconsistencias": 50
+        },
+        "risks": {
+          "legal": "BAJO",
+          "tecnico": "MEDIO",
+          "economico": "MEDIO",
+          "inconsistencias": "ALTO",
+          "ruc": "BAJO"
+        },
+        "issues": [
+          {
+            "type": "missing_information",
+            "where": "CLÁUSULA CUARTA – GARANTÍAS",
+            "evidence": "No se especifica el tipo de garantía para el fiel cumplimiento, solo se menciona un porcentaje.",
+            "severity": "medium",
+            "recommendation": "Especificar el tipo de garantía que se debe presentar para el fiel cumplimiento del contrato.",
+            "category": "legal"
+          },
+          {
+            "type": "missing_information",
+            "where": "CLÁUSULA SEXTA – MULTAS Y PENALIZACIONES",
+            "evidence": "No se especifica un límite máximo para las multas acumuladas.",
+            "severity": "medium",
+            "recommendation": "Incluir un límite máximo para las multas acumuladas por retrasos o incumplimientos.",
+            "category": "legal"
+          },
+          {
+            "type": "ambiguity",
+            "where": "CLÁUSULA TERCERA – PLAZO DE EJECUCIÓN",
+            "evidence": "El contrato menciona que inicia el 1 de septiembre de 2025 y finaliza el 31 de agosto de 2026, pero no se menciona si hay posibilidad de prórroga.",
+            "severity": "low",
+            "recommendation": "Aclarar si existe la posibilidad de prórroga del contrato.",
+            "category": "legal"
+          },
+          {
+            "description": "No se especifica la cantidad mínima de proformas requeridas con firma ológrafa.",
+            "severity": "Amber",
+            "category": "tecnico"
+          },
+          {
+            "description": "Falta de información sobre el análisis de mercado y la justificación del presupuesto referencial.",
+            "severity": "Red",
+            "category": "tecnico"
+          },
+          {
+            "description": "No se menciona el cumplimiento de las especificaciones técnicas requeridas por la normativa de producción nacional.",
+            "severity": "Red",
+            "category": "tecnico"
+          },
+          {
+            "description": "El plazo de ejecución no se detalla en relación a los tiempos de entrega específicos para cada lote.",
+            "severity": "Amber",
+            "category": "tecnico"
+          },
+          {
+            "description": "No se incluye un plan de contingencia en caso de incumplimiento de calidad o retrasos en la entrega.",
+            "severity": "Amber",
+            "category": "tecnico"
+          },
+          {
+            "description": "El contrato menciona un anticipo del 20% del valor del contrato, pero no se especifica el mecanismo de amortización en detalle, lo que puede generar ambigüedad en la ejecución de pagos.",
+            "severity": "medium",
+            "category": "economico"
+          },
+          {
+            "description": "No se detalla el procedimiento para la aprobación de la inspección de calidad antes de los pagos, lo que puede llevar a discrepancias en la interpretación de los términos.",
+            "severity": "medium",
+            "category": "economico"
+          },
+          {
+            "description": "El contrato no menciona un cronograma de pagos específico más allá de la entrega mensual, lo que puede dificultar la planificación financiera.",
+            "severity": "low",
+            "category": "economico"
+          },
+          {
+            "description": "No se especifica el procedimiento para la liberación del 5% de retención al cierre del contrato, lo que podría generar confusiones sobre el tiempo y condiciones para su devolución.",
+            "severity": "medium",
+            "category": "economico"
+          },
+          {
+            "type": "parse_error",
+            "where": "validator_incons",
+            "evidence": "```json\n{\n  \"issues\": [\n    {\n      \"issue\": \"Falta de especificación sobre el origen de los productos en el contrato.\",\n      \"description\": \"El contrato menciona que el banano proviene de 'plantaciones propias y certificadas bajo normas GlobalG.A.P', pero no se especifica si esto se alinea con la normativa sobre el control del valor agregado ecuatoriano, que requiere verificación de la producción nacional.\",\n      \"score\": 20\n    },\n    {\n      \"issue\": \"Ambigüedad en la cláusula de garantías.\",\n      \"description\": \"La cláusula cuarta menciona 'cobertura de reposición o descuento inmediato por producto rechazado en inspección', pero no se especifica el proceso de inspección ni los criterios claros para la aceptación o rechazo del producto.\",\n      \"score\": 30\n    },\n    {\n      \"issue\": \"Inconsistencia en el monto del anticipo.\",\n      \"description\": \"El anticipo se establece en 20% del valor del contrato, pero el cálculo presentado (USD 216.000,00) no coincide con el 20% de USD 1.0",
+            "severity": "MEDIO",
+            "recommendation": "Revisar",
+            "category": "inconsistencias"
+          }
+        ],
+        "ruc_reports": [
+          {
+            "ruc": "0990038414001",
+            "exists": true,
+            "related": true,
+            "risk": "BAJO",
+            "rationale": "La actividad económica principal de la empresa, 'CULTIVO DE BANANOS Y PLÁTANOS', es directamente coherente con el objeto del contrato, que es un 'CONTRATO DE SUMINISTRO DE BANANO'. La empresa mencionada, 'EXPORTADORA BANANERA NOBOA S.A.', se dedica a la producción de bananos, lo que la convierte en un proveedor potencial adecuado para el suministro requerido por 'Frutas del Pacífico S.A.'. La alta confianza en esta evaluación se debe a la alineación directa entre la actividad económica y el objeto del contrato, aunque se debe considerar que la empresa proveedora mencionada en el contrato es 'Agroexportadora del Litoral Cía. Ltda.', lo que podría requerir una verificación adicional sobre la relación entre las empresas.",
+            "ai_powered": true,
+            "sri_data": {
+              "numeroRuc": "0990038414001",
+              "razonSocial": "EXPORTADORA BANANERA NOBOA S.A.",
+              "estadoContribuyenteRuc": "ACTIVO",
+              "actividadEconomicaPrincipal": "CULTIVO DE BANANOS Y PLÁTANOS.",
+              "tipoContribuyente": "SOCIEDAD",
+              "regimen": "GENERAL",
+              "categoria": null,
+              "obligadoLlevarContabilidad": "SI",
+              "agenteRetencion": "NO",
+              "contribuyenteEspecial": "NO",
+              "informacionFechasContribuyente": {
+                "fechaInicioActividades": "1946-12-26 00:00:00.0",
+                "fechaCese": "",
+                "fechaReinicioActividades": "",
+                "fechaActualizacion": "2025-06-18 14:29:34.0"
+              },
+              "representantesLegales": [
+                {
+                  "identificacion": "0904455235",
+                  "nombre": "LOPEZ CASTRO AURA GUILLERMINA                     "
+                }
+              ],
+              "motivoCancelacionSuspension": null,
+              "contribuyenteFantasma": "NO",
+              "transaccionesInexistente": "NO"
+            },
+            "actividad_economica": "CULTIVO DE BANANOS Y PLÁTANOS.",
+            "razon_social": "EXPORTADORA BANANERA NOBOA S.A.",
+            "estado_contribuyente": "ACTIVO",
+            "tipo_contribuyente": "SOCIEDAD",
+            "obligado_contabilidad": "SI",
+            "confidence": 90
+          }
+        ]
+      }
+    },
+    {
+      "file": "CONTRATO DE SUMINISTRO DE BANANO2.pdf",
+      "path": "D:\\Github\\Github\\Personal\\HackIATHONN\\Hackathon-Agents\\AgenteIA\\data\\docs\\d6626b68-41f1-4624-a7ed-cb6fa43e06c0\\CONTRATO DE SUMINISTRO DE BANANO2.pdf",
+      "report": {
+        "scores": {
+          "legal": 70,
+          "tecnico": 70,
+          "economico": 60,
+          "inconsistencias": 50
+        },
+        "risks": {
+          "legal": "MEDIO",
+          "tecnico": "MEDIO",
+          "economico": "MEDIO",
+          "inconsistencias": "ALTO",
+          "ruc": "BAJO"
+        },
+        "issues": [
+          {
+            "type": "Missing Information",
+            "where": "Cláusula Cuarta – GARANTÍAS",
+            "evidence": "No se especifica el tipo de garantías que el proveedor debe presentar ni su forma de ejecución.",
+            "severity": "High",
+            "recommendation": "Incluir detalles sobre las garantías que el proveedor debe presentar, así como las condiciones bajo las cuales se ejecutarán.",
+            "category": "legal"
+          },
+          {
+            "type": "Ambiguity",
+            "where": "Cláusula Sexta – MULTAS Y PENALIZACIONES",
+            "evidence": "Las multas se determinarán de común acuerdo, lo que puede generar incertidumbre sobre su aplicación.",
+            "severity": "Medium",
+            "recommendation": "Definir criterios claros para la imposición de multas y el monto específico o un rango de multas aplicables.",
+            "category": "legal"
+          },
+          {
+            "type": "Missing Information",
+            "where": "Cláusula Tercera – PLAZO DE VIGENCIA",
+            "evidence": "El contrato tiene vigencia indefinida, lo que puede ser problemático en términos de gestión y control.",
+            "severity": "Medium",
+            "recommendation": "Establecer un plazo específico o condiciones bajo las cuales el contrato puede ser revisado o renovado.",
+            "category": "legal"
+          },
+          {
+            "description": "No se especifica la cantidad exacta de banano a entregar, lo que puede generar ambigüedad en el cumplimiento del contrato.",
+            "severity": "High",
+            "category": "tecnico"
+          },
+          {
+            "description": "No se detallan las condiciones específicas de calidad que debe cumplir el banano, lo que puede llevar a discrepancias en la recepción del producto.",
+            "severity": "Medium",
+            "category": "tecnico"
+          },
+          {
+            "description": "El plazo de entrega se menciona como 'razonable' sin un marco temporal definido, lo que puede causar incertidumbre en la logística.",
+            "severity": "High",
+            "category": "tecnico"
+          },
+          {
+            "description": "No se menciona un proceso claro para la verificación de la calidad del producto antes de la entrega, lo que puede afectar la satisfacción del comprador.",
+            "severity": "Medium",
+            "category": "tecnico"
+          },
+          {
+            "description": "El contrato tiene vigencia indefinida sin un mecanismo claro de revisión o actualización de términos, lo que puede ser problemático a largo plazo.",
+            "severity": "Low",
+            "category": "tecnico"
+          },
+          {
+            "issue": "El precio por tonelada de banano no está definido claramente, se menciona que será determinado tomando en cuenta varios factores, lo que puede generar ambigüedad en la fijación del precio.",
+            "severity": "high",
+            "category": "economico"
+          },
+          {
+            "issue": "Las condiciones de pago son vagamente definidas, se menciona que el pago se efectuará de forma parcial o total según acuerdo verbal o escrito, lo que puede generar incertidumbre.",
+            "severity": "medium",
+            "category": "economico"
+          },
+          {
+            "issue": "El anticipo de hasta el 50% del valor de la entrega no especifica claramente cómo se calculará este valor, lo que puede llevar a confusiones en la ejecución del contrato.",
+            "severity": "medium",
+            "category": "economico"
+          },
+          {
+            "issue": "No se especifican hitos claros para la entrega y pago, lo que dificulta el seguimiento del cumplimiento del contrato.",
+            "severity": "high",
+            "category": "economico"
+          },
+          {
+            "type": "parse_error",
+            "where": "validator_incons",
+            "evidence": "```json\n{\n  \"issues\": [\n    {\n      \"issue\": \"Ambigüedad en la definición de cantidades y calidades del producto.\",\n      \"description\": \"La cláusula primera menciona que las cantidades y calidades serán definidas oportunamente entre las partes, lo que puede generar incertidumbre sobre las expectativas y obligaciones de cada parte.\",\n      \"score\": 30\n    },\n    {\n      \"issue\": \"Falta de especificación sobre el estudio de mercado.\",\n      \"description\": \"No se menciona un estudio de mercado previo para la definición del precio, lo cual es un requisito según la normativa. Esto puede afectar la transparencia y la justificación del precio acordado.\",\n      \"score\": 25\n    },\n    {\n      \"issue\": \"Condiciones de pago poco claras.\",\n      \"description\": \"La cláusula segunda establece que el pago se efectuará de forma parcial o total según acuerdo verbal o escrito, lo que puede llevar a malentendidos. Se recomienda especificar los plazos y condiciones de pago de manera más clara.\",\n      \"s",
+            "severity": "MEDIO",
+            "recommendation": "Revisar",
+            "category": "inconsistencias"
+          }
+        ],
+        "ruc_reports": [
+          {
+            "ruc": "0990038414001",
+            "exists": true,
+            "related": true,
+            "risk": "BAJO",
+            "rationale": "La actividad económica principal de la empresa, 'CULTIVO DE BANANOS Y PLÁTANOS', es directamente coherente con el objeto del contrato, que implica el suministro de banano. La empresa 'EXPORTADORA BANANERA NOBOA S.A.' se dedica a la producción de bananos, lo que la posiciona como un proveedor adecuado para el contrato de suministro mencionado. Además, el contrato especifica la entrega de banano, lo que refuerza la relación entre la actividad económica de la empresa y el objeto del contrato. Sin embargo, la confianza no es del 100% debido a la falta de información sobre la capacidad de la empresa para cumplir con los términos del contrato y su relación específica con el 'VENDEDOR: Banano del Litoral'.",
+            "ai_powered": true,
+            "sri_data": {
+              "numeroRuc": "0990038414001",
+              "razonSocial": "EXPORTADORA BANANERA NOBOA S.A.",
+              "estadoContribuyenteRuc": "ACTIVO",
+              "actividadEconomicaPrincipal": "CULTIVO DE BANANOS Y PLÁTANOS.",
+              "tipoContribuyente": "SOCIEDAD",
+              "regimen": "GENERAL",
+              "categoria": null,
+              "obligadoLlevarContabilidad": "SI",
+              "agenteRetencion": "NO",
+              "contribuyenteEspecial": "NO",
+              "informacionFechasContribuyente": {
+                "fechaInicioActividades": "1946-12-26 00:00:00.0",
+                "fechaCese": "",
+                "fechaReinicioActividades": "",
+                "fechaActualizacion": "2025-06-18 14:29:34.0"
+              },
+              "representantesLegales": [
+                {
+                  "identificacion": "0904455235",
+                  "nombre": "LOPEZ CASTRO AURA GUILLERMINA                     "
+                }
+              ],
+              "motivoCancelacionSuspension": null,
+              "contribuyenteFantasma": "NO",
+              "transaccionesInexistente": "NO"
+            },
+            "actividad_economica": "CULTIVO DE BANANOS Y PLÁTANOS.",
+            "razon_social": "EXPORTADORA BANANERA NOBOA S.A.",
+            "estado_contribuyente": "ACTIVO",
+            "tipo_contribuyente": "SOCIEDAD",
+            "obligado_contabilidad": "SI",
+            "confidence": 90
+          }
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "rojas": 0,
+    "amarillas": 2
+  }
+}
