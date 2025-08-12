@@ -1,310 +1,170 @@
 {
   "licitaciones": [
     {
-      "id": "0a0e911e-f5e5-4cc8-bba6-fbd5e6618094",
-      "nombre": "Contrato Parque Actuactivo",
-      "objeto": "compara los 2 contratos",
-      "presupuesto": 220000.0,
-      "pesos": {
-        "legal": 35,
-        "tecnico": 40,
-        "economico": 25
-      },
-      "normativa": [],
-      "deadline": null,
-      "etapa": "Análisis",
-      "progreso": 100,
-      "created_at": "2025-08-11T03:42:11.186384",
-      "last_analysis_at": "2025-08-11T03:47:00.535644"
-    },
-    {
-      "id": "42193086-8fff-45ca-a16b-45def094aec6",
-      "nombre": "Proceso sin nombre",
+      "id": "d4f078c9-2121-449f-ba67-f6345e60a5d2",
+      "nombre": "Contratar el suministro internacional de bananas tipo Cavendish categoría Premium",
       "objeto": "",
-      "presupuesto": null,
+      "presupuesto": 26000000.0,
       "pesos": {
         "legal": 35,
-        "tecnico": 40,
-        "economico": 25
-      },
-      "normativa": [],
-      "deadline": null,
-      "etapa": "Ingesta",
-      "progreso": 0,
-      "created_at": "2025-08-11T03:47:24.661163"
-    },
-    {
-      "id": "d16a7971-c5ec-4783-a03a-a22ab2b4b0a8",
-      "nombre": "Contratacion Parques Acuaticos",
-      "objeto": "Compara los 2 contratos",
-      "presupuesto": 30000000.0,
-      "pesos": {
-        "legal": 35,
-        "tecnico": 40,
-        "economico": 25
-      },
-      "normativa": [],
-      "deadline": null,
-      "etapa": "Análisis",
-      "progreso": 100,
-      "created_at": "2025-08-11T04:20:35.425263",
-      "last_analysis_at": "2025-08-11T04:32:43.868153"
-    },
-    {
-      "id": "198e5d45-15c3-4cde-b071-079cd4c2a3d5",
-      "nombre": "Parque Acuatico",
-      "objeto": "Compara los 2 parques acuaticos",
-      "presupuesto": 30000000.0,
-      "pesos": {
-        "legal": 35,
-        "tecnico": 40,
-        "economico": 25
-      },
-      "normativa": [],
-      "deadline": null,
-      "etapa": "Análisis",
-      "progreso": 100,
-      "created_at": "2025-08-11T04:51:17.735969",
-      "last_analysis_at": "2025-08-11T04:53:26.029393"
-    },
-    {
-      "id": "03a172a6-433e-4d5b-82ad-9b1643f0a75e",
-      "nombre": "Parques Acuaticos",
-      "objeto": "Comparar parques acuaticos",
-      "presupuesto": 30000000.0,
-      "pesos": {
-        "legal": 35,
-        "tecnico": 40,
-        "economico": 25
-      },
-      "normativa": [],
-      "deadline": null,
-      "etapa": "Análisis",
-      "progreso": 100,
-      "created_at": "2025-08-11T04:54:12.038812",
-      "last_analysis_at": "2025-08-11T04:56:24.591018"
-    },
-    {
-      "id": "b750b46f-9e6a-4048-b744-8d1376e8ca3e",
-      "nombre": "Parques Acuaticos",
-      "objeto": "Comparativa parques acuaticos",
-      "presupuesto": 30000000.0,
-      "pesos": {
-        "legal": 35,
-        "tecnico": 40,
-        "economico": 25
-      },
-      "normativa": [],
-      "deadline": null,
-      "etapa": "Análisis",
-      "progreso": 100,
-      "created_at": "2025-08-11T05:01:06.211692",
-      "last_analysis_at": "2025-08-11T05:02:47.035048"
-    },
-    {
-      "id": "ca517531-4bcb-4941-a148-8c61ae74003d",
-      "nombre": "Parque Acuatico",
-      "objeto": "Comparacion de contratos",
-      "presupuesto": 3000000.0,
-      "pesos": {
-        "legal": 35,
-        "tecnico": 40,
-        "economico": 25
-      },
-      "normativa": [],
-      "deadline": null,
-      "etapa": "Análisis",
-      "progreso": 100,
-      "created_at": "2025-08-11T05:22:26.091211",
-      "last_analysis_at": "2025-08-11T05:24:48.464448"
-    },
-    {
-      "id": "38b72d81-5042-4515-9869-a002d62e7090",
-      "nombre": "Parque Acuatico",
-      "objeto": "Parque acuatico",
-      "presupuesto": 30000000.0,
-      "pesos": {
-        "legal": 35,
-        "tecnico": 40,
-        "economico": 25
-      },
-      "normativa": [],
-      "deadline": null,
-      "etapa": "Ingesta",
-      "progreso": 0,
-      "created_at": "2025-08-11T14:30:14.566829"
-    },
-    {
-      "id": "df24aa63-0ba6-4621-b0af-0204f6c7db87",
-      "nombre": "Contratacion equipos acuaticos",
-      "objeto": "Contratacion",
-      "presupuesto": 3000000.0,
-      "pesos": {
-        "legal": 35,
-        "tecnico": 40,
-        "economico": 25
-      },
-      "normativa": [],
-      "deadline": null,
-      "etapa": "Análisis",
-      "progreso": 100,
-      "created_at": "2025-08-11T15:51:45.031382",
-      "last_analysis_at": "2025-08-11T15:54:15.798367"
-    },
-    {
-      "id": "21e7105f-c8c0-4961-a7a1-0ffe1818b612",
-      "nombre": "Proceso sin nombre",
-      "objeto": "",
-      "presupuesto": null,
-      "pesos": {
-        "legal": 35,
-        "tecnico": 40,
-        "economico": 25
-      },
-      "normativa": [],
-      "deadline": null,
-      "etapa": "Ingesta",
-      "progreso": 0,
-      "created_at": "2025-08-11T15:56:06.575126"
-    },
-    {
-      "id": "65fe0713-2d7d-4cf6-b4d4-79825946483c",
-      "nombre": "Proceso sin nombre",
-      "objeto": "",
-      "presupuesto": null,
-      "pesos": {
-        "legal": 35,
-        "tecnico": 40,
-        "economico": 25
-      },
-      "normativa": [],
-      "deadline": null,
-      "etapa": "Ingesta",
-      "progreso": 0,
-      "created_at": "2025-08-11T15:58:44.732741"
-    },
-    {
-      "id": "b6fb32c2-5a13-4113-8665-627b89ffc0eb",
-      "nombre": "Parque",
-      "objeto": "Comparar Parques",
-      "presupuesto": 3022701.0,
-      "pesos": {
-        "legal": 35,
-        "tecnico": 40,
-        "economico": 25
-      },
-      "normativa": [],
-      "deadline": null,
-      "etapa": "Análisis",
-      "progreso": 100,
-      "created_at": "2025-08-11T16:46:31.660595",
-      "last_analysis_at": "2025-08-11T16:48:36.365047"
-    },
-    {
-      "id": "0c4c3788-22a4-4d84-be66-cc61fb5fcb35",
-      "nombre": "Creacion de Parques",
-      "objeto": "Parques",
-      "presupuesto": 300000.0,
-      "pesos": {
-        "legal": 35,
-        "tecnico": 40,
-        "economico": 25
-      },
-      "normativa": [],
-      "deadline": null,
-      "etapa": "Ingesta",
-      "progreso": 0,
-      "created_at": "2025-08-11T16:53:46.437633"
-    },
-    {
-      "id": "74b71eab-fbf9-46a3-8885-d7ca1063ba87",
-      "nombre": "Proceso sin nombre",
-      "objeto": "",
-      "presupuesto": null,
-      "pesos": {
-        "legal": 35,
-        "tecnico": 40,
-        "economico": 25
-      },
-      "normativa": [],
-      "deadline": null,
-      "etapa": "Ingesta",
-      "progreso": 0,
-      "created_at": "2025-08-11T16:54:08.617475"
-    },
-    {
-      "id": "8c8bee9b-1b73-4f56-b8f8-eee3805cd529",
-      "nombre": "parques",
-      "objeto": "",
-      "presupuesto": 30.0,
-      "pesos": {
-        "legal": 35,
-        "tecnico": 40,
-        "economico": 25
-      },
-      "normativa": [],
-      "deadline": null,
-      "etapa": "Análisis",
-      "progreso": 100,
-      "created_at": "2025-08-11T17:04:49.109877",
-      "docs": [
-        {
-          "file": "📄 PLIEGO DE LICITACIÓN.pdf",
-          "path": "D:\\HACKATHONFRONTBACK\\Hackathon-Agents\\AgenteIA\\data\\docs\\8c8bee9b-1b73-4f56-b8f8-eee3805cd529\\📄 PLIEGO DE LICITACIÓN.pdf",
-          "type": "pliego",
-          "size": 3926631
-        },
-        {
-          "file": "CONSTRUCCION DE UN PARQUE RECREACIONAL ACADEMIA DEL VALLE.pdf",
-          "path": "D:\\HACKATHONFRONTBACK\\Hackathon-Agents\\AgenteIA\\data\\docs\\8c8bee9b-1b73-4f56-b8f8-eee3805cd529\\CONSTRUCCION DE UN PARQUE RECREACIONAL ACADEMIA DEL VALLE.pdf",
-          "type": "propuesta",
-          "size": 931964
-        },
-        {
-          "file": "CONSTRUCCIÓN DE PARQUE BIOSALUDABLE COMUNA CENTRO ALANGASI.pdf",
-          "path": "D:\\HACKATHONFRONTBACK\\Hackathon-Agents\\AgenteIA\\data\\docs\\8c8bee9b-1b73-4f56-b8f8-eee3805cd529\\CONSTRUCCIÓN DE PARQUE BIOSALUDABLE COMUNA CENTRO ALANGASI.pdf",
-          "type": "propuesta",
-          "size": 946177
-        }
-      ],
-      "last_analysis_at": "2025-08-11T17:06:23.099471"
-    },
-    {
-      "id": "28c846e6-2374-4e1e-b3d1-3095ea076dd1",
-      "nombre": "Exportacion de banano",
-      "objeto": "",
-      "presupuesto": 1080000.0,
-      "pesos": {
-        "legal": 25,
-        "tecnico": 35,
+        "tecnico": 25,
         "economico": 40
       },
       "normativa": [],
       "deadline": null,
       "etapa": "Análisis",
       "progreso": 100,
-      "created_at": "2025-08-11T18:11:20.710675",
+      "created_at": "2025-08-12T03:25:03.627677",
       "docs": [
         {
-          "file": "PLIEGO DE CONTRATACIÓN PÚBLICA.pdf",
-          "path": "D:\\HACKATHONFRONTBACK\\Hackathon-Agents\\AgenteIA\\data\\docs\\28c846e6-2374-4e1e-b3d1-3095ea076dd1\\PLIEGO DE CONTRATACIÓN PÚBLICA.pdf",
+          "file": "Pliego.pdf",
+          "path": "D:\\HACKATHONFRONTBACK\\Hackathon-Agents\\AgenteIA\\data\\docs\\d4f078c9-2121-449f-ba67-f6345e60a5d2\\Pliego.pdf",
           "type": "pliego",
-          "size": 105819
+          "size": 3909386
         },
         {
-          "file": "CONTRATO DE SUMINISTRO DE BANANO1.pdf",
-          "path": "D:\\HACKATHONFRONTBACK\\Hackathon-Agents\\AgenteIA\\data\\docs\\28c846e6-2374-4e1e-b3d1-3095ea076dd1\\CONTRATO DE SUMINISTRO DE BANANO1.pdf",
+          "file": "Contrato Banano 2.pdf",
+          "path": "D:\\HACKATHONFRONTBACK\\Hackathon-Agents\\AgenteIA\\data\\docs\\d4f078c9-2121-449f-ba67-f6345e60a5d2\\Contrato Banano 2.pdf",
           "type": "propuesta",
-          "size": 97953
+          "size": 3876150
         },
         {
-          "file": "CONTRATO DE SUMINISTRO DE BANANO2.pdf",
-          "path": "D:\\HACKATHONFRONTBACK\\Hackathon-Agents\\AgenteIA\\data\\docs\\28c846e6-2374-4e1e-b3d1-3095ea076dd1\\CONTRATO DE SUMINISTRO DE BANANO2.pdf",
+          "file": "Contrato Banano 1.pdf",
+          "path": "D:\\HACKATHONFRONTBACK\\Hackathon-Agents\\AgenteIA\\data\\docs\\d4f078c9-2121-449f-ba67-f6345e60a5d2\\Contrato Banano 1.pdf",
           "type": "propuesta",
-          "size": 52642
+          "size": 3908121
         }
       ],
-      "last_analysis_at": "2025-08-11T18:13:10.493910"
+      "last_analysis_at": "2025-08-12T03:26:35.069111"
+    },
+    {
+      "id": "8606771c-b273-48c2-bc85-2e3fa717db15",
+      "nombre": "Contrato de bananos",
+      "objeto": "",
+      "presupuesto": 25000000.0,
+      "pesos": {
+        "legal": 35,
+        "tecnico": 25,
+        "economico": 40
+      },
+      "normativa": [],
+      "deadline": null,
+      "etapa": "Análisis",
+      "progreso": 100,
+      "created_at": "2025-08-12T03:34:52.782098",
+      "docs": [
+        {
+          "file": "Pliego.pdf",
+          "path": "D:\\HACKATHONFRONTBACK\\Hackathon-Agents\\AgenteIA\\data\\docs\\8606771c-b273-48c2-bc85-2e3fa717db15\\Pliego.pdf",
+          "type": "pliego",
+          "size": 3909386
+        },
+        {
+          "file": "Contrato Banano 3.pdf",
+          "path": "D:\\HACKATHONFRONTBACK\\Hackathon-Agents\\AgenteIA\\data\\docs\\8606771c-b273-48c2-bc85-2e3fa717db15\\Contrato Banano 3.pdf",
+          "type": "propuesta",
+          "size": 80791
+        },
+        {
+          "file": "Contrato Banano 2.pdf",
+          "path": "D:\\HACKATHONFRONTBACK\\Hackathon-Agents\\AgenteIA\\data\\docs\\8606771c-b273-48c2-bc85-2e3fa717db15\\Contrato Banano 2.pdf",
+          "type": "propuesta",
+          "size": 3876150
+        },
+        {
+          "file": "Contrato Banano 1.pdf",
+          "path": "D:\\HACKATHONFRONTBACK\\Hackathon-Agents\\AgenteIA\\data\\docs\\8606771c-b273-48c2-bc85-2e3fa717db15\\Contrato Banano 1.pdf",
+          "type": "propuesta",
+          "size": 3908121
+        }
+      ],
+      "last_analysis_at": "2025-08-12T03:37:03.736293"
+    },
+    {
+      "id": "0df9bc43-2e3f-42b4-bba8-1177a4ccb673",
+      "nombre": "Contratación para exportar Bananas premium",
+      "objeto": "",
+      "presupuesto": 27000000.0,
+      "pesos": {
+        "legal": 35,
+        "tecnico": 25,
+        "economico": 40
+      },
+      "normativa": [],
+      "deadline": null,
+      "etapa": "Análisis",
+      "progreso": 100,
+      "created_at": "2025-08-12T03:47:10.531403",
+      "docs": [
+        {
+          "file": "Pliego.pdf",
+          "path": "D:\\HACKATHONFRONTBACK\\Hackathon-Agents\\AgenteIA\\data\\docs\\0df9bc43-2e3f-42b4-bba8-1177a4ccb673\\Pliego.pdf",
+          "type": "pliego",
+          "size": 3909386
+        },
+        {
+          "file": "Contrato Banano 3.pdf",
+          "path": "D:\\HACKATHONFRONTBACK\\Hackathon-Agents\\AgenteIA\\data\\docs\\0df9bc43-2e3f-42b4-bba8-1177a4ccb673\\Contrato Banano 3.pdf",
+          "type": "propuesta",
+          "size": 80791
+        },
+        {
+          "file": "Contrato Banano 2.pdf",
+          "path": "D:\\HACKATHONFRONTBACK\\Hackathon-Agents\\AgenteIA\\data\\docs\\0df9bc43-2e3f-42b4-bba8-1177a4ccb673\\Contrato Banano 2.pdf",
+          "type": "propuesta",
+          "size": 3876150
+        },
+        {
+          "file": "Contrato Banano 1.pdf",
+          "path": "D:\\HACKATHONFRONTBACK\\Hackathon-Agents\\AgenteIA\\data\\docs\\0df9bc43-2e3f-42b4-bba8-1177a4ccb673\\Contrato Banano 1.pdf",
+          "type": "propuesta",
+          "size": 3908121
+        }
+      ],
+      "last_analysis_at": "2025-08-12T03:49:08.752210"
+    },
+    {
+      "id": "8c80d9e1-0818-43a5-9bc9-aaa823f1250a",
+      "nombre": "Banana Test",
+      "objeto": "",
+      "presupuesto": 25000000.0,
+      "pesos": {
+        "legal": 35,
+        "tecnico": 40,
+        "economico": 25
+      },
+      "normativa": [],
+      "deadline": null,
+      "etapa": "Análisis",
+      "progreso": 100,
+      "created_at": "2025-08-12T05:27:25.398499",
+      "docs": [
+        {
+          "file": "Pliego.pdf",
+          "path": "D:\\Github\\Github\\Personal\\HackIATHONN\\Hackathon-Agents\\AgenteIA\\data\\docs\\8c80d9e1-0818-43a5-9bc9-aaa823f1250a\\Pliego.pdf",
+          "type": "pliego",
+          "size": 3909386
+        },
+        {
+          "file": "Contrato Banano 1.pdf",
+          "path": "D:\\Github\\Github\\Personal\\HackIATHONN\\Hackathon-Agents\\AgenteIA\\data\\docs\\8c80d9e1-0818-43a5-9bc9-aaa823f1250a\\Contrato Banano 1.pdf",
+          "type": "propuesta",
+          "size": 3908121
+        },
+        {
+          "file": "Contrato Banano 2.pdf",
+          "path": "D:\\Github\\Github\\Personal\\HackIATHONN\\Hackathon-Agents\\AgenteIA\\data\\docs\\8c80d9e1-0818-43a5-9bc9-aaa823f1250a\\Contrato Banano 2.pdf",
+          "type": "propuesta",
+          "size": 3876150
+        },
+        {
+          "file": "Contrato Banano 3.pdf",
+          "path": "D:\\Github\\Github\\Personal\\HackIATHONN\\Hackathon-Agents\\AgenteIA\\data\\docs\\8c80d9e1-0818-43a5-9bc9-aaa823f1250a\\Contrato Banano 3.pdf",
+          "type": "propuesta",
+          "size": 80791
+        }
+      ],
+      "last_analysis_at": "2025-08-12T05:30:20.605140"
     }
   ]
 }

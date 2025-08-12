@@ -1,0 +1,407 @@
+{
+  "results": [
+    {
+      "file": "Contrato Banano 1.pdf",
+      "path": "D:\\Github\\Github\\Personal\\HackIATHONN\\Hackathon-Agents\\AgenteIA\\data\\docs\\8c80d9e1-0818-43a5-9bc9-aaa823f1250a\\Contrato Banano 1.pdf",
+      "report": {
+        "scores": {
+          "legal": 75,
+          "tecnico": 75,
+          "economico": 80,
+          "inconsistencias": 50
+        },
+        "risks": {
+          "legal": "MEDIO",
+          "tecnico": "MEDIO",
+          "economico": "MEDIO",
+          "inconsistencias": "ALTO",
+          "ruc": "BAJO"
+        },
+        "issues": [
+          {
+            "type": "Missing Information",
+            "where": "CLÁUSULA SÉPTIMA – Garantías",
+            "evidence": "Fiel cumplimiento: 5% del valor total.",
+            "severity": "Medium",
+            "recommendation": "Especificar el mecanismo de ejecución de la garantía de fiel cumplimiento.",
+            "category": "legal"
+          },
+          {
+            "type": "Ambiguous Clause",
+            "where": "CLÁUSULA OCTAVA – Penalidades",
+            "evidence": "Multa del 5% del valor FOB del embarque afectado por incumplimiento de calidad o retraso injustificado.",
+            "severity": "Medium",
+            "recommendation": "Definir claramente qué se considera 'retraso injustificado' y cómo se calculará el valor FOB.",
+            "category": "legal"
+          },
+          {
+            "type": "Missing Information",
+            "where": "CLÁUSULA QUINTA – Plazo y entregas",
+            "evidence": "Duración del contrato: 12 meses, con envíos semanales desde el Puerto Marítimo de Guayaquil.",
+            "severity": "Low",
+            "recommendation": "Incluir un cronograma detallado de entregas y condiciones para la modificación de plazos.",
+            "category": "legal"
+          },
+          {
+            "description": "El contrato menciona que las bananas deben cumplir con los estándares de calidad, inocuidad y trazabilidad exigidos por la USDA y las autoridades sanitarias ecuatorianas, pero no se especifican los criterios exactos de calidad que se utilizarán para la evaluación.",
+            "severity": "Amber",
+            "category": "tecnico"
+          },
+          {
+            "description": "El contrato establece un plazo de 12 meses con envíos semanales, pero no se detalla el cronograma específico de entregas ni las fechas exactas de inicio y finalización de los envíos.",
+            "severity": "Amber",
+            "category": "tecnico"
+          },
+          {
+            "description": "No se menciona un proceso claro para la verificación de la calidad de las bananas antes del embarque, lo que podría generar ambigüedad en la responsabilidad del proveedor en caso de rechazo de lotes.",
+            "severity": "Amber",
+            "category": "tecnico"
+          },
+          {
+            "description": "El contrato no especifica los requisitos de empaque más allá de la mención de 'caja de cartón corrugado con ventilación', lo que podría dar lugar a diferentes interpretaciones sobre el tipo de empaque adecuado.",
+            "severity": "Amber",
+            "category": "tecnico"
+          },
+          {
+            "description": "El presupuesto total de USD 25’000.000,00 está claramente definido, pero no se menciona si incluye o excluye IVA, lo que puede generar ambigüedad en la interpretación del costo final.",
+            "severity": "medium",
+            "category": "economico"
+          },
+          {
+            "description": "La forma de pago establece un anticipo del 50% y el 50% restante contra entrega de documentos. Sin embargo, no se especifica un plazo para la entrega de estos documentos, lo que podría generar incertidumbre en el cumplimiento de los plazos.",
+            "severity": "medium",
+            "category": "economico"
+          },
+          {
+            "description": "No se menciona un cronograma de pagos específico más allá del anticipo y el pago final, lo que podría dificultar la planificación financiera del proveedor.",
+            "severity": "low",
+            "category": "economico"
+          },
+          {
+            "type": "parse_error",
+            "where": "validator_incons",
+            "evidence": "```json\n{\n  \"issues\": [\n    {\n      \"issue\": \"Ambigüedad en la cláusula de calidad\",\n      \"description\": \"La cláusula segunda menciona que las bananas deben ser de calidad 'Premium', pero no se especifican los criterios exactos que definen esta categoría más allá de 'sin daños físicos ni enfermedades'. Esto puede llevar a interpretaciones diferentes sobre lo que constituye una banana 'Premium'.\",\n      \"severity\": \"Moderada\"\n    },\n    {\n      \"issue\": \"Faltante de cláusula sobre cumplimiento normativo\",\n      \"description\": \"No se menciona explícitamente que el proveedor debe cumplir con las normativas ecuatorianas y estadounidenses en términos de producción y exportación, más allá de la referencia a estándares de calidad. Esto podría ser un vacío legal en caso de incumplimiento.\",\n      \"severity\": \"Alta\"\n    },\n    {\n      \"issue\": \"Contradicción en la forma de pago\",\n      \"description\": \"La cláusula cuarta establece que el 50% del pago se realizará contra presentación de factura ",
+            "severity": "MEDIO",
+            "recommendation": "Revisar",
+            "category": "inconsistencias"
+          }
+        ],
+        "ruc_reports": [
+          {
+            "ruc": "0990038414001",
+            "exists": true,
+            "related": true,
+            "risk": "BAJO",
+            "rationale": "La actividad económica principal de la empresa, 'CULTIVO DE BANANOS Y PLÁTANOS', es directamente coherente y adecuada para el objeto del contrato, que es un 'CONTRATO DE SUMINISTRO INTERNACIONAL DE BANANAS TIPO CAVENDISH'. La empresa, EXPORTADORA BANANERA NOBOA S.A., se dedica a la producción de bananos, lo que la posiciona como un proveedor natural para el suministro de este tipo específico de banana. Además, el hecho de que la empresa esté registrada y tenga un representante legal debidamente facultado refuerza su capacidad para cumplir con el contrato. La alta confianza en esta evaluación se debe a la relación directa entre la actividad económica y el objeto del contrato.",
+            "ai_powered": true,
+            "sri_data": {
+              "numeroRuc": "0990038414001",
+              "razonSocial": "EXPORTADORA BANANERA NOBOA S.A.",
+              "estadoContribuyenteRuc": "ACTIVO",
+              "actividadEconomicaPrincipal": "CULTIVO DE BANANOS Y PLÁTANOS.",
+              "tipoContribuyente": "SOCIEDAD",
+              "regimen": "GENERAL",
+              "categoria": null,
+              "obligadoLlevarContabilidad": "SI",
+              "agenteRetencion": "NO",
+              "contribuyenteEspecial": "NO",
+              "informacionFechasContribuyente": {
+                "fechaInicioActividades": "1946-12-26 00:00:00.0",
+                "fechaCese": "",
+                "fechaReinicioActividades": "",
+                "fechaActualizacion": "2025-06-18 14:29:34.0"
+              },
+              "representantesLegales": [
+                {
+                  "identificacion": "0904455235",
+                  "nombre": "LOPEZ CASTRO AURA GUILLERMINA                     "
+                }
+              ],
+              "motivoCancelacionSuspension": null,
+              "contribuyenteFantasma": "NO",
+              "transaccionesInexistente": "NO"
+            },
+            "actividad_economica": "CULTIVO DE BANANOS Y PLÁTANOS.",
+            "razon_social": "EXPORTADORA BANANERA NOBOA S.A.",
+            "estado_contribuyente": "ACTIVO",
+            "tipo_contribuyente": "SOCIEDAD",
+            "obligado_contabilidad": "SI",
+            "confidence": 95
+          }
+        ]
+      }
+    },
+    {
+      "file": "Contrato Banano 2.pdf",
+      "path": "D:\\Github\\Github\\Personal\\HackIATHONN\\Hackathon-Agents\\AgenteIA\\data\\docs\\8c80d9e1-0818-43a5-9bc9-aaa823f1250a\\Contrato Banano 2.pdf",
+      "report": {
+        "scores": {
+          "legal": 70,
+          "tecnico": 70,
+          "economico": 70,
+          "inconsistencias": 50
+        },
+        "risks": {
+          "legal": "MEDIO",
+          "tecnico": "MEDIO",
+          "economico": "MEDIO",
+          "inconsistencias": "ALTO",
+          "ruc": "BAJO"
+        },
+        "issues": [
+          {
+            "type": "Missing Information",
+            "where": "SÉPTIMA – Garantías",
+            "evidence": "El proveedor procurará cumplir los estándares de calidad habituales en el comercio internacional, aunque no se establecen parámetros específicos para la evaluación de la mercadería.",
+            "severity": "High",
+            "recommendation": "Especificar claramente los parámetros de calidad y las garantías que se ofrecerán en caso de incumplimiento.",
+            "category": "legal"
+          },
+          {
+            "type": "Ambiguity",
+            "where": "SEXTA – Entrega",
+            "evidence": "Las fechas serán coordinadas de acuerdo con la capacidad de carga disponible y la programación de cosechas, sin que se considere incumplimiento la postergación razonable por causas ajenas a las partes.",
+            "severity": "Medium",
+            "recommendation": "Definir qué se considera 'postergación razonable' y establecer un plazo máximo para las entregas.",
+            "category": "legal"
+          },
+          {
+            "type": "Missing Information",
+            "where": "OCTAVA – Resolución de controversias",
+            "evidence": "Cualquier diferencia derivada del presente contrato será resuelta mediante diálogo directo entre las partes.",
+            "severity": "Medium",
+            "recommendation": "Incluir un mecanismo de resolución de disputas más formal, como mediación o arbitraje, en caso de que el diálogo no sea efectivo.",
+            "category": "legal"
+          },
+          {
+            "description": "Falta especificación de los materiales de empaque que aseguren la adecuada conservación de los productos.",
+            "severity": "Amber",
+            "category": "tecnico"
+          },
+          {
+            "description": "No se especifican los estándares de calidad que deben cumplir los productos agrícolas, lo que puede generar ambigüedad en la evaluación de la calidad.",
+            "severity": "Amber",
+            "category": "tecnico"
+          },
+          {
+            "description": "No se detallan los plazos específicos para la entrega de productos, solo se menciona que serán coordinados según la capacidad de carga y programación de cosechas.",
+            "severity": "Amber",
+            "category": "tecnico"
+          },
+          {
+            "description": "El contrato no menciona un cronograma de entregas, lo que puede afectar la planificación del comprador.",
+            "severity": "Amber",
+            "category": "tecnico"
+          },
+          {
+            "description": "No se especifica el proceso de verificación de la producción nacional de los productos ofrecidos, lo que es un requisito en la normativa.",
+            "severity": "Red",
+            "category": "tecnico"
+          },
+          {
+            "issue": "El presupuesto total estimado de USD 43’750.000,00 no especifica si incluye IVA.",
+            "severity": "high",
+            "category": "economico"
+          },
+          {
+            "issue": "La forma de pago es ambigua, ya que se menciona que se definirá conforme a la modalidad operativa de cada embarque, lo que puede generar incertidumbre en los plazos de pago.",
+            "severity": "medium",
+            "category": "economico"
+          },
+          {
+            "issue": "No se especifican hitos claros para los pagos, lo que podría dificultar el seguimiento y cumplimiento del contrato.",
+            "severity": "medium",
+            "category": "economico"
+          },
+          {
+            "issue": "No se menciona un mecanismo de ajuste en caso de variaciones significativas en los costos de producción o transporte más allá de la revisión semestral.",
+            "severity": "medium",
+            "category": "economico"
+          },
+          {
+            "type": "parse_error",
+            "where": "validator_incons",
+            "evidence": "```json\n{\n  \"issues\": [\n    {\n      \"issue\": \"Ambigüedad en el objeto del contrato.\",\n      \"description\": \"El contrato menciona que el proveedor se compromete a suministrar productos agrícolas, principalmente bananas, pero no especifica qué otros cultivos tropicales podrían incluirse. Esto puede generar confusión sobre el alcance del suministro.\",\n      \"score\": 20\n    },\n    {\n      \"issue\": \"Falta de especificación en la cantidad.\",\n      \"description\": \"La cláusula segunda establece que el volumen estimado de producción mensual será acordado de forma conjunta al inicio de cada trimestre, lo que puede llevar a incertidumbre sobre las expectativas de entrega y planificación de producción.\",\n      \"score\": 15\n    },\n    {\n      \"issue\": \"Condiciones de pago poco claras.\",\n      \"description\": \"La cláusula tercera menciona que el pago se efectuará en plazos que se definirán conforme a la modalidad operativa de cada embarque, pero no establece un marco temporal claro ni condiciones espe",
+            "severity": "MEDIO",
+            "recommendation": "Revisar",
+            "category": "inconsistencias"
+          }
+        ],
+        "ruc_reports": [
+          {
+            "ruc": "0790060547001",
+            "exists": true,
+            "related": true,
+            "risk": "BAJO",
+            "rationale": "La actividad económica principal de la empresa, que es la 'VENTA AL POR MAYOR DE BANANO Y PLÁTANO', es coherente y adecuada para el objeto del contrato, que es un 'CONTRATO DE SUMINISTRO DE PRODUCTOS AGRÍCOLAS'. Dado que la empresa se especializa en la venta de banano y plátano, productos agrícolas, su participación en el suministro de estos productos es lógica y esperada. Además, el hecho de que la empresa se llame 'PRODUCTORES BANANEROS Y EXPORTADORES' refuerza su capacidad y experiencia en el sector agrícola, lo que aumenta la confianza en su idoneidad para cumplir con el contrato. Sin embargo, la confianza no es del 100% debido a la falta de información sobre la capacidad de la empresa para cumplir con los términos específicos del contrato, así como la ausencia de detalles sobre la empresa contraparte.",
+            "ai_powered": true,
+            "sri_data": {
+              "numeroRuc": "0790060547001",
+              "razonSocial": "PRODUCTORES BANANEROS Y EXPORTADORES PROBANAEXPOR C LTDA",
+              "estadoContribuyenteRuc": "ACTIVO",
+              "actividadEconomicaPrincipal": "VENTA AL POR MAYOR DE BANANO Y PLÁTANO.",
+              "tipoContribuyente": "SOCIEDAD",
+              "regimen": "GENERAL",
+              "categoria": null,
+              "obligadoLlevarContabilidad": "SI",
+              "agenteRetencion": "SI",
+              "contribuyenteEspecial": "SI",
+              "informacionFechasContribuyente": {
+                "fechaInicioActividades": "1982-05-10 00:00:00.0",
+                "fechaCese": "",
+                "fechaReinicioActividades": "",
+                "fechaActualizacion": "2025-05-06 16:20:27.0"
+              },
+              "representantesLegales": [
+                {
+                  "identificacion": "0702033002",
+                  "nombre": "ESPINOSA VALVERDE JORGE FABRICIO"
+                }
+              ],
+              "motivoCancelacionSuspension": null,
+              "contribuyenteFantasma": "NO",
+              "transaccionesInexistente": "NO"
+            },
+            "actividad_economica": "VENTA AL POR MAYOR DE BANANO Y PLÁTANO.",
+            "razon_social": "PRODUCTORES BANANEROS Y EXPORTADORES PROBANAEXPOR C LTDA",
+            "estado_contribuyente": "ACTIVO",
+            "tipo_contribuyente": "SOCIEDAD",
+            "obligado_contabilidad": "SI",
+            "confidence": 90
+          }
+        ]
+      }
+    },
+    {
+      "file": "Contrato Banano 3.pdf",
+      "path": "D:\\Github\\Github\\Personal\\HackIATHONN\\Hackathon-Agents\\AgenteIA\\data\\docs\\8c80d9e1-0818-43a5-9bc9-aaa823f1250a\\Contrato Banano 3.pdf",
+      "report": {
+        "scores": {
+          "legal": 75,
+          "tecnico": 70,
+          "economico": 75,
+          "inconsistencias": 50
+        },
+        "risks": {
+          "legal": "MEDIO",
+          "tecnico": "MEDIO",
+          "economico": "MEDIO",
+          "inconsistencias": "ALTO",
+          "ruc": "ALTO"
+        },
+        "issues": [
+          {
+            "type": "Missing Information",
+            "where": "CLÁUSULA SÉPTIMA – Garantías",
+            "evidence": "La cláusula menciona una garantía de fiel cumplimiento del 5% del valor total del contrato, pero no especifica el mecanismo de ejecución de esta garantía.",
+            "severity": "Medium",
+            "recommendation": "Especificar el mecanismo de ejecución de la garantía de fiel cumplimiento.",
+            "category": "legal"
+          },
+          {
+            "type": "Ambiguity",
+            "where": "CLÁUSULA OCTAVA – Penalidades",
+            "evidence": "La penalidad del 0,1% diario por retrasos injustificados no establece un límite máximo de penalización.",
+            "severity": "High",
+            "recommendation": "Incluir un límite máximo para la penalización por retrasos injustificados.",
+            "category": "legal"
+          },
+          {
+            "type": "Missing Information",
+            "where": "CLÁUSULA QUINTA – Plazo y entregas",
+            "evidence": "El plazo de 10 meses para la duración del contrato es claro, pero no se especifica el número total de envíos semanales.",
+            "severity": "Medium",
+            "recommendation": "Especificar el número total de envíos semanales durante el plazo del contrato.",
+            "category": "legal"
+          },
+          {
+            "description": "Falta especificar el cumplimiento de las normas del MAGAP y Agrocalidad en relación a los procesos de producción y empaque.",
+            "severity": "Amber",
+            "category": "tecnico"
+          },
+          {
+            "description": "No se menciona el proceso de verificación de la calidad de las bananas antes del embarque, lo cual es crucial para cumplir con los estándares de la Unión Europea.",
+            "severity": "Amber",
+            "category": "tecnico"
+          },
+          {
+            "description": "El cronograma de envíos semanales no detalla las fechas específicas de inicio y finalización, lo que puede generar ambigüedad en la planificación.",
+            "severity": "Amber",
+            "category": "tecnico"
+          },
+          {
+            "description": "No se especifica el proceso de trazabilidad de los productos desde la producción hasta la entrega, lo cual es importante para el cumplimiento de estándares internacionales.",
+            "severity": "Amber",
+            "category": "tecnico"
+          },
+          {
+            "description": "El presupuesto total de USD 21’525.000,00 está claramente definido, pero no se menciona si incluye IVA o no, lo cual es importante para la evaluación económica.",
+            "severity": "medium",
+            "category": "economico"
+          },
+          {
+            "description": "La forma de pago establece un anticipo del 40% y el 60% restante contra entrega de documentos, pero no se especifica un calendario de pagos o hitos claros para la entrega de las cajas, lo que podría generar ambigüedad en la ejecución del contrato.",
+            "severity": "medium",
+            "category": "economico"
+          },
+          {
+            "description": "No se menciona un mecanismo de ajuste de precios en caso de fluctuaciones en costos de producción o cambios en normativas que puedan afectar el precio de las bananas.",
+            "severity": "low",
+            "category": "economico"
+          },
+          {
+            "type": "parse_error",
+            "where": "validator_incons",
+            "evidence": "```json\n{\n  \"issues\": [\n    {\n      \"issue\": \"Ambigüedad en la especificación de calidad\",\n      \"description\": \"La cláusula segunda menciona que las bananas deben ser de 'calidad Premium', pero no se especifican los criterios exactos que definen esta calidad más allá de estar libres de plagas y enfermedades. Esto puede llevar a interpretaciones diferentes sobre qué constituye 'calidad Premium'.\",\n      \"score\": 20\n    },\n    {\n      \"issue\": \"Falta de cláusula sobre el valor agregado ecuatoriano\",\n      \"description\": \"El contrato no menciona el cumplimiento de la normativa sobre el valor agregado ecuatoriano, que es un requisito en la normativa secundaria del Sistema Nacional de Contratación Pública. Esto es relevante dado que el proveedor es ecuatoriano y el comprador es internacional.\",\n      \"score\": 25\n    },\n    {\n      \"issue\": \"Inconsistencia en la forma de pago\",\n      \"description\": \"La cláusula cuarta establece un anticipo del 40% y el 60% restante contra entrega de documen",
+            "severity": "MEDIO",
+            "recommendation": "Revisar",
+            "category": "inconsistencias"
+          }
+        ],
+        "ruc_reports": [
+          {
+            "ruc": "1724918774001",
+            "exists": true,
+            "related": false,
+            "risk": "ALTO",
+            "rationale": "La actividad económica principal de la empresa 'VARGAS PALADINES KEVIN ALEXANDER' se centra en la venta al por menor de una variedad de productos no alimenticios, como prendas de vestir, muebles, artículos de ferretería, cosméticos, joyería, juguetes y artículos de deporte. Sin embargo, el objeto del contrato/proyecto es un suministro de bananas Cavendish premium, que es un producto alimenticio. Dado que la empresa no se dedica a la venta de productos alimenticios, la actividad económica no es coherente ni adecuada para el proyecto de suministro de bananas. La confianza en esta evaluación es alta, ya que la discrepancia entre el tipo de productos vendidos y el objeto del contrato es clara.",
+            "ai_powered": true,
+            "sri_data": {
+              "numeroRuc": "1724918774001",
+              "razonSocial": "VARGAS PALADINES KEVIN ALEXANDER",
+              "estadoContribuyenteRuc": "ACTIVO",
+              "actividadEconomicaPrincipal": "VENTA AL POR MENOR DE GRAN VARIEDAD DE PRODUCTOS ENTRE LOS QUE NO PREDOMINAN LOS PRODUCTOS ALIMENTICIOS, LAS BEBIDAS O EL TABACO, ACTIVIDADES DE VENTA DE: PRENDAS DE VESTIR, MUEBLES, APARATOS, ARTÍCULOS DE FERRETERÍA, COSMÉTICOS, ARTÍCULOS DE JOYERÍA Y BISUTERÍA, JUGUETES, ARTÍCULOS DE DEPORTE, ETCÉTERA.",
+              "tipoContribuyente": "PERSONA NATURAL",
+              "regimen": "RIMPE",
+              "categoria": "NEGOCIO POPULAR",
+              "obligadoLlevarContabilidad": "NO",
+              "agenteRetencion": "NO",
+              "contribuyenteEspecial": "NO",
+              "informacionFechasContribuyente": {
+                "fechaInicioActividades": "2023-07-06 00:00:00.0",
+                "fechaCese": "",
+                "fechaReinicioActividades": "",
+                "fechaActualizacion": "2023-07-07 14:00:10.0"
+              },
+              "representantesLegales": null,
+              "motivoCancelacionSuspension": null,
+              "contribuyenteFantasma": "NO",
+              "transaccionesInexistente": "NO"
+            },
+            "actividad_economica": "VENTA AL POR MENOR DE GRAN VARIEDAD DE PRODUCTOS ENTRE LOS QUE NO PREDOMINAN LOS PRODUCTOS ALIMENTICIOS, LAS BEBIDAS O EL TABACO, ACTIVIDADES DE VENTA DE: PRENDAS DE VESTIR, MUEBLES, APARATOS, ARTÍCULOS DE FERRETERÍA, COSMÉTICOS, ARTÍCULOS DE JOYERÍA Y BISUTERÍA, JUGUETES, ARTÍCULOS DE DEPORTE, ETCÉTERA.",
+            "razon_social": "VARGAS PALADINES KEVIN ALEXANDER",
+            "estado_contribuyente": "ACTIVO",
+            "tipo_contribuyente": "PERSONA NATURAL",
+            "obligado_contabilidad": "NO",
+            "confidence": 85
+          }
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "rojas": 0,
+    "amarillas": 3
+  },
+  "justificacion_agente": "Tras analizar los tres contratos presentados, el **Contrato Banano 1** se destaca como la mejor opción, obteniendo un puntaje total de 76. Desde la perspectiva legal, este contrato presenta una sólida estructura, aunque se identificaron algunos vacíos, como la necesidad de especificar el mecanismo de ejecución de la garantía de fiel cumplimiento y la definición de \"retraso injustificado\". Estos aspectos son cruciales, ya que una clara definición de términos y condiciones ayuda a prevenir conflictos y asegura que ambas partes comprendan sus responsabilidades.\n\nEn el ámbito técnico, el Contrato Banano 1 también se muestra favorable, con un puntaje de 75. Sin embargo, es importante mencionar que se requieren aclaraciones en ciertos procesos, como el cronograma de entregas. La claridad en estos procesos es esencial para garantizar que los materiales y servicios se entreguen a tiempo y cumplan con las expectativas de calidad. Por otro lado, el Contrato Banano 2 y 3, aunque competitivos, presentan riesgos legales más altos, especialmente en lo que respecta a las garantías de calidad y los mecanismos de resolución de disputas, lo que podría generar complicaciones en caso de incumplimientos.\n\nEconómicamente, el Contrato Banano 1 también es el más atractivo, con un puntaje de 80. Esto sugiere que ofrece un equilibrio adecuado entre costo y valor, lo cual es fundamental para la sostenibilidad del proyecto. A pesar de que todos los contratos tienen algunas amarillas, el Contrato Banano 1 tiene menos riesgos significativos en comparación con los otros dos, lo que lo convierte en una opción más segura.\n\nPara fortalecer el Contrato Banano 1, se recomienda incluir un cronograma detallado de entregas y condiciones para la modificación de plazos, así como definir claramente qué se considera \"retraso injustificado\". Además, establecer un límite máximo para las penalizaciones por retrasos podría ayudar a mitigar riesgos futuros. Estas mejoras no solo clarificarían las expectativas, sino que también aumentarían la confianza entre las partes involucradas."
+}
