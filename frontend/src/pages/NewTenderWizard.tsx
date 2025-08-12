@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
-import api from "@/lib/api";
+import api, { Hallazgo } from "@/lib/api";
 import { parseMoney } from "@/lib/utils";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
@@ -79,9 +79,36 @@ export default function NewTenderWizard() {
   });
 
   const analizar = useMutation({
-    mutationFn: async () => { if (!licId) throw new Error("Falta licitación"); return api.analizar(licId); },
-    onSuccess: () => {
+    mutationFn: async () => { if (!licId) throw new Error("Falta licitación");
+      // Solicitar permiso de notificación antes de lanzar el análisis
+      if (typeof Notification !== "undefined" && Notification.permission === "default") {
+        try { await Notification.requestPermission(); } catch { /* no-op */ }
+      }
+      return api.analizar(licId);
+    },
+    onSuccess: async () => {
       qc.invalidateQueries({ queryKey: ["licitaciones"] });
+      // Notificación push según riesgos detectados
+      try {
+        if (licId && typeof Notification !== "undefined" && Notification.permission === "granted") {
+          const [resumen, hall] = await Promise.all([
+            api.resumen(licId),
+            api.hallazgos(licId)
+          ]);
+          const items = (hall?.items as Hallazgo[] | undefined) || [];
+          let rojas = 0, amarillas = 0;
+          for (const it of items) {
+            const s = String((it.severity || "")).toUpperCase();
+            if (["ALTO","ROJO","HIGH"].includes(s)) rojas++;
+            else if (["MEDIO","AMARILLO","MEDIUM"].includes(s)) amarillas++;
+          }
+          const title = rojas > 0 ? "Riesgos críticos detectados" : "Análisis finalizado";
+          const body = rojas > 0
+            ? `Se detectaron ${rojas} rojas y ${amarillas} amarillas.`
+            : `Sin rojas. Amarillas: ${amarillas}. Progreso: ${resumen?.progreso ?? 100}%`;
+          new Notification(title, { body });
+        }
+      } catch { /* no-op */ }
       if (licId) navigate(`/dashboard?lic=${licId}`);
     },
   });

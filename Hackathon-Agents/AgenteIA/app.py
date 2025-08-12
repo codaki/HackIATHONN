@@ -10,6 +10,7 @@ from datetime import datetime
 from utils.pdf_text import pdf_to_text
 from utils.ruc_extract import extract_rucs
 from agents import rag_legal, validator_legal, validator_tech, validator_econ, validator_incons, validator_ruc, aggregator
+from agents.justificador import generate_justification
 from rag.chroma_setup import get_docs_collection
 from openai import OpenAI
 
@@ -34,6 +35,7 @@ DB_PATH = os.path.join(DB_DIR, "licitaciones.json")
 
 client = OpenAI()
 MODEL_EMB = os.environ.get("MODEL_EMB", "text-embedding-3-small")
+MODEL_JUST = os.environ.get("MODEL_JUST", "gpt-4o-mini")
 
 # ============ Helpers de persistencia (MVP) ============
 
@@ -147,7 +149,91 @@ def run_analysis_for_lic(lic_id: str, objeto: str) -> Dict[str, Any]:
     total_amarillas = sum(1 for r in results for i in r["report"]["issues"] if str(i.get("severity", "")).upper() in ("MEDIO","AMARILLO"))
 
     summary = {"rojas": int(total_rojas), "amarillas": int(total_amarillas)}
-    return {"results": results, "summary": summary}
+
+    # Calcular filas comparativas y ganador (misma lógica de endpoint comparativo)
+    try:
+        db = _load_db()
+        lic = _get_licitacion(db, lic_id)
+        pesos = (lic or {}).get("pesos", {"legal": 35, "tecnico": 40, "economico": 25})
+        wl, wt, we = float(pesos.get("legal", 35)), float(pesos.get("tecnico", 40)), float(pesos.get("economico", 25))
+        denom = max(wl + wt + we, 1.0)
+        wl, wt, we = wl/denom, wt/denom, we/denom
+        filas = []
+        for r in results:
+            rep = r["report"]
+            sc = rep.get("scores", {})
+            total = int(wl*sc.get("legal",0) + wt*sc.get("tecnico",0) + we*sc.get("economico",0))
+            rojas = sum(1 for i in rep.get("issues", []) if str(i.get("severity","" )).upper() in ("ALTO","ROJO"))
+            amar = sum(1 for i in rep.get("issues", []) if str(i.get("severity","" )).upper() in ("MEDIO","AMARILLO"))
+            filas.append({
+                "oferente": r.get("file"),
+                "scores": sc,
+                "total": total,
+                "rojas": rojas,
+                "amarillas": amar,
+                "issues": rep.get("issues", [])
+            })
+        ganador = max(filas, key=lambda x: x["total"]) if filas else None
+    except Exception:
+        filas, ganador = [], None
+
+    # Generar justificación con IA (fallback determinístico si falla)
+    def _generate_just(data_rows, win):
+        try:
+            resumen_insumos = []
+            for f in data_rows:
+                resumen_insumos.append({
+                    "oferente": f["oferente"],
+                    "legal": f["scores"].get("legal", 0),
+                    "tecnico": f["scores"].get("tecnico", 0),
+                    "economico": f["scores"].get("economico", 0),
+                    "rojas": f["rojas"],
+                    "amarillas": f["amarillas"],
+                    "top_riesgos": [
+                        {
+                            "categoria": i.get("category",""),
+                            "severidad": i.get("severity",""),
+                            "desc": i.get("recommendation") or i.get("evidence") or i.get("type")
+                        } for i in (f.get("issues") or [])[:5]
+                    ]
+                })
+
+            prompt = f"""
+            Eres AgenteIA. Con base en los siguientes resultados de análisis de una licitación, redacta una justificación breve (máx. 4 párrafos) en español, clara para usuarios no técnicos, pero precisa. Explica cuál contrato es la mejor opción y por qué, comparando criterios legales, técnicos y económicos. Considera garantías, multas, plazos, materiales/procesos, tiempos, presupuestos/forma de pago, vacíos/inconsistencias, cláusulas ambiguas/faltantes, coherencia con pliegos y riesgos.
+
+            Datos (JSON): {resumen_insumos}
+            Ganador propuesto: {win.get('oferente') if win else 'N/D'} con total {win.get('total') if win else 'N/D'}.
+
+            Debes incluir al final (en un párrafo breve) recomendaciones para fortalecer el contrato ganador si aplica. Evita opiniones sin sustento y mantén el texto en 3-4 párrafos.
+            """
+            resp = client.chat.completions.create(
+                model=MODEL_JUST,
+                messages=[
+                    {"role":"system","content":"Eres un asesor experto en contratación pública. Redactas claro y breves párrafos."},
+                    {"role":"user","content": prompt}
+                ],
+                temperature=0.3,
+            )
+            return resp.choices[0].message.content.strip()
+        except Exception as e:
+            if win:
+                return (
+                    f"Se recomienda el contrato '{win.get('oferente')}' por presentar el mejor equilibrio entre cumplimiento legal, solidez técnica y propuesta económica, de acuerdo con los puntajes ponderados. "
+                    f"Frente a las alternativas, registra menos riesgos críticos (rojas: {win.get('rojas')}, amarillas: {win.get('amarillas')}) y una mejor alineación con los requisitos del pliego.\n\n"
+                    "En el aspecto legal, cumple con las exigencias de garantías, multas y plazos de forma más clara y consistente. En lo técnico, la definición de materiales, procesos y tiempos es más completa y compatible con los objetivos del proyecto. En lo económico, la estructura de precios y pagos es competitiva y viable.\n\n"
+                    "Como mejora, se recomienda precisar cláusulas susceptibles de ambigüedad y reforzar hitos de control y evidencias técnicas para mitigar riesgos residuales."
+                )
+            return "No fue posible generar una justificación automática."
+
+    just_text = generate_justification(
+        filas,
+        ganador,
+        objeto=objeto,
+        pesos=pesos if 'pesos' in locals() else None,
+        num_docs=len(results)
+    )
+
+    return {"results": results, "summary": summary, "justificacion_agente": just_text}
 
 # ============ PDF: Resumen Ejecutivo (2 páginas) ============
 
@@ -420,7 +506,8 @@ def resumen_licitacion(lic_id: str):
         data = json.load(f)
     rojas = data["summary"].get("rojas", 0)
     amarillas = data["summary"].get("amarillas", 0)
-    return {"progreso": 100, "rojas": rojas, "amarillas": amarillas}
+    just = data.get("justificacion_agente")
+    return {"progreso": 100, "rojas": rojas, "amarillas": amarillas, "justificacion_agente": just}
 
 @app.get("/licitaciones/{lic_id}/hallazgos")
 def hallazgos_licitacion(lic_id: str):
@@ -490,6 +577,132 @@ def comparativo(lic_id: str):
     rows = [r for r in rows if not str(r.get("oferente", "")).lower().startswith("pliego")]
     ganador = max(rows, key=lambda x: x["score_total"]) if rows else None
     return {"items": rows, "ganador": ganador}
+
+class ChatRequest(BaseModel):
+    message: str
+
+@app.post("/licitaciones/{lic_id}/chat")
+def chat_licitacion(lic_id: str, payload: ChatRequest):
+    # Cargar reporte existente
+    rep_path = os.path.join(REPORTS_DIR, f"reporte_{lic_id}.json")
+    if not os.path.exists(rep_path):
+        raise HTTPException(status_code=404, detail="Aún no hay reporte. Ejecuta /analizar")
+    with open(rep_path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    # Derivar filas comparativas y ganador como en /comparativo
+    rows = []
+    try:
+        db = _load_db()
+        lic = _get_licitacion(db, lic_id)
+        pesos = (lic or {}).get("pesos", {"legal": 35, "tecnico": 40, "economico": 25})
+        wl, wt, we = float(pesos.get("legal", 35)), float(pesos.get("tecnico", 40)), float(pesos.get("economico", 25))
+        denom = max(wl + wt + we, 1.0)
+        wl, wt, we = wl/denom, wt/denom, we/denom
+        for r in data.get("results", []):
+            rep = r.get("report", {})
+            scores = rep.get("scores", {})
+            rojas = sum(1 for i in rep.get("issues", []) if str(i.get("severity", "")).upper() in ("ALTO", "ROJO"))
+            amar = sum(1 for i in rep.get("issues", []) if str(i.get("severity", "")).upper() in ("MEDIO", "AMARILLO"))
+            total = int(wl * scores.get("legal", 0) + wt * scores.get("tecnico", 0) + we * scores.get("economico", 0))
+            rows.append({
+                "oferente": r.get("file"),
+                "scores": scores,
+                "total": total,
+                "rojas": rojas,
+                "amarillas": amar,
+            })
+        rows = [r for r in rows if not str(r.get("oferente", "")).lower().startswith("pliego")]
+        ganador = max(rows, key=lambda x: x["total"]) if rows else None
+    except Exception:
+        ganador = None
+
+    # Extraer hallazgos y RUCs del reporte
+    top_issues = []
+    for r in data.get("results", []):
+        for it in r.get("report", {}).get("issues", []) or []:
+            top_issues.append({
+                "doc": r.get("file"),
+                "severity": str(it.get("severity", "")).upper(),
+                "category": it.get("category") or it.get("tipo") or "",
+                "desc": it.get("recommendation") or it.get("evidence") or it.get("type") or "",
+            })
+    # limitar para el prompt
+    top_issues = top_issues[:20]
+
+    ruc_rows = []
+    for r in data.get("results", []):
+        for rr in r.get("report", {}).get("ruc_reports", []) or []:
+            ruc_rows.append({
+                "ruc": rr.get("ruc"),
+                "exists": rr.get("exists"),
+                "related": rr.get("related"),
+                "risk": rr.get("risk"),
+                "doc": r.get("file"),
+                "rationale": rr.get("rationale"),
+            })
+
+    # Recuperación semántica con Chroma para esta licitación
+    retrieved_chunks: List[str] = []
+    try:
+        col = get_docs_collection()
+        q = col.query(
+            query_texts=[payload.message],
+            n_results=6,
+            where={"licitacion_id": lic_id},
+        )
+        # chroma devuelve documentos en q.get("documents") o q["documents"]
+        docs = None
+        if isinstance(q, dict):
+            docs = q.get("documents") or []
+        else:
+            # fallback por si devuelve objeto con atributo
+            docs = getattr(q, "documents", [])
+        if docs:
+            # docs es lista de listas (por consulta)
+            for d in (docs[0] if isinstance(docs[0], list) else docs):
+                if isinstance(d, str):
+                    retrieved_chunks.append(d)
+    except Exception as e:
+        print(f"[chat] retrieval error: {e}")
+
+    # Construir prompt para OpenAI
+    resumen_insumos = {
+        "ganador": ganador,
+        "filas": rows[:6],
+        "issues": top_issues,
+        "rucs": ruc_rows[:10],
+    }
+    ctx_text = "\n\n".join((retrieved_chunks or [])[:6])
+
+    try:
+        messages = [
+            {"role": "system", "content": (
+                "Eres un asesor experto en contratación pública. Respondes en español, claro y con 3-4 párrafos máximo. "
+                "Explica y compara usando criterios legales, técnicos y económicos. Sustenta con datos del análisis. "
+                "Si el usuario pide riesgos, garantías, RUC u otras comparaciones, respáldate en el JSON de análisis y los fragmentos recuperados. "
+                "Evita generalidades y no inventes si falta evidencia."
+            )},
+            {"role": "user", "content": (
+                f"Pregunta del usuario: {payload.message}\n\n"
+                f"Resumen comparativo (JSON): {json.dumps(resumen_insumos, ensure_ascii=False)}\n\n"
+                f"Contexto recuperado (fragmentos):\n{ctx_text}"
+            )},
+        ]
+        resp = client.chat.completions.create(
+            model=MODEL_JUST,
+            messages=messages,
+            temperature=0.2,
+        )
+        answer = resp.choices[0].message.content.strip()
+    except Exception as e:
+        print(f"[chat] openai error: {e}")
+        answer = (
+            "No fue posible generar una respuesta completa ahora. Sin embargo, de acuerdo con el comparativo, el ganador presenta mejor equilibrio de puntajes y menor número de riesgos críticos. "
+            "Revisa garantías, multas y plazos en lo legal; definición de materiales, procesos y tiempos en lo técnico; y coherencia de precios y pagos en lo económico."
+        )
+
+    return {"answer": answer}
 
 # ---- Descargar PDF de Resumen Ejecutivo (2 páginas) ----
 @app.get("/licitaciones/{lic_id}/resumen-ejecutivo.pdf")

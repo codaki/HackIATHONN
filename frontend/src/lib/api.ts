@@ -76,11 +76,16 @@ export const api = {
 	},
 	analizar: (licId: string) => request(`/licitaciones/${licId}/analizar`, { method: "POST" }),
 	comparativo: (licId: string) => request<ComparativoResp>(`/licitaciones/${licId}/comparativo`),
-	resumen: (licId: string) => request<{ progreso: number; rojas: number; amarillas: number }>(`/licitaciones/${licId}/resumen`),
+	resumen: (licId: string) => request<{ progreso: number; rojas: number; amarillas: number; justificacion_agente?: string }>(`/licitaciones/${licId}/resumen`),
 	hallazgos: (licId: string) => request<{ items: Hallazgo[] }>(`/licitaciones/${licId}/hallazgos`),
 	listarDocumentos: (licId: string) => request<{ items: { file: string; type: string; size: number }[] }>(`/licitaciones/${licId}/documentos`),
 	validacionesRuc: (licId: string) => request<{ items: RucValidationItem[] }>(`/licitaciones/${licId}/validaciones/ruc`),
 	resumenPdfUrl: (licId: string) => `${BASE_URL}/licitaciones/${licId}/resumen-ejecutivo.pdf`,
+  chat: (licId: string, message: string) => request<{ answer: string }>(`/licitaciones/${licId}/chat`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ message }),
+  }),
 };
 
 export default api;
