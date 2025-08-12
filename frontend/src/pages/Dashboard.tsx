@@ -368,42 +368,7 @@ export default function Dashboard() {
 					</CardContent>
 				</Card>
 
-        {/* Chat del Agente */}
-        <Card className="grid-stack-item shadow-elevated overflow-hidden" gs-x={8} gs-y={2} gs-w={4} gs-h={4} style={{ height: '100%' }}>
-          <CardHeader className="py-2"><CardTitle className="text-sm">Chat del Agente</CardTitle></CardHeader>
-          <CardContent className="p-3 h-[calc(100%-2.5rem)] flex flex-col gap-2">
-            <div className="flex-1 overflow-auto rounded border bg-background/50 p-2 space-y-2 text-[11px]">
-              {chatMsgs.length === 0 && (
-                <p className="text-muted-foreground">Haz una pregunta sobre riesgos, RUC, garantías o comparación de propuestas.</p>
-              )}
-              {chatMsgs.map((m, i) => (
-                <div key={i} className={`flex ${m.role==='user'?'justify-end':'justify-start'}`}>
-                  <div className={`${m.role==='user'?'bg-primary text-primary-foreground':'bg-muted'} px-2 py-1 rounded max-w-[80%] whitespace-pre-line`}>
-                    {m.role === 'assistant' ? renderMarkdownLite(m.content) : m.content}
-                  </div>
-                </div>
-              ))}
-              {chatSending && (
-                <div className="flex justify-start">
-                  <div className="bg-muted px-2 py-1 rounded inline-flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-muted-foreground/80 animate-bounce" style={{ animationDelay: '0ms' }} />
-                    <span className="w-1.5 h-1.5 rounded-full bg-muted-foreground/80 animate-bounce" style={{ animationDelay: '150ms' }} />
-                    <span className="w-1.5 h-1.5 rounded-full bg-muted-foreground/80 animate-bounce" style={{ animationDelay: '300ms' }} />
-                  </div>
-                </div>
-              )}
-            </div>
-            <div className="flex items-center gap-2">
-              <Input
-                value={chatText}
-                onChange={(e)=>setChatText(e.target.value)}
-                onKeyDown={(e)=>{ if(e.key==='Enter'&& !e.shiftKey){ e.preventDefault(); onSendChat(); }}}
-                placeholder="Escribe tu pregunta..."
-              />
-              <Button size="sm" onClick={onSendChat} disabled={chatSending || !chatText.trim()}>Enviar</Button>
-			</div>
-          </CardContent>
-        </Card>
+
 
         {/* Radar comparativo multi-dimensión */}
         <Card className="grid-stack-item shadow-elevated overflow-hidden" gs-x={0} gs-y={11} gs-w={12} gs-h={4} style={{ height: '100%' }}>

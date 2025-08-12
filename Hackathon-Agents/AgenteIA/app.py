@@ -40,10 +40,15 @@ MODEL_JUST = os.environ.get("MODEL_JUST", "gpt-4o-mini")
 # ============ Helpers de persistencia (MVP) ============
 
 def _load_db() -> Dict[str, Any]:
-    if not os.path.exists(DB_PATH):
+    try:
+        # Si no existe o está vacío/corrupto, devolvemos estructura por defecto
+        if not os.path.exists(DB_PATH) or os.path.getsize(DB_PATH) == 0:
+            return {"licitaciones": []}
+        with open(DB_PATH, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        # Manejo robusto ante JSON inválido
         return {"licitaciones": []}
-    with open(DB_PATH, "r", encoding="utf-8") as f:
-        return json.load(f)
 
 def _save_db(db: Dict[str, Any]):
     with open(DB_PATH, "w", encoding="utf-8") as f:
