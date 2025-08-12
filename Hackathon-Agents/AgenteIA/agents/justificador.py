@@ -1,11 +1,11 @@
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 import os
 from openai import OpenAI
 
 MODEL_JUST = os.environ.get("MODEL_JUST", "gpt-4o-mini")
 
 
-def _fallback_text(rows: List[Dict[str, Any]], winner: Dict[str, Any] | None) -> str:
+def _fallback_text(rows: List[Dict[str, Any]], winner: Optional[Dict[str, Any]]) -> str:
     if not winner:
         return (
             "No fue posible determinar un contrato ganador con la información disponible. "
@@ -20,7 +20,13 @@ def _fallback_text(rows: List[Dict[str, Any]], winner: Dict[str, Any] | None) ->
     )
 
 
-def generate_justification(rows: List[Dict[str, Any]], winner: Dict[str, Any] | None, objeto: str = "", pesos: Dict[str, Any] | None = None, num_docs: int | None = None) -> str:
+def generate_justification(
+    rows: List[Dict[str, Any]],
+    winner: Optional[Dict[str, Any]],
+    objeto: str = "",
+    pesos: Optional[Dict[str, Any]] = None,
+    num_docs: Optional[int] = None,
+) -> str:
     """Genera una justificación breve (3–4 párrafos) del contrato recomendado.
 
     rows: lista de dicts con: oferente, scores{legal,tecnico,economico}, total, rojas, amarillas, issues[]
@@ -77,7 +83,11 @@ def generate_justification(rows: List[Dict[str, Any]], winner: Dict[str, Any] | 
         resp = client.chat.completions.create(
             model=MODEL_JUST,
             messages=[
-                {"role": "system", "content": "Eres un asesor experto en contratación pública."},
+                {"role": "system", "content": (
+                    "Eres un asistente experto en análisis de licitaciones. "
+                    "Redactas en español, en 3–4 párrafos máximo, claro y educativo para no técnicos. "
+                    "Explica QUÉ hallazgos hay (legales, técnicos, económicos), POR QUÉ importan, cita evidencia cuando sea posible y cierra con recomendaciones prácticas."
+                )},
                 {"role": "user", "content": prompt},
             ],
             temperature=0.3,

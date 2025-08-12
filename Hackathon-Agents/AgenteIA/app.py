@@ -581,17 +581,79 @@ def comparativo(lic_id: str):
 class ChatRequest(BaseModel):
     message: str
 
-@app.post("/licitaciones/{lic_id}/chat")
-def chat_licitacion(lic_id: str, payload: ChatRequest):
-    # Cargar reporte existente
+CHAT_SYSTEM_PROMPT = """
+Eres un asistente experto en análisis de licitaciones que ayuda a interpretar reportes de contratos.
+Tienes acceso a:
+1. Análisis completo (scores legales, técnicos, económicos)
+2. Issues detectados con evidencia
+3. Validaciones de RUC y riesgos empresariales
+4. Contenido original relevante de documentos
+
+Responde de forma conversacional, clara y educativa.
+Explica QUÉ encontraste, POR QUÉ es importante, cita evidencia y da recomendaciones prácticas.
+Si hay más de un contrato, haz comparaciones automáticas.
+Usa un tono profesional pero accesible.
+"""
+
+def _format_issues(issues: List[Dict[str, Any]]) -> str:
+    if not issues:
+        return "Sin issues destacados."
+    lines: List[str] = []
+    for it in issues[:30]:
+        sev = str(it.get("severity", "")).upper()
+        cat = it.get("category") or ""
+        desc = it.get("desc") or it.get("recommendation") or it.get("evidence") or it.get("type") or ""
+        doc = it.get("doc") or it.get("documento") or ""
+        lines.append(f"- [{sev}] ({cat}) {desc} — Doc: {doc}")
+    return "\n".join(lines)
+
+def _format_ruc_data(rucs: List[Dict[str, Any]]) -> str:
+    if not rucs:
+        return "Sin validaciones RUC registradas."
+    lines: List[str] = []
+    for r in rucs[:20]:
+        lines.append(
+            f"- RUC {r.get('ruc')} — exists={r.get('exists')} related={r.get('related')} risk={r.get('risk')} doc={r.get('doc')}. Razonamiento: {r.get('rationale','')}"
+        )
+    return "\n".join(lines)
+
+def _format_rows(rows: List[Dict[str, Any]], ganador: Optional[Dict[str, Any]]) -> str:
+    if not rows:
+        return "Sin filas comparativas."
+    lines: List[str] = []
+    for r in rows[:10]:
+        sc = r.get("scores", {})
+        lines.append(
+            f"- {r.get('oferente')}: Legal={sc.get('legal',0)}, Técnico={sc.get('tecnico',0)}, Económico={sc.get('economico',0)}, Total={r.get('total',0)} (Rojas={r.get('rojas',0)}, Amarillas={r.get('amarillas',0)})"
+        )
+    if ganador:
+        lines.append(f"Ganador propuesto: {ganador.get('oferente')} con Total={ganador.get('total')}")
+    return "\n".join(lines)
+
+def _retrieve_context(lic_id: str, user_question: str, k: int = 6) -> List[str]:
+    chunks: List[str] = []
+    try:
+        col = get_docs_collection()
+        q = col.query(query_texts=[user_question], n_results=k, where={"licitacion_id": lic_id})
+        docs = q.get("documents") if isinstance(q, dict) else getattr(q, "documents", None)
+        if docs:
+            for d in (docs[0] if isinstance(docs[0], list) else docs):
+                if isinstance(d, str):
+                    chunks.append(d)
+    except Exception as e:
+        print(f"[chat] retrieval error: {e}")
+    return chunks
+
+def build_chat_context(lic_id: str, user_question: str) -> Dict[str, Any]:
     rep_path = os.path.join(REPORTS_DIR, f"reporte_{lic_id}.json")
     if not os.path.exists(rep_path):
         raise HTTPException(status_code=404, detail="Aún no hay reporte. Ejecuta /analizar")
     with open(rep_path, "r", encoding="utf-8") as f:
         data = json.load(f)
 
-    # Derivar filas comparativas y ganador como en /comparativo
-    rows = []
+    # Derivar filas/ganador
+    rows: List[Dict[str, Any]] = []
+    ganador: Optional[Dict[str, Any]] = None
     try:
         db = _load_db()
         lic = _get_licitacion(db, lic_id)
@@ -615,25 +677,22 @@ def chat_licitacion(lic_id: str, payload: ChatRequest):
         rows = [r for r in rows if not str(r.get("oferente", "")).lower().startswith("pliego")]
         ganador = max(rows, key=lambda x: x["total"]) if rows else None
     except Exception:
-        ganador = None
+        rows, ganador = [], None
 
-    # Extraer hallazgos y RUCs del reporte
-    top_issues = []
+    # Issues y RUCs
+    issues: List[Dict[str, Any]] = []
     for r in data.get("results", []):
         for it in r.get("report", {}).get("issues", []) or []:
-            top_issues.append({
+            issues.append({
                 "doc": r.get("file"),
                 "severity": str(it.get("severity", "")).upper(),
                 "category": it.get("category") or it.get("tipo") or "",
                 "desc": it.get("recommendation") or it.get("evidence") or it.get("type") or "",
             })
-    # limitar para el prompt
-    top_issues = top_issues[:20]
-
-    ruc_rows = []
+    rucs: List[Dict[str, Any]] = []
     for r in data.get("results", []):
         for rr in r.get("report", {}).get("ruc_reports", []) or []:
-            ruc_rows.append({
+            rucs.append({
                 "ruc": rr.get("ruc"),
                 "exists": rr.get("exists"),
                 "related": rr.get("related"),
@@ -642,51 +701,37 @@ def chat_licitacion(lic_id: str, payload: ChatRequest):
                 "rationale": rr.get("rationale"),
             })
 
-    # Recuperación semántica con Chroma para esta licitación
-    retrieved_chunks: List[str] = []
-    try:
-        col = get_docs_collection()
-        q = col.query(
-            query_texts=[payload.message],
-            n_results=6,
-            where={"licitacion_id": lic_id},
-        )
-        # chroma devuelve documentos en q.get("documents") o q["documents"]
-        docs = None
-        if isinstance(q, dict):
-            docs = q.get("documents") or []
-        else:
-            # fallback por si devuelve objeto con atributo
-            docs = getattr(q, "documents", [])
-        if docs:
-            # docs es lista de listas (por consulta)
-            for d in (docs[0] if isinstance(docs[0], list) else docs):
-                if isinstance(d, str):
-                    retrieved_chunks.append(d)
-    except Exception as e:
-        print(f"[chat] retrieval error: {e}")
+    # Recuperación semántica
+    rag_chunks = _retrieve_context(lic_id, user_question, k=6)
 
-    # Construir prompt para OpenAI
-    resumen_insumos = {
-        "ganador": ganador,
-        "filas": rows[:6],
-        "issues": top_issues,
-        "rucs": ruc_rows[:10],
+    # Construcción de texto de contexto estructurado
+    context_text = (
+        "ANÁLISIS COMPLETO:\n" + _format_rows(rows, ganador) + "\n\n"
+        "ISSUES ENCONTRADOS:\n" + _format_issues(issues) + "\n\n"
+        "VALIDACIÓN RUC:\n" + _format_ruc_data(rucs) + "\n\n"
+        "CONTENIDO RELEVANTE DE DOCUMENTOS:\n" + "\n---\n".join(rag_chunks)
+    )
+
+    return {
+        "rows": rows,
+        "winner": ganador,
+        "issues": issues,
+        "rucs": rucs,
+        "rag": rag_chunks,
+        "text": context_text,
     }
-    ctx_text = "\n\n".join((retrieved_chunks or [])[:6])
+
+@app.post("/licitaciones/{lic_id}/chat")
+def chat_licitacion(lic_id: str, payload: ChatRequest):
+    # Construir contexto enriquecido
+    ctx = build_chat_context(lic_id, payload.message)
 
     try:
         messages = [
-            {"role": "system", "content": (
-                "Eres un asesor experto en contratación pública. Respondes en español, claro y con 3-4 párrafos máximo. "
-                "Explica y compara usando criterios legales, técnicos y económicos. Sustenta con datos del análisis. "
-                "Si el usuario pide riesgos, garantías, RUC u otras comparaciones, respáldate en el JSON de análisis y los fragmentos recuperados. "
-                "Evita generalidades y no inventes si falta evidencia."
-            )},
+            {"role": "system", "content": CHAT_SYSTEM_PROMPT},
             {"role": "user", "content": (
                 f"Pregunta del usuario: {payload.message}\n\n"
-                f"Resumen comparativo (JSON): {json.dumps(resumen_insumos, ensure_ascii=False)}\n\n"
-                f"Contexto recuperado (fragmentos):\n{ctx_text}"
+                f"CONTEXTO UNIFICADO:\n{ctx['text']}"
             )},
         ]
         resp = client.chat.completions.create(

@@ -45,7 +45,7 @@ export default function Dashboard() {
 	const compQ = useQuery({ queryKey: ["comparativo", lic], queryFn: () => api.comparativo(lic), enabled: !!lic });
   const rucQ = useQuery({ queryKey: ["validaciones-ruc", lic], queryFn: () => api.validacionesRuc(lic), enabled: !!lic });
 
-  const resumen = resumenQ.data || { progreso: 0, rojas: 0, amarillas: 0 };
+	const resumen = resumenQ.data || { progreso: 0, rojas: 0, amarillas: 0 };
   type UIHallazgo = Hallazgo & { severity: string; category: string; description: string };
   type RawHallazgo = Hallazgo & { SEVERITY?: string; tipo?: string; desc?: string };
   const rawHallazgos: RawHallazgo[] = (hallazgosQ.data?.items as RawHallazgo[] | undefined) || [];
@@ -145,6 +145,54 @@ export default function Dashboard() {
       if (clsKey) return <span key={i} className={`px-1 rounded ${KEY_CLASSES[clsKey]} font-semibold`}>{seg}</span>;
       return <span key={i}>{seg}</span>;
     });
+  };
+  
+  // Render markdown ligero para respuestas del agente en chat
+  const renderMarkdownLite = (text: string) => {
+    const escape = (s: string) => s
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+    const lines = escape(text).split(/\r?\n/);
+    const out: string[] = [];
+    let inList = false;
+    let lastWasBlock = false;
+    for (let i = 0; i < lines.length; i++) {
+      const ln = lines[i];
+      // close list if current line is not a list item
+      if (inList && !/^\s*[-*]\s+/.test(ln)) {
+        out.push('</ul>');
+        inList = false;
+        lastWasBlock = true;
+      }
+      // headings ### -> h4
+      const h3 = ln.match(/^###\s+(.*)$/);
+      if (h3) {
+        if (inList) { out.push('</ul>'); inList = false; }
+        const inner = h3[1];
+        out.push(`<h4 class="text-sm font-semibold mb-1 mt-1">${inner}</h4>`);
+        continue;
+      }
+      // list items
+      const li = ln.match(/^\s*[-*]\s+(.*)$/);
+      if (li) {
+        if (!inList) { out.push('<ul class="list-disc ml-4 my-1 space-y-0.5">'); inList = true; }
+        out.push(`<li>${li[1]}</li>`);
+        lastWasBlock = true;
+        continue;
+      }
+      // skip extra blank lines
+      if (ln.trim() === '') { continue; }
+      // paragraph line with compact spacing
+      out.push(`<p class="mb-1">${ln}</p>`);
+      lastWasBlock = true;
+    }
+    if (inList) out.push('</ul>');
+    let html = out.join('\n');
+    // bold and italics
+    html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    html = html.replace(/(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)/g, '<em>$1</em>');
+    return <span dangerouslySetInnerHTML={{ __html: html }} />;
   };
   // api.resumen solo devuelve progreso y conteo; para mostrar el texto, lo obtendremos desde /reports si backend lo expone en /resumen o usar comparativo/resumen endpoints.
 
@@ -256,14 +304,14 @@ export default function Dashboard() {
               <Badge variant="destructive" className="inline-flex items-center gap-1 w-fit"><AlertTriangle className="w-3 h-3"/>{derived.red || resumen.rojas} rojas</Badge>
               <span className="px-2 py-0.5 rounded-full bg-warning text-warning-foreground text-[10px] font-semibold inline-flex items-center gap-1 w-fit"><AlertTriangle className="w-3 h-3"/>{derived.yellow || resumen.amarillas} amarillas</span>
             </div>
-          </CardContent>
-        </Card>
+					</CardContent>
+				</Card>
 
         {/* Ganador */}
         <Card className="grid-stack-item shadow-elevated bg-gradient-primary text-primary-foreground" gs-x={8} gs-y={4} gs-w={4} gs-h={2} style={{ height: "100%" }}>
           <CardHeader className="py-2"><CardTitle className="text-sm">Ganador recomendado</CardTitle></CardHeader>
           <CardContent className="flex items-center gap-3 text-xs">
-            {ganador ? (
+						{ganador ? (
               <>
                 <div className="h-10 w-10 rounded-full bg-white/20 grid place-items-center shadow-glow"><Trophy className="h-5 w-5" /></div>
                 <div className="truncate">
@@ -316,9 +364,9 @@ export default function Dashboard() {
                     <Bar dataKey="economico" stackId="a" fill="var(--color-economico)"/>
                   </BarChart>
                 </ChartContainer>
-              )}
-            </CardContent>
-        </Card>
+						)}
+					</CardContent>
+				</Card>
 
         {/* Chat del Agente */}
         <Card className="grid-stack-item shadow-elevated overflow-hidden" gs-x={8} gs-y={2} gs-w={4} gs-h={4} style={{ height: '100%' }}>
@@ -330,7 +378,9 @@ export default function Dashboard() {
               )}
               {chatMsgs.map((m, i) => (
                 <div key={i} className={`flex ${m.role==='user'?'justify-end':'justify-start'}`}>
-                  <div className={`${m.role==='user'?'bg-primary text-primary-foreground':'bg-muted'} px-2 py-1 rounded max-w-[80%] whitespace-pre-line`}>{m.content}</div>
+                  <div className={`${m.role==='user'?'bg-primary text-primary-foreground':'bg-muted'} px-2 py-1 rounded max-w-[80%] whitespace-pre-line`}>
+                    {m.role === 'assistant' ? renderMarkdownLite(m.content) : m.content}
+                  </div>
                 </div>
               ))}
               {chatSending && (
@@ -351,7 +401,7 @@ export default function Dashboard() {
                 placeholder="Escribe tu pregunta..."
               />
               <Button size="sm" onClick={onSendChat} disabled={chatSending || !chatText.trim()}>Enviar</Button>
-            </div>
+			</div>
           </CardContent>
         </Card>
 
@@ -403,28 +453,28 @@ export default function Dashboard() {
             <CardContent className="p-3 h-[calc(100%-2.5rem)]">
               <div className="h-full overflow-auto">
               <Table className="text-[11px]">
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Documento</TableHead>
-                    <TableHead>Tipo</TableHead>
-                    <TableHead>Severidad</TableHead>
-                    <TableHead>Descripción</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
+						<TableHeader>
+							<TableRow>
+								<TableHead>Documento</TableHead>
+								<TableHead>Tipo</TableHead>
+								<TableHead>Severidad</TableHead>
+								<TableHead>Descripción</TableHead>
+							</TableRow>
+						</TableHeader>
+						<TableBody>
                   {topHallazgos.map((h, idx) => (
-                    <TableRow key={idx}>
-                      <TableCell>{h.documento || "-"}</TableCell>
+								<TableRow key={idx}>
+									<TableCell>{h.documento || "-"}</TableCell>
                       <TableCell className="capitalize">{h.category || "-"}</TableCell>
-                      <TableCell>
+									<TableCell>
                         {h.severity === "ALTO" || h.severity === "ROJO" || h.severity === "HIGH" ? (
-                          <Badge variant="destructive">{h.severity}</Badge>
+											<Badge variant="destructive">{h.severity}</Badge>
                         ) : h.severity === "MEDIO" || h.severity === "AMARILLO" || h.severity === "MEDIUM" ? (
                           <span className="px-2 py-0.5 rounded-full bg-warning text-warning-foreground text-xs font-semibold">{h.severity}</span>
-                        ) : (
+										) : (
                           <Badge variant="secondary">{h.severity || "LOW"}</Badge>
-                        )}
-                      </TableCell>
+										)}
+									</TableCell>
                       <TableCell className="truncate max-w-[260px]">{h.description}</TableCell>
                     </TableRow>
                   ))}
@@ -474,12 +524,12 @@ export default function Dashboard() {
                       <TableCell>{o.tecnico}</TableCell>
                       <TableCell>{o.economico}</TableCell>
                       <TableCell className="font-semibold">{o.score_total}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </CardContent>
-        </Card>
+								</TableRow>
+							))}
+						</TableBody>
+					</Table>
+				</CardContent>
+			</Card>
       </div>
       {/* Burbuja flotante de justificación */}
       {justificacion && showBubble && (
@@ -513,7 +563,9 @@ export default function Dashboard() {
                 )}
                 {chatMsgs.map((m, i) => (
                   <div key={i} className={`flex ${m.role==='user'?'justify-end':'justify-start'}`}>
-                    <div className={`${m.role==='user'?'bg-primary text-primary-foreground':'bg-muted'} px-2 py-1 rounded max-w-[80%] whitespace-pre-line`}>{m.content}</div>
+                    <div className={`${m.role==='user'?'bg-primary text-primary-foreground':'bg-muted'} px-2 py-1 rounded max-w-[80%] whitespace-pre-line`}>
+                      {m.role === 'assistant' ? renderMarkdownLite(m.content) : m.content}
+                    </div>
                   </div>
                 ))}
                 {chatSending && (
@@ -548,8 +600,8 @@ export default function Dashboard() {
           <MessageSquare className="w-6 h-6"/>
         </button>
       )}
-    </div>
-  );
+		</div>
+	);
 }
 
 
