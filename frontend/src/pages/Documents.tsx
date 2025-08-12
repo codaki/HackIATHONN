@@ -5,12 +5,30 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { useState } from "react";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 
 export default function Documents() {
+  const [open, setOpen] = useState(true);
   return (
     <div className="space-y-6">
       <SEO title="Documentos | ElicitIA" description="Visor con índice de secciones y tabs de resumen, texto y metadatos." />
       <h1 className="text-2xl font-semibold">Documentos</h1>
+
+      <AlertDialog open={open} onOpenChange={setOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Funcionalidad en desarrollo</AlertDialogTitle>
+            <AlertDialogDescription>
+              Esta sección permitirá previsualizar pliegos y propuestas, resaltar secciones clave (garantías, multas, plazos, anexos), y navegar por hallazgos detectados con enlaces al texto original. Próximamente podrás comparar versiones y reclasificar secciones.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cerrar</AlertDialogCancel>
+            <AlertDialogAction>Entendido</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
         <div className="lg:col-span-3 space-y-3">

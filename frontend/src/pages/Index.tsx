@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Progress } from "@/components/ui/progress";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import api, { LicResumen } from "@/lib/api";
 
@@ -29,7 +30,20 @@ export default function Index() {
     queryKey: ["licitaciones"],
     queryFn: api.listarLicitaciones,
   });
+  const [estado] = useState<string>("todos");
+  const [dueno] = useState<string>("");
+  const [fechaLimite] = useState<string>("");
   const procesos: Row[] = (data || []).map((x) => ({ ...x }));
+  const [page, setPage] = useState<number>(1);
+  const pageSize = 10;
+  const totalPages = Math.max(1, Math.ceil((procesos.length || 0) / pageSize));
+  useEffect(() => {
+    if (page > totalPages) setPage(totalPages);
+    if (page < 1) setPage(1);
+  }, [page, totalPages]);
+  const start = (page - 1) * pageSize;
+  const end = start + pageSize;
+  const pageRows = procesos.slice(start, end);
 
   const positivos = (p: Row): string[] => {
     const items: string[] = [];
@@ -59,11 +73,14 @@ export default function Index() {
           <CardTitle className="text-base">Filtros</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div className="md:col-span-3 text-xs text-muted-foreground bg-muted/30 rounded-md p-2">
+              Los filtros estarán disponibles próximamente. Podrás segmentar por etapa, responsables y fecha límite.
+            </div>
             <div>
               <label className="text-sm mb-1 block">Estado</label>
-              <Select>
-                <SelectTrigger>
+              <Select value={estado}>
+                <SelectTrigger disabled>
                   <SelectValue placeholder="Todos" />
                 </SelectTrigger>
                 <SelectContent>
@@ -76,27 +93,12 @@ export default function Index() {
               </Select>
             </div>
             <div>
-              <label className="text-sm mb-1 block">Categoría</label>
-              <Select>
-                <SelectTrigger>
-                  <SelectValue placeholder="Todas" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="todas">Todas</SelectItem>
-                  <SelectItem value="obras">Obras</SelectItem>
-                  <SelectItem value="bienes">Bienes</SelectItem>
-                  <SelectItem value="servicios">Servicios</SelectItem>
-                  <SelectItem value="ti">TI</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div>
               <label className="text-sm mb-1 block">Dueño</label>
-              <Input placeholder="Nombre" />
+              <Input placeholder="Nombre" value={dueno} disabled />
             </div>
             <div>
               <label className="text-sm mb-1 block">Fecha límite</label>
-              <Input type="date" />
+              <Input type="date" value={fechaLimite} disabled />
             </div>
           </div>
         </CardContent>
@@ -129,7 +131,7 @@ export default function Index() {
                   <TableCell colSpan={7} className="text-sm text-destructive-foreground">Error al cargar</TableCell>
                 </TableRow>
               )}
-              {procesos.map((p) => (
+              {pageRows.map((p) => (
                 <TableRow key={p.id} className="align-middle">
                   <TableCell className="font-medium">{p.nombre}</TableCell>
                   <TableCell><EtapaBadge etapa={p.etapa} /></TableCell>
@@ -169,6 +171,16 @@ export default function Index() {
               )}
             </TableBody>
           </Table>
+          <div className="flex items-center justify-between mt-4 text-xs text-muted-foreground">
+            <span>
+              Mostrando {procesos.length ? start + 1 : 0}-{Math.min(end, procesos.length)} de {procesos.length}
+            </span>
+            <div className="flex items-center gap-2">
+              <Button size="sm" variant="outline" disabled={page <= 1} onClick={() => setPage((p) => Math.max(1, p - 1))}>Anterior</Button>
+              <span>Página {page} de {totalPages}</span>
+              <Button size="sm" variant="outline" disabled={page >= totalPages} onClick={() => setPage((p) => Math.min(totalPages, p + 1))}>Siguiente</Button>
+            </div>
+          </div>
         </CardContent>
       </Card>
 
